@@ -1,0 +1,1116 @@
+
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>QUIROGEST - Pacientes</title>
+
+    <link
+        rel="stylesheet"
+        href="css/style.css"
+    >
+
+    <link
+        rel="stylesheet"
+        href="css/notificaciones.css"
+    >
+
+</head>
+
+
+<body class="app">
+
+<div
+    id="notificacionQuirogest"
+    class="notificacion-quirogest"
+    hidden
+>
+    <div class="notificacion-icono">
+        !
+    </div>
+
+    <div class="notificacion-contenido">
+
+        <strong id="notificacionTitulo">
+            Error
+        </strong>
+
+        <span id="notificacionMensaje">
+            Ha ocurrido un error.
+        </span>
+
+    </div>
+
+    <button
+        type="button"
+        id="cerrarNotificacion"
+        class="notificacion-cerrar"
+    >
+        ×
+    </button>
+
+</div>
+    <!-- =====================================================
+         SIDEBAR
+    ===================================================== -->
+
+    <aside class="sidebar">
+
+        <div class="sidebar-header">
+
+            <div class="sidebar-logo">
+                Q
+            </div>
+
+            <div>
+
+                <div class="sidebar-title">
+                    QUIROGEST
+                </div>
+
+                <div class="sidebar-subtitle">
+                    Gestión del consultorio
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <nav class="sidebar-nav">
+
+
+            <!-- INICIO -->
+
+            <a
+                href="index.html"
+                class="nav-item"
+            >
+
+                <span class="nav-icon">
+
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+
+                        <path d="M3 10.5L12 3l9 7.5"></path>
+
+                        <path d="M5 9.5V21h14V9.5"></path>
+
+                        <path d="M9 21v-6h6v6"></path>
+
+                    </svg>
+
+                </span>
+
+                <span>
+                    Inicio
+                </span>
+
+            </a>
+
+
+            <!-- PACIENTES -->
+
+            <a
+                href="pacientes.html"
+                class="nav-item active"
+            >
+
+                <span class="nav-icon">
+
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+
+                        <circle
+                            cx="9"
+                            cy="8"
+                            r="3"
+                        ></circle>
+
+                        <path
+                            d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"
+                        ></path>
+
+                        <path
+                            d="M16 11c2.2 0 4 1.8 4 4"
+                        ></path>
+
+                        <path
+                            d="M16 5.5a3 3 0 0 1 0 5"
+                        ></path>
+
+                    </svg>
+
+                </span>
+
+                <span>
+                    Pacientes
+                </span>
+
+            </a>
+
+
+            <!-- TURNOS -->
+
+            <a
+                href="turnos.html"
+                class="nav-item"
+            >
+
+                <span class="nav-icon">
+
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+
+                        <rect
+                            x="3"
+                            y="5"
+                            width="18"
+                            height="16"
+                            rx="2"
+                        ></rect>
+
+                        <path d="M16 3v4"></path>
+
+                        <path d="M8 3v4"></path>
+
+                        <path d="M3 10h18"></path>
+
+                        <path d="M8 14h2"></path>
+
+                        <path d="M14 14h2"></path>
+
+                        <path d="M8 18h2"></path>
+
+                    </svg>
+
+                </span>
+
+                <span>
+                    Turnos
+                </span>
+
+            </a>
+
+
+            <!-- PAGOS -->
+
+            <a
+                href="pagos.html"
+                class="nav-item"
+            >
+
+                <span class="nav-icon">
+
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+
+                        <rect
+                            x="3"
+                            y="6"
+                            width="18"
+                            height="13"
+                            rx="2"
+                        ></rect>
+
+                        <path d="M3 10h18"></path>
+
+                        <path d="M8 15h3"></path>
+
+                    </svg>
+
+                </span>
+
+                <span>
+                    Pagos
+                </span>
+
+            </a>
+
+
+            <div class="nav-separator"></div>
+
+
+            <!-- CONFIGURACIÓN -->
+
+            <a
+                href="#"
+                class="nav-item"
+            >
+
+                <span class="nav-icon">
+
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+
+                        <circle
+                            cx="12"
+                            cy="12"
+                            r="3"
+                        ></circle>
+
+                        <path
+                            d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1-1.8 1.8-.1-.1a1.7 1.7 0 0 0-1.9-.3 1.7 1.7 0 0 0-1 1.6v.2h-2.6V20a1.7 1.7 0 0 0-1-1.6 1.7 1.7 0 0 0-1.9.3l-.1.1-1.8-1.8.1-.1A1.7 1.7 0 0 0 8 15a1.7 1.7 0 0 0-1.6-1H6v-2.6h.4A1.7 1.7 0 0 0 8 10a1.7 1.7 0 0 0-.3-1.9l-.1-.1 1.8-1.8.1.1a1.7 1.7 0 0 0 1.9.3 1.7 1.7 0 0 0 1-1.6v-.2H15V5a1.7 1.7 0 0 0 1 1.6 1.7 1.7 0 0 0 1.9-.3l.1-.1 1.8 1.8-.1.1a1.7 1.7 0 0 0-.3 1.9 1.7 1.7 0 0 0 1.6 1h.2V14H21a1.7 1.7 0 0 0-1.6 1z"
+                        ></path>
+
+                    </svg>
+
+                </span>
+
+                <span>
+                    Configuración
+                </span>
+
+            </a>
+
+        </nav>
+
+
+        <!-- CERRAR SESIÓN -->
+
+        <div class="sidebar-footer">
+
+            <button
+                id="btnCerrarSesion"
+                class="logout-button"
+            >
+
+                <span class="nav-icon">
+
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+
+                        <path
+                            d="M10 4H5a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h5"
+                        ></path>
+
+                        <path d="M14 8l4 4-4 4"></path>
+
+                        <path d="M9 12h9"></path>
+
+                    </svg>
+
+                </span>
+
+                <span>
+                    Cerrar sesión
+                </span>
+
+            </button>
+
+        </div>
+
+    </aside>
+
+
+
+    <!-- =====================================================
+         CONTENIDO PRINCIPAL
+    ===================================================== -->
+
+    <main class="main-content">
+
+
+        <!-- TOPBAR -->
+
+        <header class="topbar">
+
+            <div>
+
+                <h1>
+                    Pacientes
+                </h1>
+
+                <p>
+                    Gestión de pacientes del consultorio
+                </p>
+
+            </div>
+
+
+            <div class="user-menu">
+
+                <div class="user-avatar">
+                    U
+                </div>
+
+                <div class="user-info">
+
+                    <strong>
+                        Usuario
+                    </strong>
+
+                    <span>
+                        Administrador
+                    </span>
+
+                </div>
+
+            </div>
+
+        </header>
+
+
+
+        <!-- =====================================================
+             CONTENIDO
+        ===================================================== -->
+
+        <section class="dashboard">
+
+
+            <div class="dashboard-section">
+
+
+                <!-- CABECERA -->
+
+                <div class="section-header">
+
+                    <div>
+
+                        <h3>
+                            Lista de pacientes
+                        </h3>
+
+                        <p>
+                            Consultá, modificá y administrá los pacientes.
+                        </p>
+
+                    </div>
+
+
+                    <button
+                        id="btnNuevoPaciente"
+                        class="primary-button"
+                    >
+                    + Nuevo paciente
+                    </button>
+
+                </div>
+
+
+
+                <!-- FILTROS -->
+
+                <div class="patients-toolbar">
+
+
+                    <div class="search-box">
+
+                        <svg
+                            viewBox="0 0 24 24"
+                            aria-hidden="true"
+                        >
+
+                            <circle
+                                cx="11"
+                                cy="11"
+                                r="7"
+                            ></circle>
+
+                            <path d="m20 20-4-4"></path>
+
+                        </svg>
+
+
+                        <input
+                            type="text"
+                            id="buscarPaciente"
+                            placeholder="Buscar por nombre, apellido o DNI..."
+                        >
+
+                    </div>
+
+
+                    <select id="filtroEstado">
+
+                        <option value="todos">
+                            Todos
+                        </option>
+
+                        <option value="activos">
+                            Activos
+                        </option>
+
+                        <option value="inactivos">
+                            Inactivos
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+
+                <!-- TABLA -->
+
+                <div class="table-container">
+
+                    <table class="patients-table">
+
+                        <thead>
+
+                            <tr>
+
+                                <th>
+                                    ID
+                                </th>
+
+                                <th>
+                                    Paciente
+                                </th>
+
+                                <th>
+                                    DNI
+                                </th>
+
+                                <th>
+                                    Teléfono
+                                </th>
+
+                                <th>
+                                    Estado
+                                </th>
+
+                                <th>
+                                    Acciones
+                                </th>
+
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody id="tablaPacientes">
+
+                            <tr>
+
+                                <td colspan="6">
+
+                                    <div class="table-loading">
+                                        Cargando pacientes...
+                                    </div>
+
+                                </td>
+
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =====================================================
+             MODAL NUEVO PACIENTE
+        ===================================================== -->
+
+        <div
+            id="modalPaciente"
+            class="modal-overlay"
+            hidden
+        >
+
+            <div
+                class="modal"
+                role="dialog"
+                aria-modal="true"
+                aria-labelledby="tituloModalPaciente"
+            >
+
+                <div class="modal-header">
+
+                    <div>
+
+                        <h2 id="tituloModalPaciente">
+                            + Nuevo paciente
+                        </h2>
+
+                        <p>
+                            Completá los datos del paciente.
+                        </p>
+
+                    </div>
+
+
+                    <button
+                        type="button"
+                        id="btnCerrarModal"
+                        class="modal-close"
+                        aria-label="Cerrar"
+                    >
+
+                        <svg
+                            viewBox="0 0 24 24"
+                            aria-hidden="true"
+                        >
+
+                            <path d="M6 6l12 12"></path>
+
+                            <path d="M18 6L6 18"></path>
+
+                        </svg>
+
+                    </button>
+
+                </div>
+
+
+                <form id="formPaciente">
+
+
+                    <div class="form-grid">
+
+
+                        <div class="form-group">
+
+                            <label for="numeroIdentificacion">
+                                Número de identificación
+                            </label>
+
+                            <input
+                                type="number"
+                                id="numeroIdentificacion"
+                                name="numero_identificacion"
+                                placeholder="Ej. 1002"
+                                required
+                            >
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label for="dni">
+                                DNI
+                            </label>
+
+                            <input
+                                type="text"
+                                id="dni"
+                                name="dni"
+                                placeholder="Ej. 30123456"
+                            >
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label for="apellido">
+                                Apellido <span>*</span>
+                            </label>
+
+                            <input
+                                type="text"
+                                id="apellido"
+                                name="apellido"
+                                placeholder="Apellido"
+                                required
+                            >
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label for="nombre">
+                                Nombre <span>*</span>
+                            </label>
+
+                            <input
+                                type="text"
+                                id="nombre"
+                                name="nombre"
+                                placeholder="Nombre"
+                                required
+                            >
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label for="telefono">
+                                Teléfono
+                            </label>
+
+                            <input
+                                type="tel"
+                                id="telefono"
+                                name="telefono"
+                                placeholder="Ej. 2615555555"
+                            >
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label for="email">
+                                Email
+                            </label>
+
+                            <input
+                                type="email"
+                                id="email"
+                                name="email"
+                                placeholder="correo@ejemplo.com"
+                            >
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="form-required">
+                        * Campos obligatorios
+                    </div>
+
+
+                    <div class="modal-footer">
+
+                        <button
+                            type="button"
+                            id="btnCancelarPaciente"
+                            class="secondary-button"
+                        >
+                            Cancelar
+                        </button>
+
+
+                        <button
+                            type="submit"
+                            class="primary-button"
+                        >
+                            Guardar paciente
+                        </button>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =====================================================
+             MODAL FICHA PACIENTE
+        ===================================================== -->
+
+        <div
+            id="modalFichaPaciente"
+            class="modal-overlay"
+            hidden
+        >
+
+            <div
+                class="modal modal-ficha"
+                role="dialog"
+                aria-modal="true"
+                aria-labelledby="tituloFichaPaciente"
+            >
+
+
+                <!-- CABECERA -->
+
+                <div class="modal-header">
+
+                    <div>
+
+                        <h2 id="tituloFichaPaciente">
+                            Ficha del paciente
+                        </h2>
+
+                        <p id="subtituloFichaPaciente">
+                            Información del paciente
+                        </p>
+
+                    </div>
+
+
+                    <button
+                        type="button"
+                        id="btnCerrarFicha"
+                        class="modal-close"
+                        aria-label="Cerrar"
+                    >
+
+                        <svg
+                            viewBox="0 0 24 24"
+                            aria-hidden="true"
+                        >
+
+                            <path d="M6 6l12 12"></path>
+
+                            <path d="M18 6L6 18"></path>
+
+                        </svg>
+
+                    </button>
+
+                </div>
+
+
+
+                <!-- CONTENIDO DE LA FICHA -->
+
+                <div class="ficha-contenido">
+
+
+                    <!-- IDENTIDAD -->
+
+                    <div class="ficha-identidad">
+
+                        <div
+                            id="fichaIniciales"
+                            class="ficha-avatar"
+                        >
+                            --
+                        </div>
+
+
+                        <div>
+
+                            <h3 id="fichaNombre">
+                                —
+                            </h3>
+
+                            <span
+                                id="fichaEstado"
+                                class="status-badge"
+                            >
+                                —
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- DATOS DEL PACIENTE -->
+
+                    <div class="ficha-datos">
+
+
+                        <div class="ficha-dato">
+
+                            <span>
+                                Número de identificación
+                            </span>
+
+                            <strong id="fichaNumero">
+                                —
+                            </strong>
+
+                        </div>
+
+
+                        <div class="ficha-dato">
+
+                            <span>
+                                DNI
+                            </span>
+
+                            <strong id="fichaDni">
+                                —
+                            </strong>
+
+                        </div>
+
+
+                        <div class="ficha-dato">
+
+                            <span>
+                                Teléfono
+                            </span>
+
+                            <strong id="fichaTelefono">
+                                —
+                            </strong>
+
+                        </div>
+
+
+                        <div class="ficha-dato">
+
+                            <span>
+                                Email
+                            </span>
+
+                            <strong id="fichaEmail">
+                                —
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- =================================================
+                         HISTORIAL DE PAGOS
+                    ================================================= -->
+
+                    <div class="ficha-seccion">
+
+                        <div class="ficha-seccion-header">
+
+                            <div>
+
+                                <h3>
+                                    Historial de pagos
+                                </h3>
+
+                                <p>
+                                    Pagos registrados de este paciente.
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+                        <div
+                            id="historialPagosPaciente"
+                            class="historial-pagos"
+                        >
+
+                            <div class="historial-pagos-vacio">
+                                Cargando pagos...
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- FOOTER -->
+
+                    <div class="modal-footer">
+
+                        <button
+                            type="button"
+                            id="btnCerrarFichaFooter"
+                            class="secondary-button"
+                        >
+                            Cerrar
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =====================================================
+             MODAL EDITAR PACIENTE
+        ===================================================== -->
+
+        <div
+            id="modalEditarPaciente"
+            class="modal-overlay"
+            hidden
+        >
+
+            <div
+                class="modal"
+                role="dialog"
+                aria-modal="true"
+                aria-labelledby="tituloEditarPaciente"
+            >
+
+                <div class="modal-header">
+
+                    <div>
+
+                        <h2 id="tituloEditarPaciente">
+                            Editar paciente
+                        </h2>
+
+                        <p>
+                            Modificá los datos del paciente.
+                        </p>
+
+                    </div>
+
+
+                    <button
+                        type="button"
+                        id="btnCerrarEditar"
+                        class="modal-close"
+                        aria-label="Cerrar"
+                    >
+
+                        <svg
+                            viewBox="0 0 24 24"
+                            aria-hidden="true"
+                        >
+
+                            <path d="M6 6l12 12"></path>
+
+                            <path d="M18 6L6 18"></path>
+
+                        </svg>
+
+                    </button>
+
+                </div>
+
+
+                <form id="formEditarPaciente">
+
+                    <div class="form-grid">
+
+
+                        <div class="form-group">
+
+                            <label for="editarNumeroIdentificacion">
+                                Número de identificación
+                            </label>
+
+                            <input
+                                type="number"
+                                id="editarNumeroIdentificacion"
+                                required
+                            >
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label for="editarDni">
+                                DNI
+                            </label>
+
+                            <input
+                                type="text"
+                                id="editarDni"
+                            >
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label for="editarApellido">
+                                Apellido <span>*</span>
+                            </label>
+
+                            <input
+                                type="text"
+                                id="editarApellido"
+                                required
+                            >
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label for="editarNombre">
+                                Nombre <span>*</span>
+                            </label>
+
+                            <input
+                                type="text"
+                                id="editarNombre"
+                                required
+                            >
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label for="editarTelefono">
+                                Teléfono
+                            </label>
+
+                            <input
+                                type="tel"
+                                id="editarTelefono"
+                            >
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label for="editarEmail">
+                                Email
+                            </label>
+
+                            <input
+                                type="email"
+                                id="editarEmail"
+                            >
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="modal-footer">
+
+                        <button
+                            type="button"
+                            id="btnCancelarEditar"
+                            class="secondary-button"
+                        >
+                            Cancelar
+                        </button>
+
+
+                        <button
+                            type="submit"
+                            class="primary-button"
+                        >
+                            Guardar cambios
+                        </button>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </main>
+
+
+
+    <!-- =====================================================
+         JAVASCRIPT
+    ===================================================== -->
+
+    <script src="js/auth.js"></script>
+
+    <script src="js/layout.js"></script>
+
+    <script src="js/notificaciones.js"></script>
+
+    <script src="js/pacientes.js"></script>
+
+
+</body>
+
+</html>

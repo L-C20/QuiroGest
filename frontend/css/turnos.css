@@ -1,0 +1,2250 @@
+/* =====================================================
+   QUIROGEST — TURNOS
+===================================================== */
+
+
+/* =====================================================
+   CONTENEDOR DE LA PÁGINA
+===================================================== */
+
+.main-content .dashboard {
+    padding: 32px 34px;
+}
+
+
+/* =====================================================
+   HEADER
+===================================================== */
+
+.page-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 20px;
+
+    margin-bottom: 24px;
+}
+
+.page-header h1 {
+    margin: 0;
+
+    color: var(--color-text);
+
+    font-size: 21px;
+    font-weight: 650;
+}
+
+.page-header p {
+    margin: 5px 0 0;
+
+    color: var(--color-text-muted);
+
+    font-size: 13px;
+}
+
+
+/* =====================================================
+   BOTÓN NUEVO TURNO
+===================================================== */
+
+.page-header .btn-primary {
+    width: auto;
+    height: 38px;
+
+    margin: 0;
+    padding: 0 16px;
+
+    border: none;
+    border-radius: 7px;
+
+    background: var(--color-accent);
+    color: white;
+
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    box-shadow: none;
+}
+
+.page-header .btn-primary:hover {
+    background: #6da832;
+}
+
+.page-header .btn-primary span {
+    margin-right: 5px;
+
+    font-size: 16px;
+}
+
+
+/* =====================================================
+   NAVEGACIÓN DE FECHA
+===================================================== */
+
+.date-navigation {
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 14px;
+
+    margin-bottom: 22px;
+}
+
+.date-button {
+    width: 36px;
+    height: 36px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    border: 1px solid var(--color-border);
+    border-radius: 7px;
+
+    background: var(--color-surface);
+    color: var(--color-primary);
+
+    cursor: pointer;
+
+    transition:
+        background 0.15s ease,
+        border-color 0.15s ease;
+}
+
+.date-button:hover {
+    background: rgba(127, 191, 63, 0.08);
+
+    border-color: rgba(127, 191, 63, 0.25);
+}
+
+.date-button svg {
+    width: 17px;
+    height: 17px;
+
+    fill: none;
+
+    stroke: currentColor;
+    stroke-width: 1.8;
+
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.current-date {
+    min-width: 250px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    gap: 4px;
+}
+
+.current-date span {
+    color: var(--color-text-muted);
+
+    font-size: 10px;
+    font-weight: 600;
+
+    text-transform: uppercase;
+
+    letter-spacing: 0.4px;
+}
+
+.current-date strong {
+    color: var(--color-primary);
+
+    font-size: 15px;
+    font-weight: 650;
+}
+
+
+/* =====================================================
+   RESUMEN DEL DÍA
+===================================================== */
+
+.appointment-summary {
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, minmax(0, 1fr));
+
+    gap: 16px;
+
+    margin-bottom: 22px;
+}
+
+.summary-card {
+    min-height: 82px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: center;
+
+    padding: 16px 18px;
+
+    background: var(--color-surface);
+
+    border: 1px solid var(--color-border);
+    border-radius: 10px;
+
+    box-shadow:
+        0 4px 12px rgba(15, 23, 42, 0.025);
+}
+
+.summary-label {
+    color: var(--color-text-muted);
+
+    font-size: 11px;
+}
+
+.summary-card strong {
+    margin-top: 6px;
+
+    color: var(--color-primary);
+
+    font-size: 21px;
+    font-weight: 650;
+}
+
+
+/* =====================================================
+   AGENDA
+===================================================== */
+
+.appointments-card {
+    overflow: visible;
+
+    background: var(--color-surface);
+
+    border: 1px solid var(--color-border);
+    border-radius: 12px;
+
+    box-shadow:
+        0 5px 15px rgba(15, 23, 42, 0.035);
+}
+
+
+/* =====================================================
+   CABECERA DE AGENDA
+===================================================== */
+
+.appointments-header {
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 20px;
+
+    padding: 18px 22px;
+
+    border-bottom: 1px solid var(--color-border);
+}
+
+.appointments-header h2 {
+    margin: 0;
+
+    color: var(--color-text);
+
+    font-size: 15px;
+    font-weight: 650;
+}
+
+.appointments-header span {
+    display: block;
+
+    margin-top: 4px;
+
+    color: var(--color-text-muted);
+
+    font-size: 11px;
+}
+
+
+/* =====================================================
+   FILTRO
+===================================================== */
+
+.appointments-filter select {
+    width: 140px;
+    height: 36px;
+
+    padding: 0 10px;
+
+    border: 1px solid var(--color-border);
+    border-radius: 7px;
+
+    background: var(--color-surface);
+    color: var(--color-text);
+
+    font-family: inherit;
+    font-size: 11px;
+
+    outline: none;
+
+    cursor: pointer;
+}
+
+.appointments-filter select:focus {
+    border-color: var(--color-accent);
+
+    box-shadow:
+        0 0 0 3px rgba(127, 191, 63, 0.10);
+}
+
+
+/* =====================================================
+   TABLA
+===================================================== */
+
+.appointments-table-container {
+    width: 100%;
+
+    overflow-x: auto;
+}
+
+.appointments-table {
+    width: 100%;
+
+    border-collapse: collapse;
+}
+
+.appointments-table thead {
+    background: #f7f9f8;
+}
+
+.appointments-table th {
+    padding: 12px 18px;
+
+    border-bottom: 1px solid var(--color-border);
+
+    color: var(--color-text-muted);
+
+    font-size: 10px;
+    font-weight: 650;
+
+    text-align: left;
+
+    text-transform: uppercase;
+
+    letter-spacing: 0.4px;
+}
+
+.appointments-table td {
+    padding: 14px 18px;
+
+    border-bottom: 1px solid #edf0ee;
+
+    color: var(--color-text);
+
+    font-size: 12px;
+
+    vertical-align: middle;
+}
+
+.appointments-table tbody tr {
+    transition:
+        background 0.15s ease;
+}
+
+.appointments-table tbody tr:hover {
+    background: #fafcfb;
+}
+
+.appointments-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+
+/* =====================================================
+   HORA
+===================================================== */
+
+.appointments-table td:first-child {
+    color: var(--color-primary);
+
+    font-weight: 650;
+
+    white-space: nowrap;
+}
+
+
+/* =====================================================
+   PACIENTE
+===================================================== */
+
+.appointment-patient {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 3px;
+}
+
+.appointment-patient strong {
+    color: var(--color-text);
+
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.appointment-patient span {
+    color: var(--color-text-muted);
+
+    font-size: 10px;
+}
+
+
+/* =====================================================
+   ESTADOS DE TURNOS
+===================================================== */
+
+.appointment-status {
+
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 7px;
+
+    min-width: 92px;
+
+    padding: 7px 11px;
+
+    border: 1px solid transparent;
+
+    border-radius: 999px;
+
+    font-size: 10px;
+    font-weight: 650;
+
+    line-height: 1;
+
+    cursor: pointer;
+
+    transition:
+        background 0.15s ease,
+        border-color 0.15s ease,
+        transform 0.15s ease,
+        filter 0.15s ease;
+}
+
+
+/* =====================================================
+   PUNTITO
+===================================================== */
+
+.appointment-status::before {
+
+    content: "";
+
+    width: 7px;
+    height: 7px;
+
+    flex-shrink: 0;
+
+    border-radius: 50%;
+
+    background: currentColor;
+}
+
+
+/* =====================================================
+   HOVER
+===================================================== */
+
+.appointment-status:hover {
+
+    transform: translateY(-1px);
+
+    filter: brightness(0.96);
+}
+
+
+/* =====================================================
+   PENDIENTE
+===================================================== */
+
+.status-pending {
+
+    background: #f6d365;
+
+    color: #5f4800;
+
+    border-color: #e2bd3f;
+}
+
+
+/* =====================================================
+   CONFIRMADO
+===================================================== */
+
+.status-confirmed {
+
+    background: #72c98a;
+
+    color: #174c28;
+
+    border-color: #51ad6c;
+}
+
+
+/* =====================================================
+   ATENDIDO
+===================================================== */
+
+.status-attended {
+
+    background: #72a9d8;
+
+    color: #183f61;
+
+    border-color: #508fc5;
+}
+
+
+/* =====================================================
+   CANCELADO
+===================================================== */
+
+.status-cancelled {
+
+    background: #e58b8b;
+
+    color: #632525;
+
+    border-color: #cc6b6b;
+}
+
+
+/* =====================================================
+   MENÚ DE ESTADOS — MINI MODAL
+===================================================== */
+
+.estado-turno-container {
+    position: relative;
+    display: inline-block;
+}
+
+
+/* =====================================================
+   BOTÓN DE ESTADO
+===================================================== */
+
+.btn-estado-turno {
+    font-family: inherit;
+}
+
+
+/* =====================================================
+   FLECHA
+===================================================== */
+
+.estado-flecha {
+    margin-left: 5px;
+    font-size: 10px;
+    line-height: 1;
+}
+
+
+/* =====================================================
+   MINI MODAL
+===================================================== */
+
+.estado-menu {
+
+    display: none;
+
+    position: fixed;
+
+    width: 150px;
+
+    padding: 7px;
+
+    background: #ffffff;
+
+    border: 1px solid #dfe5e1;
+
+    border-radius: 11px;
+
+    box-shadow:
+        0 12px 30px rgba(15, 23, 42, 0.18);
+
+    z-index: 9999;
+
+}
+
+
+/* =====================================================
+   MENÚ ABIERTO
+===================================================== */
+
+.estado-turno-container.menu-abierto .estado-menu {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 5px;
+
+}
+
+
+/* =====================================================
+   OPCIONES
+===================================================== */
+
+.estado-opcion {
+
+    width: 100%;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    padding: 9px 10px;
+
+    border: none;
+
+    border-radius: 7px;
+
+    font-family: inherit;
+
+    font-size: 11px;
+
+    font-weight: 650;
+
+    text-align: left;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.15s ease,
+        filter 0.15s ease;
+
+}
+
+
+/* =====================================================
+   PUNTITO
+===================================================== */
+
+.estado-opcion::before {
+
+    content: "";
+
+    width: 7px;
+    height: 7px;
+
+    flex-shrink: 0;
+
+    border-radius: 50%;
+
+    background: currentColor;
+
+}
+
+
+/* =====================================================
+   HOVER
+===================================================== */
+
+.estado-opcion:hover {
+
+    filter: brightness(0.93);
+
+    transform: translateX(2px);
+
+}
+
+
+/* =====================================================
+   COLORES
+===================================================== */
+
+.estado-opcion.status-pending {
+
+    background: #f6d365;
+    color: #5f4800;
+
+}
+
+
+.estado-opcion.status-confirmed {
+
+    background: #72c98a;
+    color: #174c28;
+
+}
+
+
+.estado-opcion.status-attended {
+
+    background: #72a9d8;
+    color: #183f61;
+
+}
+
+
+.estado-opcion.status-cancelled {
+
+    background: #e58b8b;
+    color: #632525;
+
+}
+/* =====================================================
+   ACCIONES
+===================================================== */
+
+.appointments-table .table-actions {
+    display: flex;
+
+    align-items: center;
+
+    gap: 5px;
+}
+
+.appointments-table .table-action {
+    width: 31px;
+    height: 31px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border: 1px solid transparent;
+    border-radius: 6px;
+
+    background: transparent;
+
+    color: var(--color-text-muted);
+
+    cursor: pointer;
+
+    transition:
+        background 0.15s ease,
+        border-color 0.15s ease,
+        color 0.15s ease;
+}
+
+.appointments-table .table-action:hover {
+    background: rgba(127, 191, 63, 0.09);
+
+    border-color:
+        rgba(127, 191, 63, 0.18);
+
+    color: var(--color-primary);
+}
+
+.appointments-table .table-action svg {
+    width: 16px;
+    height: 16px;
+
+    fill: none;
+
+    stroke: currentColor;
+
+    stroke-width: 1.8;
+
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+
+/* =====================================================
+   RESPONSIVE
+===================================================== */
+
+@media (max-width: 900px) {
+
+    .appointment-summary {
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+    }
+
+}
+
+
+@media (max-width: 700px) {
+
+    .main-content .dashboard {
+        padding: 22px 18px;
+    }
+
+    .page-header {
+        align-items: flex-start;
+
+        flex-direction: column;
+    }
+
+    .page-header .btn-primary {
+        width: auto;
+    }
+
+    .date-navigation {
+        gap: 10px;
+    }
+
+    .current-date {
+        min-width: 0;
+    }
+
+    .appointment-summary {
+        grid-template-columns: 1fr;
+    }
+
+    .appointments-header {
+        align-items: flex-start;
+
+        flex-direction: column;
+    }
+
+    .appointments-filter {
+        width: 100%;
+    }
+
+    .appointments-filter select {
+        width: 100%;
+    }
+
+}
+
+/* =========================
+   ICONOS SIDEBAR - TURNOS
+========================= */
+
+.sidebar-nav a svg {
+
+    width: 19px;
+    height: 19px;
+
+    flex-shrink: 0;
+
+    fill: none;
+
+    stroke: currentColor;
+
+    stroke-width: 1.8;
+
+    stroke-linecap: round;
+
+    stroke-linejoin: round;
+
+}
+
+
+/* =========================
+   ICONOS BOTONES
+========================= */
+
+.date-button svg {
+
+    width: 17px;
+    height: 17px;
+
+    fill: none;
+
+    stroke: currentColor;
+
+    stroke-width: 1.8;
+
+    stroke-linecap: round;
+
+    stroke-linejoin: round;
+
+}
+
+
+.table-action svg {
+
+    width: 16px;
+    height: 16px;
+
+    fill: none;
+
+    stroke: currentColor;
+
+    stroke-width: 1.8;
+
+    stroke-linecap: round;
+
+    stroke-linejoin: round;
+
+}
+
+/* =====================================================
+   MODAL NUEVO TURNO
+===================================================== */
+
+.modal-turno {
+    max-width: 620px;
+}
+
+
+.modal-turno form {
+    padding: 24px;
+}
+
+
+.modal-turno .form-group select,
+.modal-turno .form-group input,
+.modal-turno .form-group textarea {
+
+    width: 100%;
+
+    box-sizing: border-box;
+
+    border: 1px solid var(--color-border);
+
+    border-radius: 7px;
+
+    background: #ffffff;
+
+    color: var(--color-text);
+
+    font-family: inherit;
+
+    font-size: 12px;
+
+    outline: none;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+
+.modal-turno .form-group select,
+.modal-turno .form-group input {
+
+    height: 40px;
+
+    padding: 0 12px;
+
+}
+
+
+.modal-turno .form-group textarea {
+
+    min-height: 85px;
+
+    padding: 10px 12px;
+
+    resize: vertical;
+
+}
+
+
+.modal-turno .form-group select:focus,
+.modal-turno .form-group input:focus,
+.modal-turno .form-group textarea:focus {
+
+    border-color: var(--color-accent);
+
+    box-shadow:
+        0 0 0 3px rgba(127, 191, 63, 0.12);
+
+}
+
+
+.turno-observaciones {
+
+    margin-top: 18px;
+
+}
+
+
+@media (max-width: 600px) {
+
+    .modal-turno form {
+
+        padding: 18px;
+
+    }
+
+}
+
+/* =====================================================
+   MODAL NUEVO TURNO
+===================================================== */
+
+.modal-overlay {
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 1000;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 20px;
+
+    background: rgba(15, 29, 23, 0.48);
+
+    backdrop-filter: blur(3px);
+}
+
+
+/* Oculto */
+
+.modal-overlay[hidden] {
+    display: none;
+}
+
+
+/* CONTENEDOR */
+
+.modal-turno {
+    width: 100%;
+    max-width: 580px;
+
+    max-height: calc(100vh - 40px);
+
+    overflow-y: auto;
+
+    background: var(--color-surface);
+
+    border: 1px solid var(--color-border);
+
+    border-radius: 12px;
+
+    box-shadow:
+        0 20px 50px rgba(0, 0, 0, 0.16);
+
+    animation: modalTurnoEntrada 0.18s ease-out;
+}
+
+
+/* ANIMACIÓN */
+
+@keyframes modalTurnoEntrada {
+
+    from {
+        opacity: 0;
+        transform: translateY(8px) scale(0.98);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+
+}
+
+
+/* CABECERA */
+
+.modal-turno .modal-header {
+
+    display: flex;
+
+    align-items: flex-start;
+    justify-content: space-between;
+
+    gap: 20px;
+
+    padding: 22px 24px;
+
+    border-bottom: 1px solid var(--color-border);
+}
+
+
+.modal-turno .modal-header h2 {
+
+    margin: 0;
+
+    color: var(--color-primary);
+
+    font-size: 17px;
+    font-weight: 650;
+}
+
+
+.modal-turno .modal-header p {
+
+    margin: 5px 0 0;
+
+    color: var(--color-text-muted);
+
+    font-size: 11px;
+}
+
+
+/* CERRAR */
+
+.modal-turno .modal-close {
+
+    width: 32px;
+    height: 32px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    border: 1px solid transparent;
+
+    border-radius: 7px;
+
+    background: transparent;
+
+    color: var(--color-text-muted);
+
+    cursor: pointer;
+
+    transition:
+        background 0.15s ease,
+        color 0.15s ease;
+}
+
+
+.modal-turno .modal-close:hover {
+
+    background: #f1f4f2;
+
+    color: var(--color-primary);
+}
+
+
+.modal-turno .modal-close svg {
+
+    width: 17px;
+    height: 17px;
+
+    fill: none;
+
+    stroke: currentColor;
+
+    stroke-width: 1.8;
+
+    stroke-linecap: round;
+}
+
+
+/* FORMULARIO */
+
+#formNuevoTurno {
+
+    padding: 24px;
+}
+
+
+/* GRID */
+
+#formNuevoTurno .form-grid {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    gap: 18px 16px;
+}
+
+
+/* GRUPO COMPLETO */
+
+#formNuevoTurno .form-group-full {
+
+    grid-column: 1 / -1;
+}
+
+
+/* LABEL */
+
+#formNuevoTurno .form-group {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 7px;
+}
+
+
+#formNuevoTurno .form-group label {
+
+    color: var(--color-text);
+
+    font-size: 11px;
+
+    font-weight: 600;
+}
+
+
+#formNuevoTurno .form-group label span {
+
+    color: var(--color-accent);
+}
+
+
+/* INPUTS Y SELECT */
+
+#formNuevoTurno input,
+#formNuevoTurno select,
+#formNuevoTurno textarea {
+
+    width: 100%;
+
+    box-sizing: border-box;
+
+    border: 1px solid var(--color-border);
+
+    border-radius: 7px;
+
+    background: #ffffff;
+
+    color: var(--color-text);
+
+    font-family: inherit;
+
+    font-size: 12px;
+
+    outline: none;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+
+#formNuevoTurno input,
+#formNuevoTurno select {
+
+    height: 40px;
+
+    padding: 0 12px;
+}
+
+
+#formNuevoTurno textarea {
+
+    min-height: 82px;
+
+    padding: 11px 12px;
+
+    resize: vertical;
+}
+
+
+/* PLACEHOLDER */
+
+#formNuevoTurno input::placeholder,
+#formNuevoTurno textarea::placeholder {
+
+    color: #a0a9a5;
+}
+
+
+/* FOCUS */
+
+#formNuevoTurno input:focus,
+#formNuevoTurno select:focus,
+#formNuevoTurno textarea:focus {
+
+    border-color: var(--color-accent);
+
+    box-shadow:
+        0 0 0 3px rgba(127, 191, 63, 0.12);
+}
+
+
+/* TEXTO INFORMATIVO */
+
+#formNuevoTurno .form-required {
+
+    margin-top: 18px;
+
+    color: var(--color-text-muted);
+
+    font-size: 10px;
+}
+
+
+/* FOOTER */
+
+#formNuevoTurno .modal-footer {
+
+    display: flex;
+
+    align-items: center;
+    justify-content: flex-end;
+
+    gap: 9px;
+
+    margin-top: 24px;
+
+    padding-top: 18px;
+
+    border-top: 1px solid var(--color-border);
+}
+
+
+/* BOTÓN CANCELAR */
+
+#formNuevoTurno .secondary-button {
+
+    height: 36px;
+
+    padding: 0 15px;
+
+    border: 1px solid var(--color-border);
+
+    border-radius: 7px;
+
+    background: #ffffff;
+
+    color: var(--color-text);
+
+    font-family: inherit;
+
+    font-size: 11px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+}
+
+
+#formNuevoTurno .secondary-button:hover {
+
+    background: #f5f7f6;
+
+    border-color: #c9d0cc;
+}
+
+
+/* BOTÓN GUARDAR */
+
+#formNuevoTurno .primary-button {
+
+    width: auto;
+
+    height: 36px;
+
+    margin: 0;
+
+    padding: 0 16px;
+
+    border: none;
+
+    border-radius: 7px;
+
+    background: var(--color-accent);
+
+    color: white;
+
+    font-family: inherit;
+
+    font-size: 11px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    box-shadow: none;
+}
+
+
+#formNuevoTurno .primary-button:hover {
+
+    background: #6da832;
+}
+
+
+/* =====================================================
+   RESPONSIVE
+===================================================== */
+
+@media (max-width: 600px) {
+
+    .modal-overlay {
+        padding: 12px;
+    }
+
+
+    .modal-turno .modal-header {
+        padding: 18px;
+    }
+
+
+    #formNuevoTurno {
+        padding: 18px;
+    }
+
+
+    #formNuevoTurno .form-grid {
+        grid-template-columns: 1fr;
+
+        gap: 16px;
+    }
+
+
+    #formNuevoTurno .form-group-full {
+        grid-column: auto;
+    }
+
+
+    #formNuevoTurno .modal-footer {
+
+        flex-direction: column-reverse;
+
+        align-items: stretch;
+    }
+
+
+    #formNuevoTurno .modal-footer button {
+
+        width: 100%;
+    }
+
+}
+
+/* =====================================================
+   DETALLE DEL TURNO
+===================================================== */
+
+.turno-detalle {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    gap: 16px;
+
+    padding: 22px;
+
+}
+
+
+.detalle-item {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 5px;
+
+    padding: 12px 14px;
+
+    background: #f7f9f8;
+
+    border: 1px solid var(--color-border);
+
+    border-radius: 8px;
+
+}
+
+
+.detalle-item span {
+
+    color: var(--color-text-muted);
+
+    font-size: 10px;
+
+    font-weight: 600;
+
+    text-transform: uppercase;
+
+    letter-spacing: 0.35px;
+
+}
+
+
+.detalle-item strong {
+
+    color: var(--color-text);
+
+    font-size: 12px;
+
+    font-weight: 600;
+
+}
+
+
+.detalle-item-full {
+
+    grid-column: 1 / -1;
+
+}
+
+
+@media (max-width: 600px) {
+
+    .turno-detalle {
+
+        grid-template-columns: 1fr;
+
+    }
+
+    .detalle-item-full {
+
+        grid-column: auto;
+
+    }
+
+}
+
+/* =====================================================
+   ESTADO DE PAGO
+===================================================== */
+
+.appointment-payment {
+
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    min-width: 72px;
+
+    padding: 6px 9px;
+
+    border: 1px solid transparent;
+
+    border-radius: 999px;
+
+    font-size: 10px;
+    font-weight: 650;
+
+    line-height: 1;
+}
+
+
+/* =====================================================
+   PAGADO
+===================================================== */
+
+.payment-paid {
+
+    background: #72c98a;
+
+    color: #174c28;
+
+    border-color: #51ad6c;
+}
+
+
+/* =====================================================
+   PENDIENTE
+===================================================== */
+
+.payment-pending {
+
+    background: #f6d365;
+
+    color: #5f4800;
+
+    border-color: #e2bd3f;
+}
+
+#modalDetallePago .modal-turno {
+    padding: 28px;
+}
+
+#modalDetallePago .modal-header {
+    margin-bottom: 24px;
+}
+
+#modalDetallePago .form-grid {
+    margin-bottom: 24px;
+}
+/* =====================================================
+   QUIROGEST — CALENDARIO MENSUAL
+===================================================== */
+
+.calendar-card {
+
+    width: auto;
+
+    margin-top: 24px;
+
+    box-sizing: border-box;
+
+    overflow: hidden;
+
+    background: var(--color-surface);
+
+    border: 1px solid var(--color-border);
+
+    border-radius: 12px;
+
+    box-shadow:
+        0 5px 15px rgba(15, 23, 42, 0.035);
+
+}
+
+
+/* =====================================================
+   CABECERA
+===================================================== */
+
+.calendar-header {
+
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 20px;
+
+    padding: 18px 22px;
+
+    border-bottom: 1px solid var(--color-border);
+
+}
+
+
+.calendar-header h2 {
+
+    margin: 0;
+
+    color: var(--color-text);
+
+    font-size: 15px;
+    font-weight: 650;
+
+}
+
+
+.calendar-header span {
+
+    display: block;
+
+    margin-top: 4px;
+
+    color: var(--color-text-muted);
+
+    font-size: 20px;
+
+}
+
+
+/* =====================================================
+   NAVEGACIÓN
+===================================================== */
+
+.calendar-navigation {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 6px;
+
+}
+
+
+.calendar-nav-button {
+
+    width: 34px;
+    height: 34px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    border: 1px solid var(--color-border);
+
+    border-radius: 7px;
+
+    background: var(--color-surface);
+
+    color: var(--color-primary);
+
+    cursor: pointer;
+
+    transition:
+        background 0.15s ease,
+        border-color 0.15s ease;
+
+}
+
+
+.calendar-nav-button:hover {
+
+    background: rgba(127, 191, 63, 0.08);
+
+    border-color:
+        rgba(127, 191, 63, 0.25);
+
+}
+
+
+.calendar-nav-button svg {
+
+    width: 16px;
+    height: 16px;
+
+    fill: none;
+
+    stroke: currentColor;
+
+    stroke-width: 1.8;
+
+    stroke-linecap: round;
+    stroke-linejoin: round;
+
+}
+
+
+.calendar-hoy {
+
+    height: 34px;
+
+    padding: 0 12px;
+
+    border: 1px solid var(--color-border);
+
+    border-radius: 7px;
+
+    background: var(--color-surface);
+
+    color: var(--color-text);
+
+    font-family: inherit;
+
+    font-size: 11px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        background 0.15s ease,
+        border-color 0.15s ease;
+
+}
+
+
+.calendar-hoy:hover {
+
+    background: rgba(127, 191, 63, 0.08);
+
+    border-color:
+        rgba(127, 191, 63, 0.25);
+
+}
+
+
+/* =====================================================
+   DÍAS DE LA SEMANA
+===================================================== */
+
+.calendar-weekdays {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(7, minmax(0, 1fr));
+
+    background: #f7f9f8;
+
+    border-bottom: 1px solid var(--color-border);
+
+}
+
+
+.calendar-weekdays span {
+
+    padding: 11px 8px;
+
+    text-align: center;
+
+    color: var(--color-text-muted);
+
+    font-size: 10px;
+    font-weight: 650;
+
+    text-transform: uppercase;
+
+    letter-spacing: 0.4px;
+
+}
+
+
+/* =====================================================
+   GRILLA
+===================================================== */
+
+.calendar-grid {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(7, minmax(0, 1fr));
+
+    border-left: 1px solid var(--color-border);
+
+    border-top: 1px solid var(--color-border);
+
+}
+
+
+/* =====================================================
+   DÍA
+===================================================== */
+
+.calendar-day {
+
+    position: relative;
+
+    min-height: 105px;
+
+    padding: 9px;
+
+    box-sizing: border-box;
+
+    background: var(--color-surface);
+
+    border-right: 1px solid var(--color-border);
+
+    border-bottom: 1px solid var(--color-border);
+
+    cursor: pointer;
+
+    transition:
+        background 0.15s ease;
+
+}
+
+
+.calendar-day:hover {
+
+    background: #fafcfb;
+
+}
+
+
+/* =====================================================
+   NÚMERO
+===================================================== */
+
+.calendar-day-number {
+
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    width: 28px;
+    height: 28px;
+
+    border-radius: 50%;
+
+    color: var(--color-text);
+
+    font-size: 12px;
+    font-weight: 600;
+
+}
+
+
+/* =====================================================
+   DÍAS FUERA DEL MES
+===================================================== */
+
+.calendar-day.other-month {
+
+    background: #fafafa;
+
+}
+
+
+.calendar-day.other-month .calendar-day-number {
+
+    color: #c4c8ce;
+
+}
+
+
+/* =====================================================
+   DÍA ACTUAL
+===================================================== */
+
+.calendar-day.today .calendar-day-number {
+
+    background: var(--color-primary);
+
+    color: #ffffff;
+
+}
+
+
+/* =====================================================
+   DÍA SELECCIONADO
+===================================================== */
+
+.calendar-day.selected {
+
+    background: rgba(127, 191, 63, 0.045);
+
+    box-shadow:
+        inset 0 0 0 2px var(--color-accent);
+
+}
+
+
+/* =====================================================
+   INDICADOR DE TURNOS
+===================================================== */
+
+.calendar-day.has-appointments::after {
+
+    content: "";
+
+    position: absolute;
+
+    top: 15px;
+    right: 11px;
+
+    width: 6px;
+    height: 6px;
+
+    border-radius: 50%;
+
+    background: #2563eb;
+
+}
+
+
+/* =====================================================
+   CANTIDAD DE TURNOS
+===================================================== */
+
+.calendar-appointments-count {
+
+    margin-top: 9px;
+
+    color: var(--color-text-muted);
+
+    font-size: 10px;
+
+}
+
+
+.calendar-appointments-count strong {
+
+    color: var(--color-text);
+
+    font-weight: 600;
+
+}
+
+
+/* =====================================================
+   FERIADO
+===================================================== */
+
+.calendar-day.holiday {
+
+    background: #fffafa;
+
+}
+
+
+.calendar-day.holiday .calendar-day-number {
+
+    color: #dc2626;
+
+}
+
+
+.calendar-holiday-name {
+
+    margin-top: 6px;
+
+    color: #dc2626;
+
+    font-size: 10px;
+    font-weight: 500;
+
+    line-height: 1.3;
+
+}
+
+
+/* =====================================================
+   REFERENCIAS
+===================================================== */
+
+.calendar-legend {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 18px;
+
+    padding: 14px 22px;
+
+    border-top: 1px solid var(--color-border);
+
+}
+
+
+.calendar-legend span {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 6px;
+
+    color: var(--color-text-muted);
+
+    font-size: 10px;
+
+}
+
+
+.legend-dot {
+
+    width: 6px;
+    height: 6px;
+
+    display: inline-block;
+
+    flex-shrink: 0;
+
+    border-radius: 50%;
+
+}
+
+
+.legend-hoy {
+
+    background: var(--color-primary);
+
+}
+
+
+.legend-turno {
+
+    background: #2563eb;
+
+}
+
+
+.legend-feriado {
+
+    background: #dc2626;
+
+}
+
+
+/* =====================================================
+   RESPONSIVE
+===================================================== */
+
+@media (max-width: 768px) {
+
+    .calendar-header {
+
+        align-items: flex-start;
+
+        flex-direction: column;
+
+    }
+
+
+    .calendar-navigation {
+
+        width: 100%;
+
+        justify-content: flex-end;
+
+    }
+
+
+    .calendar-day {
+
+        min-height: 85px;
+
+        padding: 7px;
+
+    }
+
+
+    .calendar-day-number {
+
+        width: 26px;
+        height: 26px;
+
+        font-size: 11px;
+
+    }
+
+
+    .calendar-appointments-count {
+
+        font-size: 9px;
+
+    }
+
+
+    .calendar-holiday-name {
+
+        font-size: 9px;
+
+    }
+
+}
+
+
+@media (max-width: 600px) {
+
+    .calendar-header {
+
+        padding: 16px 18px;
+
+    }
+
+
+    .calendar-navigation {
+
+        justify-content: space-between;
+
+    }
+
+
+    .calendar-weekdays span {
+
+        padding: 9px 2px;
+
+        font-size: 9px;
+
+    }
+
+
+    .calendar-day {
+
+        min-height: 65px;
+
+        padding: 5px;
+
+    }
+
+
+    .calendar-day-number {
+
+        width: 24px;
+        height: 24px;
+
+        font-size: 10px;
+
+    }
+
+
+    .calendar-appointments-count {
+
+        display: none;
+
+    }
+
+
+    .calendar-holiday-name {
+
+        display: none;
+
+    }
+
+
+    .calendar-legend {
+
+        gap: 12px;
+
+        flex-wrap: wrap;
+
+        padding: 13px 18px;
+
+    }
+
+}
+
+/* =====================================================
+   QUIROGEST — TURNOS EN CALENDARIO
+===================================================== */
+
+.calendar-day-appointments {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    margin-top: 9px;
+
+    padding: 5px 8px;
+
+    border-radius: 6px;
+
+    background: rgba(127, 191, 63, 0.10);
+
+    color: var(--color-primary);
+
+    font-size: 10px;
+
+    font-weight: 600;
+
+}
+
+
+/* =====================================================
+   DÍA CON TURNOS
+===================================================== */
+
+.calendar-day:has(.calendar-day-appointments)::after {
+
+    content: "";
+
+    position: absolute;
+
+    top: 15px;
+    right: 11px;
+
+    width: 6px;
+    height: 6px;
+
+    border-radius: 50%;
+
+    background: #2563eb;
+
+}
+
+
+/* =====================================================
+   DÍAS FUERA DEL MES
+===================================================== */
+
+.calendar-day.other-month
+.calendar-day-appointments {
+
+    opacity: 0.6;
+
+}

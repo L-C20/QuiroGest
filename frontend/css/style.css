@@ -1,0 +1,4733 @@
+/* =========================
+   RESET
+========================= */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+
+:root {
+
+    --primary: #1f4f6f;
+    --primary-dark: #173b54;
+
+    --background: #f2f5f8;
+
+    --card: #ffffff;
+
+    --text: #1f2937;
+    --text-muted: #6b7280;
+
+    --border: #d9e0e7;
+    --color-primary: #1F4D3A;
+--color-accent: #7FBF3F;
+--color-gray: #6B7280;
+
+--color-background: #F3F5F4;
+--color-surface: #FFFFFF;
+--color-border: #E1E6E3;
+
+--color-text: #26332D;
+--color-text-muted: #718078;
+
+}
+
+
+/* =========================
+   BODY
+========================= */
+
+body {
+
+    font-family:
+        Inter,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+
+    color: var(--text);
+
+}
+
+
+/* =========================
+   LOGIN
+========================= */
+
+.login-page {
+
+    min-height: 100vh;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    background:
+
+        radial-gradient(
+            circle at top,
+            #ffffff 0%,
+            var(--background) 55%
+        );
+
+    padding: 24px;
+
+}
+
+
+/* =========================
+   LOGIN CONTAINER
+========================= */
+
+.login-container {
+
+    width: 100%;
+
+    max-width: 430px;
+
+}
+
+
+/* =========================
+   LOGIN CARD
+========================= */
+
+.login-card {
+
+    background: var(--card);
+
+    padding: 44px;
+
+    border-radius: 18px;
+
+    border: 1px solid rgba(0, 0, 0, 0.04);
+
+    box-shadow:
+
+        0 25px 50px rgba(15, 23, 42, 0.10),
+
+        0 8px 20px rgba(15, 23, 42, 0.06);
+
+}
+
+
+/* =========================
+   HEADER
+========================= */
+
+.login-header {
+
+    text-align: center;
+
+    margin-bottom: 36px;
+
+}
+
+
+.logo {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 12px;
+
+    margin-bottom: 10px;
+
+}
+
+
+.logo-icon {
+
+    width: 46px;
+
+    height: 46px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 12px;
+
+    background: var(--primary);
+
+    color: white;
+
+    font-size: 20px;
+
+    font-weight: 700;
+
+    box-shadow:
+
+        0 8px 18px rgba(31, 79, 111, 0.22);
+
+}
+
+
+.logo-text {
+
+    font-size: 26px;
+
+    font-weight: 700;
+
+    letter-spacing: 1.5px;
+
+    color: #17202a;
+
+}
+
+
+.login-header p {
+
+    color: var(--text-muted);
+
+    font-size: 14px;
+
+}
+
+
+/* =========================
+   FORM
+========================= */
+
+.form-group {
+
+    margin-bottom: 21px;
+
+}
+
+
+.form-group label {
+
+    display: block;
+
+    margin-bottom: 8px;
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+    color: #374151;
+
+}
+
+
+.form-group input {
+
+    width: 100%;
+
+    height: 46px;
+
+    padding: 0 14px;
+
+    border: 1px solid var(--border);
+
+    border-radius: 9px;
+
+    background: #fbfcfd;
+
+    color: var(--text);
+
+    font-size: 14px;
+
+    outline: none;
+
+    transition:
+
+        border-color 0.2s ease,
+
+        box-shadow 0.2s ease,
+
+        background 0.2s ease;
+
+}
+
+
+.form-group input:hover {
+
+    background: #ffffff;
+
+}
+
+
+.form-group input:focus {
+
+    background: #ffffff;
+
+    border-color: var(--primary);
+
+    box-shadow:
+
+        0 0 0 3px rgba(31, 79, 111, 0.10);
+
+}
+
+
+/* =========================
+   BUTTON
+========================= */
+
+.btn-primary {
+
+    width: 100%;
+
+    height: 46px;
+
+    margin-top: 5px;
+
+    border: none;
+
+    border-radius: 9px;
+
+    background: var(--primary);
+
+    color: white;
+
+    font-size: 14px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+
+        background 0.2s ease,
+
+        transform 0.15s ease,
+
+        box-shadow 0.2s ease;
+
+    box-shadow:
+
+        0 6px 14px rgba(31, 79, 111, 0.18);
+
+}
+
+
+.btn-primary:hover {
+
+    background: var(--primary-dark);
+
+    box-shadow:
+
+        0 8px 18px rgba(31, 79, 111, 0.24);
+
+}
+
+
+.btn-primary:active {
+
+    transform: translateY(1px);
+
+}
+
+
+/* =========================
+   ERROR
+========================= */
+
+.login-error {
+
+    margin-top: 16px;
+
+    text-align: center;
+
+    color: #b42318;
+
+    font-size: 13px;
+
+    min-height: 18px;
+
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 480px) {
+
+    .login-card {
+
+        padding: 32px 24px;
+
+        border-radius: 15px;
+
+    }
+
+    .logo-text {
+
+        font-size: 23px;
+
+    }
+
+}
+
+/* =========================
+   APP / DASHBOARD
+========================= */
+
+.app {
+
+    min-height: 100vh;
+
+    display: flex;
+
+    background: #f2f5f8;
+
+}
+
+
+/* =========================
+   SIDEBAR
+========================= */
+
+.sidebar {
+
+    width: 250px;
+
+    min-height: 100vh;
+
+    display: flex;
+
+    flex-direction: column;
+
+    background: #172b3a;
+
+    color: white;
+
+    padding: 22px 14px;
+
+}
+
+
+.sidebar-header {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 11px;
+
+    padding: 4px 10px 28px;
+
+}
+
+
+.sidebar-logo {
+
+    width: 40px;
+
+    height: 40px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 10px;
+
+    background: #1f4f6f;
+
+    font-size: 18px;
+
+    font-weight: 700;
+
+    box-shadow:
+        0 6px 14px rgba(0, 0, 0, 0.18);
+
+}
+
+
+.sidebar-title {
+
+    font-size: 16px;
+
+    font-weight: 700;
+
+    letter-spacing: 1px;
+
+}
+
+
+.sidebar-subtitle {
+
+    margin-top: 3px;
+
+    color: #aab8c4;
+
+    font-size: 11px;
+
+}
+
+
+/* =========================
+   NAV
+========================= */
+
+.sidebar-nav {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 5px;
+
+}
+
+
+.nav-item {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    padding: 11px 12px;
+
+    border-radius: 8px;
+
+    color: #c8d2db;
+
+    text-decoration: none;
+
+    font-size: 14px;
+
+    transition:
+
+        background 0.2s ease,
+
+        color 0.2s ease;
+
+}
+
+
+.nav-item:hover {
+
+    background: rgba(255, 255, 255, 0.07);
+
+    color: white;
+
+}
+
+
+.nav-item.active {
+
+    background: rgba(255, 255, 255, 0.11);
+
+    color: white;
+
+}
+
+
+.nav-icon {
+
+    width: 22px;
+
+    text-align: center;
+
+    font-size: 16px;
+
+}
+
+
+.nav-separator {
+
+    height: 1px;
+
+    background: rgba(255, 255, 255, 0.08);
+
+    margin: 15px 8px;
+
+}
+
+
+/* =========================
+   SIDEBAR FOOTER
+========================= */
+
+.sidebar-footer {
+
+    margin-top: auto;
+
+}
+
+
+.logout-button {
+
+    width: 100%;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    padding: 11px 12px;
+
+    border: none;
+
+    border-radius: 8px;
+
+    background: transparent;
+
+    color: #c8d2db;
+
+    font-size: 14px;
+
+    text-align: left;
+
+    cursor: pointer;
+
+}
+
+
+.logout-button:hover {
+
+    background: rgba(255, 255, 255, 0.07);
+
+    color: white;
+
+}
+
+
+/* =========================
+   MAIN
+========================= */
+
+.main-content {
+
+    flex: 1;
+
+    min-width: 0;
+
+}
+
+
+/* =========================
+   TOPBAR
+========================= */
+
+.topbar {
+
+    height: 78px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    padding: 0 34px;
+
+    background: white;
+
+    border-bottom: 1px solid #e4e9ee;
+
+}
+
+
+.topbar h1 {
+
+    font-size: 21px;
+
+    font-weight: 650;
+
+    color: #1f2937;
+
+}
+
+
+.topbar p {
+
+    margin-top: 3px;
+
+    color: #7a8793;
+
+    font-size: 13px;
+
+}
+
+
+/* =========================
+   USER
+========================= */
+
+.user-menu {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+}
+
+
+.user-avatar {
+
+    width: 38px;
+
+    height: 38px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: #e8eef3;
+
+    color: #1f4f6f;
+
+    font-size: 14px;
+
+    font-weight: 700;
+
+}
+
+
+.user-info {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 2px;
+
+}
+
+
+.user-info strong {
+
+    font-size: 13px;
+
+    color: #26323d;
+
+}
+
+
+.user-info span {
+
+    font-size: 11px;
+
+    color: #7a8793;
+
+}
+
+
+/* =========================
+   DASHBOARD
+========================= */
+
+.dashboard {
+
+    padding: 32px 34px;
+
+}
+
+
+/* =========================
+   WELCOME
+========================= */
+
+.welcome-card {
+
+    padding: 26px 28px;
+
+    border-radius: 13px;
+
+    background: white;
+
+    border: 1px solid #e4e9ee;
+
+    box-shadow:
+        0 5px 15px rgba(15, 23, 42, 0.04);
+
+    margin-bottom: 24px;
+
+}
+
+
+.welcome-card h2 {
+
+    font-size: 18px;
+
+    font-weight: 650;
+
+    color: #26323d;
+
+}
+
+
+.welcome-card p {
+
+    margin-top: 6px;
+
+    color: #7a8793;
+
+    font-size: 13px;
+
+}
+
+
+/* =========================
+   STATS
+========================= */
+
+.stats-grid {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, minmax(0, 1fr));
+
+    gap: 18px;
+
+    margin-bottom: 24px;
+
+}
+
+
+.stat-card {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 15px;
+
+    padding: 22px;
+
+    background: white;
+
+    border: 1px solid #e4e9ee;
+
+    border-radius: 12px;
+
+    box-shadow:
+        0 5px 15px rgba(15, 23, 42, 0.035);
+
+}
+
+
+.stat-icon {
+
+    width: 44px;
+
+    height: 44px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 10px;
+
+    background: #edf3f7;
+
+    font-size: 18px;
+
+}
+
+
+.stat-card span {
+
+    display: block;
+
+    color: #7a8793;
+
+    font-size: 12px;
+
+}
+
+
+.stat-card strong {
+
+    display: block;
+
+    margin-top: 4px;
+
+    font-size: 21px;
+
+    color: #26323d;
+
+}
+
+
+/* =========================
+   SECTION
+========================= */
+
+.dashboard-section {
+
+    background: white;
+
+    border: 1px solid #e4e9ee;
+
+    border-radius: 12px;
+
+    box-shadow:
+        0 5px 15px rgba(15, 23, 42, 0.035);
+
+}
+
+
+.section-header {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    padding: 20px 22px;
+
+    border-bottom: 1px solid #edf0f3;
+
+}
+
+
+.section-header h3 {
+
+    font-size: 15px;
+
+    font-weight: 650;
+
+    color: #26323d;
+
+}
+
+
+.section-header p {
+
+    margin-top: 4px;
+
+    font-size: 12px;
+
+    color: #7a8793;
+
+}
+
+
+/* =========================
+   BUTTONS
+========================= */
+
+.secondary-button {
+
+    padding: 8px 13px;
+
+    border: 1px solid #d8e0e6;
+
+    border-radius: 7px;
+
+    background: white;
+
+    color: #52616d;
+
+    font-size: 12px;
+
+    cursor: pointer;
+
+}
+
+
+.secondary-button:hover {
+
+    background: #f6f8fa;
+
+}
+
+
+/* =========================
+   EMPTY STATE
+========================= */
+
+.empty-state {
+
+    padding: 55px 20px;
+
+    text-align: center;
+
+}
+
+
+.empty-icon {
+
+    font-size: 30px;
+
+    margin-bottom: 12px;
+
+    opacity: 0.65;
+
+}
+
+
+.empty-state h4 {
+
+    font-size: 14px;
+
+    font-weight: 600;
+
+    color: #4b5563;
+
+}
+
+
+.empty-state p {
+
+    max-width: 420px;
+
+    margin: 6px auto 0;
+
+    color: #8a96a1;
+
+    font-size: 12px;
+
+    line-height: 1.5;
+
+}
+
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 900px) {
+
+    .sidebar {
+
+        width: 215px;
+
+    }
+
+    .stats-grid {
+
+        grid-template-columns: 1fr;
+
+    }
+
+}
+
+
+@media (max-width: 700px) {
+
+    .sidebar {
+
+        width: 68px;
+
+        padding: 18px 8px;
+
+    }
+
+    .sidebar-header {
+
+        justify-content: center;
+
+        padding: 4px 0 24px;
+
+    }
+
+    .sidebar-header > div:not(.sidebar-logo) {
+
+        display: none;
+
+    }
+
+    .nav-item {
+
+        justify-content: center;
+
+    }
+
+    .nav-item span:not(.nav-icon) {
+
+        display: none;
+
+    }
+
+    .logout-button {
+
+        justify-content: center;
+
+    }
+
+    .logout-button span:not(.nav-icon) {
+
+        display: none;
+
+    }
+
+    .dashboard {
+
+        padding: 22px 18px;
+
+    }
+
+    .topbar {
+
+        padding: 0 18px;
+
+    }
+
+    .user-info {
+
+        display: none;
+
+    }
+
+}
+/* =========================
+   ICONOS SVG
+========================= */
+
+.nav-icon svg {
+
+    width: 19px;
+    height: 19px;
+
+    fill: none;
+
+    stroke: currentColor;
+
+    stroke-width: 1.8;
+
+    stroke-linecap: round;
+
+    stroke-linejoin: round;
+
+}
+
+
+.stat-icon svg {
+
+    width: 21px;
+    height: 21px;
+
+    fill: none;
+
+    stroke: currentColor;
+
+    stroke-width: 1.8;
+
+    stroke-linecap: round;
+
+    stroke-linejoin: round;
+
+}
+
+
+.empty-icon svg {
+
+    width: 30px;
+    height: 30px;
+
+    fill: none;
+
+    stroke: currentColor;
+
+    stroke-width: 1.6;
+
+    stroke-linecap: round;
+
+    stroke-linejoin: round;
+
+}
+/* =========================
+   IDENTIDAD QUIROGEST
+========================= */
+
+.app {
+    background: var(--color-background);
+}
+
+
+/* SIDEBAR */
+
+.sidebar {
+    background: var(--color-primary);
+}
+
+
+/* LOGO */
+
+.sidebar-logo {
+    background: var(--color-accent);
+    color: white;
+}
+
+
+/* NAVEGACIÓN */
+
+.nav-item {
+    color: rgba(255, 255, 255, 0.72);
+}
+
+.nav-item:hover,
+.nav-item.active {
+    background: rgba(127, 191, 63, 0.16);
+    color: white;
+}
+
+
+/* TEXTO PRINCIPAL */
+
+.topbar h1,
+.welcome-card h2,
+.stat-card strong,
+.section-header h3 {
+    color: var(--color-text);
+}
+
+
+/* TEXTOS SECUNDARIOS */
+
+.topbar p,
+.welcome-card p,
+.stat-card span,
+.section-header p,
+.empty-state p {
+    color: var(--color-text-muted);
+}
+
+
+/* TARJETAS */
+
+.welcome-card,
+.stat-card,
+.dashboard-section {
+    background: var(--color-surface);
+    border-color: var(--color-border);
+    margin-bottom: 24px;
+}
+
+
+/* ICONOS */
+
+.stat-icon {
+    background: rgba(127, 191, 63, 0.12);
+    color: var(--color-accent);
+}
+
+
+/* BOTONES */
+
+.secondary-button {
+    border-color: var(--color-border);
+    color: var(--color-primary);
+}
+
+
+/* AVATAR */
+
+.user-avatar {
+    background: rgba(127, 191, 63, 0.14);
+    color: var(--color-primary);
+}
+
+
+/* SEPARADOR */
+
+.nav-separator {
+    background: rgba(255, 255, 255, 0.12);
+}
+/* =========================
+   GRÁFICO DE ESTADÍSTICAS
+========================= */
+
+.statistics-section {
+    margin-bottom: 24px;
+}
+
+
+.chart-container {
+    padding: 20px 24px 8px;
+}
+
+
+.chart-container svg {
+    width: 100%;
+    height: 280px;
+    display: block;
+}
+
+
+/* Ejes */
+
+.chart-axis {
+    stroke: var(--color-border);
+    stroke-width: 1;
+}
+
+
+/* Líneas de referencia */
+
+.chart-grid {
+    stroke: var(--color-border);
+    stroke-width: 1;
+    stroke-dasharray: 4 5;
+    opacity: 0.7;
+}
+
+
+/* Línea principal */
+
+.chart-line {
+    fill: none;
+
+    stroke: var(--color-accent);
+
+    stroke-width: 3;
+
+    stroke-linecap: round;
+
+    stroke-linejoin: round;
+}
+
+
+/* Puntos */
+
+.chart-point {
+    fill: var(--color-surface);
+
+    stroke: var(--color-accent);
+
+    stroke-width: 3;
+}
+
+
+/* Días */
+
+.chart-labels {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(7, 1fr);
+
+    margin-left: 6.25%;
+
+    margin-right: 2.5%;
+
+    margin-top: -2px;
+
+    color: var(--color-text-muted);
+
+    font-size: 11px;
+
+    text-align: center;
+}
+
+
+/* Resumen */
+
+.statistics-summary {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    border-top: 1px solid var(--color-border);
+
+}
+
+
+.statistics-summary > div {
+
+    padding: 18px 22px;
+
+}
+
+
+.statistics-summary > div + div {
+
+    border-left: 1px solid var(--color-border);
+
+}
+
+
+.statistics-summary span {
+
+    display: block;
+
+    color: var(--color-text-muted);
+
+    font-size: 11px;
+
+}
+
+
+.statistics-summary strong {
+
+    display: block;
+
+    margin-top: 5px;
+
+    color: var(--color-primary);
+
+    font-size: 18px;
+
+    font-weight: 650;
+
+}
+
+
+/* Responsive */
+
+@media (max-width: 700px) {
+
+    .chart-container {
+        padding: 15px 12px 5px;
+    }
+
+    .chart-container svg {
+        height: 220px;
+    }
+
+    .statistics-summary {
+        grid-template-columns: 1fr;
+    }
+
+    .statistics-summary > div + div {
+        border-left: none;
+        border-top: 1px solid var(--color-border);
+    }
+
+}
+
+/* =========================
+   PACIENTES
+========================= */
+
+.primary-button {
+
+    padding: 9px 16px;
+
+    border: none;
+
+    border-radius: 7px;
+
+    background: var(--color-accent);
+
+    color: white;
+
+    font-size: 12px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        transform 0.1s ease;
+}
+
+
+.primary-button:hover {
+
+    background: #6da832;
+
+}
+
+
+.primary-button:active {
+
+    transform: translateY(1px);
+
+}
+
+
+/* =========================
+   BARRA DE HERRAMIENTAS
+========================= */
+
+.patients-toolbar {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    padding: 18px 22px;
+
+    border-bottom: 1px solid var(--color-border);
+
+}
+
+
+.search-box {
+
+    position: relative;
+
+    flex: 1;
+
+    max-width: 520px;
+
+}
+
+
+.search-box svg {
+
+    position: absolute;
+
+    left: 12px;
+
+    top: 50%;
+
+    width: 17px;
+
+    height: 17px;
+
+    transform: translateY(-50%);
+
+    fill: none;
+
+    stroke: var(--color-text-muted);
+
+    stroke-width: 1.8;
+
+    stroke-linecap: round;
+
+    stroke-linejoin: round;
+
+}
+
+
+.search-box input {
+
+    width: 100%;
+
+    height: 38px;
+
+    padding: 0 12px 0 38px;
+
+    border: 1px solid var(--color-border);
+
+    border-radius: 7px;
+
+    background: white;
+
+    color: var(--color-text);
+
+    font-family: inherit;
+
+    font-size: 12px;
+
+    outline: none;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+
+}
+
+
+.search-box input::placeholder {
+
+    color: #9aa5a0;
+
+}
+
+
+.search-box input:focus {
+
+    border-color: var(--color-accent);
+
+    box-shadow:
+        0 0 0 3px rgba(127, 191, 63, 0.12);
+
+}
+
+
+.patients-toolbar select {
+
+    height: 38px;
+
+    min-width: 130px;
+
+    padding: 0 10px;
+
+    border: 1px solid var(--color-border);
+
+    border-radius: 7px;
+
+    background: white;
+
+    color: var(--color-text);
+
+    font-family: inherit;
+
+    font-size: 12px;
+
+    outline: none;
+
+    cursor: pointer;
+
+}
+
+
+.patients-toolbar select:focus {
+
+    border-color: var(--color-accent);
+
+}
+
+
+/* =========================
+   TABLA
+========================= */
+
+.table-container {
+
+    width: 100%;
+
+    overflow-x: auto;
+
+}
+
+
+.patients-table {
+
+    width: 100%;
+
+    border-collapse: collapse;
+
+    min-width: 760px;
+
+}
+
+
+.patients-table thead {
+
+    background: #f7f9f8;
+
+}
+
+
+.patients-table th {
+
+    padding: 12px 18px;
+
+    color: var(--color-text-muted);
+
+    font-size: 10px;
+
+    font-weight: 650;
+
+    text-align: left;
+
+    text-transform: uppercase;
+
+    letter-spacing: 0.4px;
+
+    border-bottom: 1px solid var(--color-border);
+
+}
+
+
+.patients-table td {
+
+    padding: 14px 18px;
+
+    color: var(--color-text);
+
+    font-size: 12px;
+
+    border-bottom: 1px solid #edf0ee;
+
+    vertical-align: middle;
+
+}
+
+
+.patients-table tbody tr {
+
+    transition:
+        background 0.15s ease;
+
+}
+
+
+.patients-table tbody tr:hover {
+
+    background: #fafcfb;
+
+}
+
+
+/* =========================
+   PACIENTE
+========================= */
+
+.patient-name {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 3px;
+
+}
+
+
+.patient-name strong {
+
+    color: var(--color-text);
+
+    font-size: 12px;
+
+    font-weight: 600;
+
+}
+
+
+.patient-name span {
+
+    color: var(--color-text-muted);
+
+    font-size: 10px;
+
+}
+
+
+/* =========================
+   ESTADOS
+========================= */
+/* =====================================================
+   QUIROGEST — ESTADOS DE TURNOS
+===================================================== */
+
+/* =====================================================
+   ESTADO MOSTRADO EN LA TABLA
+===================================================== */
+
+.appointment-status {
+    border: 1px solid transparent;
+    border-radius: 999px;
+
+    padding: 8px 13px;
+
+    font-size: 13px;
+    font-weight: 700;
+
+    line-height: 1;
+
+    cursor: pointer;
+
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+
+    transition:
+        filter 0.15s ease,
+        transform 0.15s ease;
+}
+
+
+/* =====================================================
+   PUNTITO DEL ESTADO
+===================================================== */
+
+.appointment-status::before {
+    content: "";
+
+    width: 8px;
+    height: 8px;
+
+    border-radius: 50%;
+
+    background: currentColor;
+
+    flex-shrink: 0;
+}
+
+
+/* =====================================================
+   HOVER
+===================================================== */
+
+.appointment-status:hover {
+    filter: brightness(0.93);
+    transform: translateY(-1px);
+}
+
+
+/* =====================================================
+   PENDIENTE
+===================================================== */
+
+.appointment-status.status-pending {
+    background: #f6d365;
+    color: #5f4800;
+    border-color: #e2bd3f;
+}
+
+
+/* =====================================================
+   CONFIRMADO
+===================================================== */
+
+.appointment-status.status-confirmed {
+    background: #72c98a;
+    color: #174c28;
+    border-color: #51ad6c;
+}
+
+
+/* =====================================================
+   ATENDIDO
+===================================================== */
+
+.appointment-status.status-attended {
+    background: #72a9d8;
+    color: #183f61;
+    border-color: #508fc5;
+}
+
+
+/* =====================================================
+   CANCELADO
+===================================================== */
+
+.appointment-status.status-cancelled {
+    background: #e58b8b;
+    color: #632525;
+    border-color: #cc6b6b;
+}
+
+
+/* =====================================================
+   PENDIENTE
+===================================================== */
+
+.status-pending {
+    background: #f4c430;
+    color: #3f3000;
+    border-color: #d5a900;
+}
+
+
+/* =====================================================
+   CONFIRMADO
+===================================================== */
+
+.status-confirmed {
+    background: #39a95b;
+    color: #ffffff;
+    border-color: #278743;
+}
+
+
+/* =====================================================
+   ATENDIDO
+===================================================== */
+
+.status-attended {
+    background: #3688c7;
+    color: #ffffff;
+    border-color: #246da8;
+}
+
+
+/* =====================================================
+   CANCELADO
+===================================================== */
+
+.status-cancelled {
+    background: #d94b4b;
+    color: #ffffff;
+    border-color: #b93838;
+}
+
+/* =====================================================
+   MENÚ DESPLEGABLE DE ESTADOS
+===================================================== */
+.estado-menu {
+    display: none;
+
+    position: absolute;
+    top: calc(100% + 6px);
+    left: 0;
+
+    min-width: 150px;
+
+    background: white;
+    border: 1px solid #d9dee7;
+    border-radius: 10px;
+
+    padding: 6px;
+
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+
+    z-index: 100;
+
+    /* IMPORTANTE */
+    max-height: none;
+    height: auto;
+    overflow: visible;
+}
+
+
+
+/* MENÚ ABIERTO */
+.estado-menu.mostrar {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+
+    max-height: none;
+    overflow: visible;
+}
+/* =====================================================
+   MENÚ DE ESTADOS DEL TURNO
+===================================================== */
+
+/* CONTENEDOR */
+
+.estado-turno-container {
+    position: relative;
+    display: inline-block;
+}
+
+
+/* =====================================================
+   BOTÓN DE ESTADO
+===================================================== */
+
+.btn-estado-turno {
+    font-family: inherit;
+}
+
+
+/* =====================================================
+   FLECHA
+===================================================== */
+
+.estado-flecha {
+    margin-left: 6px;
+    font-size: 11px;
+}
+
+
+/* =====================================================
+   MENÚ FLOTANTE
+===================================================== */
+
+.estado-menu {
+
+    display: none;
+
+    position: absolute;
+
+    top: calc(100% + 6px);
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    width: 145px;
+
+    padding: 6px;
+
+    background: #ffffff;
+
+    border: 1px solid #dfe4e9;
+
+    border-radius: 10px;
+
+    box-shadow:
+        0 10px 25px rgba(0, 0, 0, 0.16);
+
+    z-index: 9999;
+}
+
+
+/* =====================================================
+   MOSTRAR MENÚ
+===================================================== */
+
+.estado-turno-container.menu-abierto
+.estado-menu {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 5px;
+}
+
+
+/* =====================================================
+   OPCIONES
+===================================================== */
+
+.estado-opcion {
+
+    width: 100%;
+
+    border: none;
+
+    border-radius: 7px;
+
+    padding: 9px 10px;
+
+    font-family: inherit;
+
+    font-size: 12px;
+
+    font-weight: 700;
+
+    text-align: left;
+
+    cursor: pointer;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    transition:
+        filter 0.15s ease,
+        transform 0.15s ease;
+}
+
+
+/* =====================================================
+   PUNTITO
+===================================================== */
+
+.estado-opcion::before {
+
+    content: "";
+
+    width: 8px;
+    height: 8px;
+
+    border-radius: 50%;
+
+    background: currentColor;
+
+    flex-shrink: 0;
+}
+
+
+/* =====================================================
+   HOVER
+===================================================== */
+
+.estado-opcion:hover {
+
+    filter: brightness(0.90);
+
+    transform: translateX(2px);
+}
+
+
+/* =====================================================
+   COLORES
+===================================================== */
+
+.estado-opcion.status-pending {
+
+    background: #f6d365;
+
+    color: #5f4800;
+}
+
+
+.estado-opcion.status-confirmed {
+
+    background: #72c98a;
+
+    color: #174c28;
+}
+
+
+.estado-opcion.status-attended {
+
+    background: #72a9d8;
+
+    color: #183f61;
+}
+
+
+.estado-opcion.status-cancelled {
+
+    background: #e58b8b;
+
+    color: #632525;
+}
+
+
+/* =====================================================
+   HOVER DEL ESTADO ACTUAL
+===================================================== */
+
+.appointment-status:hover {
+
+    transform: translateY(-1px);
+}
+
+/* =========================
+   ACCIONES
+========================= */
+
+.table-actions {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 6px;
+
+}
+
+
+.table-action {
+
+    width: 31px;
+
+    height: 31px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border: 1px solid transparent;
+
+    border-radius: 6px;
+
+    background: transparent;
+
+    color: var(--color-text-muted);
+
+    cursor: pointer;
+
+    transition:
+        background 0.15s ease,
+        color 0.15s ease,
+        border-color 0.15s ease;
+
+}
+
+
+.table-action:hover {
+
+    background: rgba(127, 191, 63, 0.09);
+
+    border-color: rgba(127, 191, 63, 0.18);
+
+    color: var(--color-primary);
+
+}
+
+
+.table-action svg {
+
+    width: 16px;
+
+    height: 16px;
+
+    fill: none;
+
+    stroke: currentColor;
+
+    stroke-width: 1.8;
+
+    stroke-linecap: round;
+
+    stroke-linejoin: round;
+
+}
+
+
+/* =========================
+   CARGANDO / VACÍO
+========================= */
+
+.table-loading {
+
+    padding: 40px 20px;
+
+    color: var(--color-text-muted);
+
+    text-align: center;
+
+    font-size: 12px;
+
+}
+
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 700px) {
+
+    .patients-toolbar {
+
+        flex-direction: column;
+
+        align-items: stretch;
+
+    }
+
+
+    .search-box {
+
+        max-width: none;
+
+    }
+
+
+    .patients-toolbar select {
+
+        width: 100%;
+
+    }
+
+
+    .section-header {
+
+        gap: 15px;
+
+        align-items: flex-start;
+
+    }
+
+
+    .section-header .primary-button {
+
+        white-space: nowrap;
+
+    }
+
+}
+
+/* =========================
+   MODAL
+========================= */
+
+.modal-overlay {
+
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 1000;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    padding: 20px;
+
+    background: rgba(15, 29, 23, 0.48);
+
+    backdrop-filter: blur(3px);
+
+}
+
+
+.modal-overlay[hidden] {
+
+    display: none;
+
+}
+
+
+.modal {
+
+    width: 100%;
+
+    max-width: 620px;
+
+    max-height: calc(100vh - 40px);
+
+    overflow-y: auto;
+
+    background: var(--color-surface);
+
+    border: 1px solid var(--color-border);
+
+    border-radius: 12px;
+
+    box-shadow:
+        0 20px 50px rgba(0, 0, 0, 0.16);
+
+    animation: modalEntrada 0.18s ease-out;
+
+}
+
+
+@keyframes modalEntrada {
+
+    from {
+
+        opacity: 0;
+
+        transform: translateY(8px) scale(0.98);
+
+    }
+
+    to {
+
+        opacity: 1;
+
+        transform: translateY(0) scale(1);
+
+    }
+
+}
+
+
+/* =========================
+   CABECERA
+========================= */
+
+.modal-header {
+
+    display: flex;
+
+    align-items: flex-start;
+
+    justify-content: space-between;
+
+    gap: 20px;
+
+    padding: 22px 24px;
+
+    border-bottom: 1px solid var(--color-border);
+
+}
+
+
+.modal-header h2 {
+
+    margin: 0;
+
+    color: var(--color-primary);
+
+    font-size: 17px;
+
+    font-weight: 650;
+
+}
+
+
+.modal-header p {
+
+    margin: 5px 0 0;
+
+    color: var(--color-text-muted);
+
+    font-size: 11px;
+
+}
+
+
+.modal-close {
+
+    width: 32px;
+
+    height: 32px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    border: 1px solid transparent;
+
+    border-radius: 7px;
+
+    background: transparent;
+
+    color: var(--color-text-muted);
+
+    cursor: pointer;
+
+    transition:
+        background 0.15s ease,
+        color 0.15s ease;
+
+}
+
+
+.modal-close:hover {
+
+    background: #f1f4f2;
+
+    color: var(--color-primary);
+
+}
+
+
+.modal-close svg {
+
+    width: 17px;
+
+    height: 17px;
+
+    fill: none;
+
+    stroke: currentColor;
+
+    stroke-width: 1.8;
+
+    stroke-linecap: round;
+
+}
+
+
+/* =========================
+   FORMULARIO
+========================= */
+
+#formPaciente {
+
+    padding: 24px;
+
+}
+
+
+.form-grid {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    gap: 18px 16px;
+
+}
+
+
+.form-group {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 7px;
+
+}
+
+
+.form-group label {
+
+    color: var(--color-text);
+
+    font-size: 11px;
+
+    font-weight: 600;
+
+}
+
+
+.form-group label span {
+
+    color: var(--color-accent);
+
+}
+
+
+.form-group input {
+
+    width: 100%;
+
+    height: 40px;
+
+    box-sizing: border-box;
+
+    padding: 0 12px;
+
+    border: 1px solid var(--color-border);
+
+    border-radius: 7px;
+
+    background: #ffffff;
+
+    color: var(--color-text);
+
+    font-family: inherit;
+
+    font-size: 12px;
+
+    outline: none;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+
+}
+
+
+.form-group input::placeholder {
+
+    color: #a0a9a5;
+
+}
+
+
+.form-group input:focus {
+
+    border-color: var(--color-accent);
+
+    box-shadow:
+        0 0 0 3px rgba(127, 191, 63, 0.12);
+
+}
+
+
+.form-group input:invalid:not(:placeholder-shown) {
+
+    border-color: #c87878;
+
+}
+
+
+.form-required {
+
+    margin-top: 18px;
+
+    color: var(--color-text-muted);
+
+    font-size: 10px;
+
+}
+
+
+/* =========================
+   FOOTER
+========================= */
+
+.modal-footer {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: flex-end;
+
+    gap: 9px;
+
+    margin-top: 24px;
+
+    padding-top: 18px;
+
+    border-top: 1px solid var(--color-border);
+
+}
+
+
+.secondary-button {
+
+    height: 36px;
+
+    padding: 0 15px;
+
+    border: 1px solid var(--color-border);
+
+    border-radius: 7px;
+
+    background: #ffffff;
+
+    color: var(--color-text);
+
+    font-family: inherit;
+
+    font-size: 11px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        background 0.15s ease,
+        border-color 0.15s ease;
+
+}
+
+
+.secondary-button:hover {
+
+    background: #f5f7f6;
+
+    border-color: #c9d0cc;
+
+}
+
+
+.modal-footer .primary-button {
+
+    height: 36px;
+
+}
+
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 600px) {
+
+    .modal-overlay {
+
+        padding: 12px;
+
+    }
+
+
+    .modal-header {
+
+        padding: 18px;
+
+    }
+
+
+    #formPaciente {
+
+        padding: 18px;
+
+    }
+
+
+    .form-grid {
+
+        grid-template-columns: 1fr;
+
+        gap: 16px;
+
+    }
+
+
+    .modal-footer {
+
+        flex-direction: column-reverse;
+
+        align-items: stretch;
+
+    }
+
+
+    .modal-footer button {
+
+        width: 100%;
+
+    }
+
+}
+
+/* =========================
+   FICHA DEL PACIENTE
+========================= */
+
+.modal-ficha {
+
+    max-width: 580px;
+
+}
+
+
+.ficha-contenido {
+
+    padding: 24px;
+
+}
+
+
+/* =========================
+   IDENTIDAD
+========================= */
+
+.ficha-identidad {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 14px;
+
+    padding-bottom: 22px;
+
+    border-bottom: 1px solid var(--color-border);
+
+}
+
+
+.ficha-avatar {
+
+    width: 52px;
+
+    height: 52px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    border-radius: 50%;
+
+    background: rgba(127, 191, 63, 0.13);
+
+    color: var(--color-primary);
+
+    font-size: 15px;
+
+    font-weight: 700;
+
+}
+
+
+.ficha-identidad h3 {
+
+    margin: 0 0 7px;
+
+    color: var(--color-text);
+
+    font-size: 16px;
+
+    font-weight: 650;
+
+}
+
+
+/* =========================
+   DATOS
+========================= */
+
+.ficha-datos {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    gap: 1px;
+
+    margin-top: 22px;
+
+    overflow: hidden;
+
+    border: 1px solid var(--color-border);
+
+    border-radius: 8px;
+
+    background: var(--color-border);
+
+}
+
+
+.ficha-dato {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 6px;
+
+    min-height: 68px;
+
+    padding: 14px;
+
+    background: var(--color-surface);
+
+}
+
+
+.ficha-dato span {
+
+    color: var(--color-text-muted);
+
+    font-size: 10px;
+
+    font-weight: 500;
+
+}
+
+
+.ficha-dato strong {
+
+    color: var(--color-text);
+
+    font-size: 12px;
+
+    font-weight: 600;
+
+    word-break: break-word;
+
+}
+
+
+/* =========================
+   FOOTER
+========================= */
+
+.ficha-contenido .modal-footer {
+
+    margin-top: 22px;
+
+}
+
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 600px) {
+
+    .ficha-contenido {
+
+        padding: 18px;
+
+    }
+
+
+    .ficha-datos {
+
+        grid-template-columns: 1fr;
+
+    }
+
+}
+
+/* =========================
+   AJUSTE MODAL EDICIÓN
+========================= */
+
+#modalEditarPaciente .modal {
+    padding: 0;
+    overflow: hidden;
+}
+
+#modalEditarPaciente #formEditarPaciente {
+    padding: 24px;
+}
+
+#modalEditarPaciente .form-grid {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+#modalEditarPaciente .form-group {
+    min-width: 0;
+}
+
+#modalEditarPaciente .form-group input {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+#modalEditarPaciente .modal-footer {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+@media (max-width: 600px) {
+
+    #modalEditarPaciente #formEditarPaciente {
+        padding: 18px;
+    }
+
+}
+
+/* =====================================================
+   HISTORIAL DE PAGOS — FICHA PACIENTE
+===================================================== */
+
+.ficha-seccion {
+
+    margin-top: 28px;
+
+    padding-top: 24px;
+
+    border-top: 1px solid var(--color-border);
+
+}
+
+
+/* =========================
+   CABECERA
+========================= */
+
+.ficha-seccion-header {
+
+    margin-bottom: 16px;
+
+}
+
+
+.ficha-seccion-header h3 {
+
+    margin: 0 0 4px;
+
+    color: var(--color-text);
+
+    font-size: 15px;
+
+    font-weight: 650;
+
+}
+
+
+.ficha-seccion-header p {
+
+    margin: 0;
+
+    color: var(--color-text-muted);
+
+    font-size: 11px;
+
+}
+
+
+/* =========================
+   LISTA DE PAGOS
+========================= */
+
+.historial-pagos {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 8px;
+    font-size: 14px;
+
+}
+
+
+/* =========================
+   PAGO
+========================= */
+
+.historial-pago {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 20px;
+
+    padding: 14px 16px;
+
+    background: var(--color-surface);
+
+    border: 1px solid var(--color-border);
+
+    border-radius: 9px;
+
+    transition:
+        background 0.15s ease,
+        border-color 0.15s ease;
+
+}
+
+
+.historial-pago:hover {
+
+    background: #fafcfb;
+
+    border-color: #d4ddd8;
+
+}
+
+
+/* =========================
+   INFORMACIÓN
+========================= */
+
+.historial-pago-info {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 4px;
+
+    min-width: 0;
+
+}
+
+
+.historial-pago-fecha {
+
+    color: var(--color-text-muted);
+
+    font-size: 10px;
+
+}
+
+
+.historial-pago-metodo {
+
+    color: var(--color-text);
+
+    font-size: 12px;
+
+    font-weight: 600;
+
+}
+
+
+/* =========================
+   MONTO
+========================= */
+
+.historial-pago-monto {
+
+    color: var(--color-primary);
+
+    font-size: 15px;
+
+    font-weight: 700;
+
+    white-space: nowrap;
+
+}
+
+
+/* =========================
+   ESTADO
+========================= */
+
+.historial-pago-estado {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 6px;
+
+    padding: 5px 9px;
+
+    border-radius: 999px;
+
+    background: rgba(127, 191, 63, 0.12);
+
+    color: var(--color-primary);
+
+    font-size: 10px;
+
+    font-weight: 650;
+
+    white-space: nowrap;
+
+}
+
+
+/* PUNTITO */
+
+.historial-pago-estado::before {
+
+    content: "";
+
+    width: 6px;
+
+    height: 6px;
+
+    border-radius: 50%;
+
+    background: var(--color-accent);
+
+}
+
+
+/* =========================
+   SIN PAGOS
+========================= */
+
+.historial-pagos-vacio {
+
+    padding: 28px 20px;
+
+    text-align: center;
+
+    border: 1px dashed var(--color-border);
+
+    border-radius: 9px;
+
+    background: #fafcfb;
+
+    color: var(--color-text-muted);
+
+    font-size: 11px;
+
+}
+
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 600px) {
+
+    .historial-pago {
+
+        align-items: flex-start;
+
+        flex-direction: column;
+
+        gap: 10px;
+
+    }
+
+    .historial-pago-monto {
+
+        font-size: 14px;
+
+    }
+
+}
+
+/* =====================================================
+   HISTORIAL DE PAGOS — FICHA DEL PACIENTE
+===================================================== */
+
+.historial-pagos {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 10px;
+
+}
+
+
+/* =====================================================
+   PAGO
+===================================================== */
+
+.historial-pago {
+
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 24px;
+
+    padding: 14px 16px;
+
+    background: #fafcfb;
+
+    border: 1px solid var(--color-border);
+
+    border-radius: 9px;
+
+    transition:
+        background 0.15s ease,
+        border-color 0.15s ease;
+
+}
+
+
+.historial-pago:hover {
+
+    background: #f7faf8;
+
+    border-color: #d9dfdc;
+
+}
+
+
+/* =====================================================
+   INFORMACIÓN PRINCIPAL
+===================================================== */
+
+.historial-pago-info {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 4px;
+
+    min-width: 120px;
+
+}
+
+
+.historial-pago-info strong {
+
+    color: var(--color-primary);
+
+    font-size: 15px;
+
+    font-weight: 650;
+
+}
+
+
+.historial-pago-info span {
+
+    color: var(--color-text-muted);
+
+    font-size: 12px;
+
+    text-transform: capitalize;
+
+}
+
+
+/* =====================================================
+   DETALLE DE FECHAS
+===================================================== */
+
+.historial-pago-detalle {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 24px;
+
+}
+
+
+.historial-pago-detalle span {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 4px;
+
+    min-width: 95px;
+
+    color: var(--color-text-muted);
+
+    font-size: 12px;
+
+    font-weight: 600;
+
+    text-transform: uppercase;
+
+    letter-spacing: 0.35px;
+
+}
+
+
+/* =====================================================
+   FECHAS
+   Separamos visualmente etiqueta y valor
+===================================================== */
+
+.historial-pago-detalle span::first-line {
+
+    color: var(--color-text-muted);
+
+}
+
+
+/* =====================================================
+   ESTADO VACÍO / CARGANDO
+===================================================== */
+
+.historial-pagos-vacio {
+
+    padding: 22px 16px;
+
+    border: 1px dashed var(--color-border);
+
+    border-radius: 9px;
+
+    background: #fafcfb;
+
+    color: var(--color-text-muted);
+
+    font-size: 11px;
+
+    text-align: center;
+
+}
+
+
+/* =====================================================
+   RESPONSIVE
+===================================================== */
+
+@media (max-width: 600px) {
+
+    .historial-pago {
+
+        align-items: flex-start;
+
+        flex-direction: column;
+
+        gap: 14px;
+
+    }
+
+
+    .historial-pago-detalle {
+
+        width: 100%;
+
+        gap: 16px;
+
+    }
+
+
+    .historial-pago-detalle span {
+
+        min-width: 0;
+
+    }
+
+}
+
+/* =====================================================
+   QUIROGEST — PRÓXIMOS TURNOS
+===================================================== */
+
+.proximos-turnos-lista {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+
+.proximo-turno {
+    display: grid;
+    grid-template-columns: 90px 1fr auto;
+    align-items: center;
+    gap: 20px;
+
+    padding: 16px 20px;
+
+    border-bottom: 1px solid #e5e7eb;
+
+    transition:
+        background-color 0.2s ease;
+}
+
+
+.proximo-turno:last-child {
+    border-bottom: none;
+}
+
+
+.proximo-turno:hover {
+    background-color: #f8fafc;
+}
+
+
+/* ==============================
+   FECHA Y HORA
+============================== */
+
+.proximo-turno-fecha {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+
+.proximo-turno-fecha strong {
+    font-size: 16px;
+    font-weight: 700;
+}
+
+
+.proximo-turno-fecha span {
+    font-size: 12px;
+    color: #64748b;
+}
+
+
+/* ==============================
+   PACIENTE
+============================== */
+
+.proximo-turno-paciente {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+
+    min-width: 0;
+}
+
+
+.proximo-turno-paciente strong {
+    font-size: 14px;
+    font-weight: 600;
+
+    color: #1e293b;
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+
+.proximo-turno-paciente span {
+    font-size: 12px;
+    color: #64748b;
+}
+
+
+/* ==============================
+   ESTADO
+============================== */
+
+.proximo-turno .appointment-status {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 6px 10px;
+
+    border-radius: 999px;
+
+    font-size: 12px;
+    font-weight: 600;
+
+    background-color: #f1f5f9;
+    color: #475569;
+
+    white-space: nowrap;
+}
+
+
+/* ==============================
+   RESPONSIVE
+============================== */
+
+@media (max-width: 700px) {
+
+    .proximo-turno {
+        grid-template-columns: 70px 1fr;
+        gap: 12px;
+    }
+
+
+    .proximo-turno .appointment-status {
+        grid-column: 2;
+        justify-self: start;
+    }
+
+}
+
+.secondary-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    text-decoration: none;
+
+    cursor: pointer;
+}
+
+/* =====================================================
+   NOTIFICACIÓN QUIROGEST
+===================================================== */
+
+.notificacion-quirogest {
+    position: fixed;
+    top: 24px;
+    right: 24px;
+
+    width: 360px;
+
+    display: flex;
+    align-items: center;
+    gap: 14px;
+
+    padding: 16px 18px;
+
+    background: #ffffff;
+
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+
+    box-shadow:
+        0 10px 30px rgba(0, 0, 0, 0.12);
+
+    z-index: 9999;
+}
+
+
+.notificacion-quirogest[hidden] {
+    display: none;
+}
+
+
+.notificacion-icono {
+    width: 36px;
+    height: 36px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    border-radius: 50%;
+
+    background: #fef2f2;
+    color: #dc2626;
+
+    font-size: 18px;
+    font-weight: 700;
+}
+
+
+.notificacion-contenido {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+
+    flex: 1;
+}
+
+
+.notificacion-contenido strong {
+    font-size: 14px;
+    font-weight: 600;
+    color: #111827;
+}
+
+
+.notificacion-contenido span {
+    font-size: 13px;
+    line-height: 1.4;
+    color: #6b7280;
+}
+
+
+.notificacion-cerrar {
+    border: none;
+    background: transparent;
+
+    color: #9ca3af;
+
+    font-size: 22px;
+    line-height: 1;
+
+    cursor: pointer;
+
+    padding: 4px;
+}
+
+
+.notificacion-cerrar:hover {
+    color: #374151;
+}
+
+/* =====================================================
+   DASHBOARD — PRÓXIMOS TURNOS
+===================================================== */
+
+.proximos-turnos-lista {
+    display: flex;
+    flex-direction: column;
+}
+
+
+.proximo-turno {
+
+    display: grid;
+
+    grid-template-columns:
+        70px
+        1fr
+        auto;
+
+    align-items: center;
+
+    gap: 16px;
+
+    padding: 14px 18px;
+
+    border-bottom: 1px solid #edf0ee;
+
+    transition:
+        background 0.15s ease;
+}
+
+
+.proximo-turno:last-child {
+    border-bottom: none;
+}
+
+
+.proximo-turno:hover {
+    background: #fafcfb;
+}
+
+
+/* =====================================================
+   FECHA Y HORA
+===================================================== */
+
+.proximo-turno-fecha {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 3px;
+}
+
+
+.proximo-turno-fecha strong {
+
+    color: var(--color-primary);
+
+    font-size: 13px;
+
+    font-weight: 650;
+}
+
+
+.proximo-turno-fecha span {
+
+    color: var(--color-text-muted);
+
+    font-size: 11px;
+
+}
+
+
+/* =====================================================
+   PACIENTE
+===================================================== */
+
+.proximo-turno-paciente {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 3px;
+
+    min-width: 0;
+
+    font-size: 16px;
+}
+
+
+.proximo-turno-paciente strong {
+
+    color: var(--color-text);
+
+    font-size: 12px;
+
+    font-weight: 600;
+
+}
+
+
+.proximo-turno-paciente span {
+
+    color: var(--color-text-muted);
+
+    font-size: 11px;
+
+}
+
+
+/* =====================================================
+   ESTADO
+===================================================== */
+
+.proximo-turno .appointment-status {
+
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 7px;
+
+    min-width: 92px;
+
+    padding: 7px 11px;
+
+    border: 1px solid transparent;
+
+    border-radius: 999px;
+
+    font-size: 10px;
+
+    font-weight: 650;
+
+    line-height: 1;
+
+    white-space: nowrap;
+
+}
+
+
+/* PUNTITO */
+
+.proximo-turno .appointment-status::before {
+
+    content: "";
+
+    width: 7px;
+    height: 7px;
+
+    flex-shrink: 0;
+
+    border-radius: 50%;
+
+    background: currentColor;
+
+}
+
+
+/* =====================================================
+   ESTADOS
+===================================================== */
+
+.proximo-turno .status-pending {
+
+    background: #f6d365;
+
+    color: #5f4800;
+
+    border-color: #e2bd3f;
+
+}
+
+
+.proximo-turno .status-confirmed {
+
+    background: #72c98a;
+
+    color: #174c28;
+
+    border-color: #51ad6c;
+
+}
+
+
+.proximo-turno .status-attended {
+
+    background: #72a9d8;
+
+    color: #183f61;
+
+    border-color: #508fc5;
+
+}
+
+
+.proximo-turno .status-cancelled {
+
+    background: #e58b8b;
+
+    color: #632525;
+
+    border-color: #cc6b6b;
+
+}
+
+
+/* =====================================================
+   RESPONSIVE
+===================================================== */
+
+@media (max-width: 700px) {
+
+    .proximo-turno {
+
+        grid-template-columns:
+            60px
+            1fr;
+
+        gap: 10px;
+
+    }
+
+
+    .proximo-turno .appointment-status {
+
+        grid-column: 2;
+
+        justify-self: start;
+
+    }
+
+}
+
+
+/* =====================================================
+   DASHBOARD — ESTADOS DE PRÓXIMOS TURNOS
+===================================================== */
+
+.appointment-status-select {
+
+    min-width: 115px;
+
+    height: 30px;
+
+    padding: 0 9px;
+
+    border: 1px solid transparent;
+
+    border-radius: 999px;
+
+    font-family: inherit;
+
+    font-size: 10px;
+
+    font-weight: 650;
+
+    line-height: 1;
+
+    text-align: center;
+
+    cursor: pointer;
+
+    outline: none;
+
+    appearance: auto;
+
+    transition:
+        background 0.15s ease,
+        border-color 0.15s ease,
+        filter 0.15s ease;
+}
+
+
+/* =====================================================
+   PENDIENTE
+===================================================== */
+
+.appointment-status-select.status-pending {
+
+    background: #f6d365;
+
+    color: #5f4800;
+
+    border-color: #e2bd3f;
+
+}
+
+
+/* =====================================================
+   CONFIRMADO
+===================================================== */
+
+.appointment-status-select.status-confirmed {
+
+    background: #72c98a;
+
+    color: #174c28;
+
+    border-color: #51ad6c;
+
+}
+
+
+/* =====================================================
+   ATENDIDO
+===================================================== */
+
+.appointment-status-select.status-attended {
+
+    background: #72a9d8;
+
+    color: #183f61;
+
+    border-color: #508fc5;
+
+}
+
+
+/* =====================================================
+   CANCELADO
+===================================================== */
+
+.appointment-status-select.status-cancelled {
+
+    background: #e58b8b;
+
+    color: #632525;
+
+    border-color: #cc6b6b;
+
+}
+
+
+/* =====================================================
+   OPCIONES DEL MENÚ
+===================================================== */
+
+.appointment-status-select option {
+
+    background: #ffffff;
+
+    color: #26332d;
+
+    font-family: inherit;
+
+    font-size: 11px;
+
+    font-weight: 600;
+
+}
+
+
+/* =====================================================
+   HOVER
+===================================================== */
+
+.appointment-status-select:hover {
+
+    filter: brightness(0.96);
+
+}
+
+
+/* =====================================================
+   FOCUS
+===================================================== */
+
+.appointment-status-select:focus {
+
+    box-shadow:
+        0 0 0 3px rgba(127, 191, 63, 0.10);
+
+}
+
+
+/* =====================================================
+   QUIROGEST — ESTADOS DE TURNOS EN DASHBOARD
+===================================================== */
+
+
+/* =====================================================
+   CONTENEDOR
+===================================================== */
+
+.estado-turno-container {
+
+    position: relative;
+
+    display: inline-block;
+
+}
+
+
+/* =====================================================
+   BOTÓN DE ESTADO
+===================================================== */
+
+.btn-estado-turno {
+
+    font-family: inherit;
+
+}
+
+
+/* =====================================================
+   FLECHA
+===================================================== */
+
+.estado-flecha {
+
+    margin-left: 5px;
+
+    font-size: 10px;
+
+    line-height: 1;
+
+}
+
+
+/* =====================================================
+   MINI MODAL
+===================================================== */
+
+.estado-menu {
+
+    display: none;
+
+    position: fixed;
+
+    width: 150px;
+
+    padding: 7px;
+
+    background: #ffffff;
+
+    border: 1px solid #dfe5e1;
+
+    border-radius: 11px;
+
+    box-shadow:
+        0 12px 30px
+        rgba(15, 23, 42, 0.18);
+
+    z-index: 9999;
+
+}
+
+
+/* =====================================================
+   MENÚ ABIERTO
+===================================================== */
+
+.estado-turno-container.menu-abierto
+.estado-menu {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 5px;
+
+}
+
+
+/* =====================================================
+   OPCIONES
+===================================================== */
+
+.estado-opcion {
+
+    width: 100%;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    padding: 9px 10px;
+
+    border: none;
+
+    border-radius: 7px;
+
+    font-family: inherit;
+
+    font-size: 11px;
+
+    font-weight: 650;
+
+    text-align: left;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.15s ease,
+        filter 0.15s ease;
+
+}
+
+
+/* =====================================================
+   PUNTITO
+===================================================== */
+
+.estado-opcion::before {
+
+    content: "";
+
+    width: 7px;
+
+    height: 7px;
+
+    flex-shrink: 0;
+
+    border-radius: 50%;
+
+    background: currentColor;
+
+}
+
+
+/* =====================================================
+   HOVER
+===================================================== */
+
+.estado-opcion:hover {
+
+    filter: brightness(0.93);
+
+    transform:
+        translateX(2px);
+
+}
+
+
+/* =====================================================
+   PENDIENTE
+===================================================== */
+
+.estado-opcion.status-pending {
+
+    background: #f6d365;
+
+    color: #5f4800;
+
+}
+
+
+/* =====================================================
+   CONFIRMADO
+===================================================== */
+
+.estado-opcion.status-confirmed {
+
+    background: #72c98a;
+
+    color: #174c28;
+
+}
+
+
+/* =====================================================
+   ATENDIDO
+===================================================== */
+
+.estado-opcion.status-attended {
+
+    background: #72a9d8;
+
+    color: #183f61;
+
+}
+
+
+/* =====================================================
+   CANCELADO
+===================================================== */
+
+.estado-opcion.status-cancelled {
+
+    background: #e58b8b;
+
+    color: #632525;
+
+}
+
+/* =====================================================
+   QUIROGEST — ESTADOS DE TURNOS EN DASHBOARD
+===================================================== */
+
+.appointment-status-select {
+
+    min-width: 110px;
+
+    height: 30px;
+
+    padding: 0 9px;
+
+    border: 1px solid transparent;
+
+    border-radius: 999px;
+
+    font-family: inherit;
+
+    font-size: 10px;
+
+    font-weight: 650;
+
+    line-height: 1;
+
+    cursor: pointer;
+
+    outline: none;
+
+    appearance: auto;
+
+    transition:
+        background 0.15s ease,
+        border-color 0.15s ease,
+        filter 0.15s ease;
+}
+
+
+/* =====================================================
+   PENDIENTE
+===================================================== */
+
+.appointment-status-select.status-pending {
+
+    background: #f6d365;
+
+    color: #5f4800;
+
+    border-color: #e2bd3f;
+}
+
+
+/* =====================================================
+   CONFIRMADO
+===================================================== */
+
+.appointment-status-select.status-confirmed {
+
+    background: #72c98a;
+
+    color: #174c28;
+
+    border-color: #51ad6c;
+}
+
+
+/* =====================================================
+   ATENDIDO
+===================================================== */
+
+.appointment-status-select.status-attended {
+
+    background: #72a9d8;
+
+    color: #183f61;
+
+    border-color: #508fc5;
+}
+
+
+/* =====================================================
+   CANCELADO
+===================================================== */
+
+.appointment-status-select.status-cancelled {
+
+    background: #e58b8b;
+
+    color: #632525;
+
+    border-color: #cc6b6b;
+}
+
+
+/* =====================================================
+   HOVER
+===================================================== */
+
+.appointment-status-select:hover {
+
+    filter: brightness(0.96);
+
+}
+
+
+/* =====================================================
+   FOCUS
+===================================================== */
+
+.appointment-status-select:focus {
+
+    outline: none;
+
+    box-shadow:
+        0 0 0 3px rgba(127, 191, 63, 0.10);
+
+}
+
+
+/* =====================================================
+   OPCIONES DEL SELECT
+===================================================== */
+
+.appointment-status-select option {
+
+    background: #ffffff;
+
+    color: var(--color-text);
+
+    font-family: inherit;
+
+    font-size: 11px;
+
+    font-weight: 600;
+
+}
+
+
+/* =====================================================
+   QUIROGEST — CONTROLES PRÓXIMOS TURNOS
+===================================================== */
+
+.proximos-turnos-controles {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+}
+
+
+/* =====================================================
+   SELECTOR
+===================================================== */
+
+.filtro-proximos-turnos {
+
+    height: 34px;
+
+    min-width: 128px;
+
+    padding:
+        0 28px 0 11px;
+
+    border:
+        1px solid var(--color-border);
+
+    border-radius: 7px;
+
+    background:
+        var(--color-surface);
+
+    color:
+        var(--color-primary);
+
+    font-family: inherit;
+
+    font-size: 12px;
+
+    font-weight: 500;
+
+    cursor: pointer;
+
+    outline: none;
+
+    transition:
+        border-color 0.15s ease,
+        box-shadow 0.15s ease,
+        background-color 0.15s ease;
+
+}
+
+
+/* =====================================================
+   HOVER
+===================================================== */
+
+.filtro-proximos-turnos:hover {
+
+    border-color:
+        #cbd5dc;
+
+    background:
+        #fafcf9;
+
+}
+
+
+/* =====================================================
+   FOCUS
+===================================================== */
+
+.filtro-proximos-turnos:focus {
+
+    border-color:
+        var(--color-accent);
+
+    box-shadow:
+        0 0 0 3px
+        rgba(127, 191, 63, 0.10);
+
+}
+
+
+/* =====================================================
+   OPCIONES
+===================================================== */
+
+.filtro-proximos-turnos option {
+
+    background:
+        var(--color-surface);
+
+    color:
+        var(--color-text);
+
+    font-family: inherit;
+
+    font-size: 12px;
+
+}
+
+
+/* =====================================================
+   RESPONSIVE
+===================================================== */
+
+@media (max-width: 700px) {
+
+    .section-header {
+
+        flex-wrap: wrap;
+
+        gap: 14px;
+
+    }
+
+
+    .proximos-turnos-controles {
+
+        width: 100%;
+
+    }
+
+
+    .filtro-proximos-turnos {
+
+        flex: 1;
+
+    }
+
+}
+
+/* =====================================================
+   GRÁFICO — ESTADOS DE LOS TURNOS
+===================================================== */
+
+.grafico-turnos-contenedor {
+
+    padding: 28px 24px;
+
+    min-height: 280px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+}
+
+
+#graficoEstadosTurnos {
+
+    width: 100%;
+
+    max-width: 620px;
+
+    min-height: 260px;
+
+}
+
+
+/* =====================================================
+   QUIROGEST — MODAL GLOBAL DE CONFIRMACIÓN
+===================================================== */
+
+.modal-confirmacion {
+
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 9999;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    padding: 20px;
+
+    background: rgba(15, 23, 42, 0.45);
+
+    backdrop-filter: blur(4px);
+
+    opacity: 0;
+
+    visibility: hidden;
+
+    transition:
+        opacity 0.2s ease,
+        visibility 0.2s ease;
+
+}
+
+
+.modal-confirmacion-visible {
+
+    opacity: 1;
+
+    visibility: visible;
+
+}
+
+
+.modal-confirmacion-contenido {
+
+    width: 100%;
+
+    max-width: 430px;
+
+    background: #ffffff;
+
+    border-radius: 18px;
+
+    padding: 28px;
+
+    box-shadow:
+        0 20px 50px rgba(15, 23, 42, 0.18);
+
+    transform: translateY(15px) scale(0.97);
+
+    transition:
+        transform 0.2s ease;
+
+}
+
+
+.modal-confirmacion-visible
+.modal-confirmacion-contenido {
+
+    transform:
+        translateY(0)
+        scale(1);
+
+}
+
+
+.modal-confirmacion-saliendo {
+
+    opacity: 0;
+
+}
+
+
+.modal-confirmacion-saliendo
+.modal-confirmacion-contenido {
+
+    transform:
+        translateY(10px)
+        scale(0.98);
+
+}
+
+
+/* =====================================================
+   ICONO
+===================================================== */
+
+.modal-confirmacion-icono {
+
+    width: 52px;
+
+    height: 52px;
+
+    margin-bottom: 18px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 14px;
+
+    background: #fff7ed;
+
+    color: #ea580c;
+
+}
+
+
+.modal-confirmacion-icono svg {
+
+    width: 27px;
+
+    height: 27px;
+
+    fill: none;
+
+    stroke: currentColor;
+
+    stroke-width: 1.8;
+
+    stroke-linecap: round;
+
+    stroke-linejoin: round;
+
+}
+
+
+/* =====================================================
+   TEXTO
+===================================================== */
+
+.modal-confirmacion-texto h3 {
+
+    margin: 0 0 8px;
+
+    font-size: 19px;
+
+    font-weight: 700;
+
+    color: #111827;
+
+}
+
+
+.modal-confirmacion-texto p {
+
+    margin: 0;
+
+    font-size: 14px;
+
+    line-height: 1.6;
+
+    color: #64748b;
+
+}
+
+
+/* =====================================================
+   BOTONES
+===================================================== */
+
+.modal-confirmacion-acciones {
+
+    display: flex;
+
+    justify-content: flex-end;
+
+    gap: 10px;
+
+    margin-top: 26px;
+
+}
+
+
+.modal-confirmacion-acciones button {
+
+    border: none;
+
+    border-radius: 10px;
+
+    padding: 10px 17px;
+
+    font-family: inherit;
+
+    font-size: 14px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        transform 0.15s ease;
+
+}
+
+
+.modal-confirmacion-acciones button:active {
+
+    transform: scale(0.97);
+
+}
+
+
+/* =====================================================
+   CANCELAR
+===================================================== */
+
+.btn-confirmacion-cancelar {
+
+    background: #f1f5f9;
+
+    color: #475569;
+
+}
+
+
+.btn-confirmacion-cancelar:hover {
+
+    background: #e2e8f0;
+
+}
+
+
+/* =====================================================
+   CONFIRMAR
+===================================================== */
+
+.btn-confirmacion-aceptar {
+
+    background: #ea580c;
+
+    color: #ffffff;
+
+}
+
+
+.btn-confirmacion-aceptar:hover {
+
+    background: #c2410c;
+
+}
+
+
+/* =====================================================
+   RESPONSIVE
+===================================================== */
+
+@media (max-width: 500px) {
+
+    .modal-confirmacion-contenido {
+
+        padding: 22px;
+
+        border-radius: 16px;
+
+    }
+
+
+    .modal-confirmacion-acciones {
+
+        flex-direction: column-reverse;
+
+    }
+
+
+    .modal-confirmacion-acciones button {
+
+        width: 100%;
+
+    }
+
+}
+

@@ -1,0 +1,814 @@
+
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>QuiroGest — Pagos</title>
+
+    <link
+        rel="stylesheet"
+        href="css/style.css"
+    >
+    <link
+        rel="stylesheet"
+        href="css/notificaciones.css"
+    >
+
+    <link
+        rel="stylesheet"
+        href="css/pagos.css"
+    >
+
+</head>
+
+
+<body class="app">
+
+
+    <!-- =====================================================
+         SIDEBAR
+    ====================================================== -->
+
+    <aside class="sidebar">
+
+
+        <div class="sidebar-header">
+
+            <div class="sidebar-logo">
+                Q
+            </div>
+
+            <div>
+
+                <div class="sidebar-title">
+                    QUIROGEST
+                </div>
+
+                <div class="sidebar-subtitle">
+                    Gestión del consultorio
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <nav class="sidebar-nav">
+
+
+            <!-- INICIO -->
+
+            <a
+                href="index.html"
+                class="nav-item"
+            >
+
+                <span class="nav-icon">
+
+                    <svg
+                        viewBox="0 0 24 24"
+                        aria-hidden="true"
+                    >
+
+                        <path d="M3 10.5L12 3l9 7.5"></path>
+
+                        <path d="M5 9.5V21h14V9.5"></path>
+
+                        <path d="M9 21v-6h6v6"></path>
+
+                    </svg>
+
+                </span>
+
+                <span>
+                    Inicio
+                </span>
+
+            </a>
+
+
+            <!-- PACIENTES -->
+
+            <a
+                href="pacientes.html"
+                class="nav-item"
+            >
+
+                <span class="nav-icon">
+
+                    <svg
+                        viewBox="0 0 24 24"
+                        aria-hidden="true"
+                    >
+
+                        <circle
+                            cx="9"
+                            cy="8"
+                            r="3"
+                        ></circle>
+
+                        <path
+                            d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"
+                        ></path>
+
+                        <path
+                            d="M16 11c2.2 0 4 1.8 4 4"
+                        ></path>
+
+                        <path
+                            d="M16 5.5a3 3 0 0 1 0 5"
+                        ></path>
+
+                    </svg>
+
+                </span>
+
+                <span>
+                    Pacientes
+                </span>
+
+            </a>
+
+
+            <!-- TURNOS -->
+
+            <a
+                href="turnos.html"
+                class="nav-item"
+            >
+
+                <span class="nav-icon">
+
+                    <svg
+                        viewBox="0 0 24 24"
+                        aria-hidden="true"
+                    >
+
+                        <rect
+                            x="3"
+                            y="5"
+                            width="18"
+                            height="16"
+                            rx="2"
+                        ></rect>
+
+                        <path d="M16 3v4"></path>
+
+                        <path d="M8 3v4"></path>
+
+                        <path d="M3 10h18"></path>
+
+                        <path d="M8 14h2"></path>
+
+                        <path d="M14 14h2"></path>
+
+                        <path d="M8 18h2"></path>
+
+                    </svg>
+
+                </span>
+
+                <span>
+                    Turnos
+                </span>
+
+            </a>
+
+
+            <!-- PAGOS -->
+
+            <a
+                href="pagos.html"
+                class="nav-item active"
+            >
+
+                <span class="nav-icon">
+
+                    <svg
+                        viewBox="0 0 24 24"
+                        aria-hidden="true"
+                    >
+
+                        <rect
+                            x="3"
+                            y="6"
+                            width="18"
+                            height="13"
+                            rx="2"
+                        ></rect>
+
+                        <path d="M3 10h18"></path>
+
+                        <path d="M8 15h3"></path>
+
+                    </svg>
+
+                </span>
+
+                <span>
+                    Pagos
+                </span>
+
+            </a>
+
+
+            <div class="nav-separator"></div>
+
+
+            <!-- CONFIGURACIÓN -->
+
+            <a
+                href="#"
+                class="nav-item"
+            >
+
+                <span class="nav-icon">
+
+                    <svg
+                        viewBox="0 0 24 24"
+                        aria-hidden="true"
+                    >
+
+                        <circle
+                            cx="12"
+                            cy="12"
+                            r="3"
+                        ></circle>
+
+                        <path
+                            d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1-1.8 1.8-.1-.1a1.7 1.7 0 0 0-1.9-.3 1.7 1.7 0 0 0-1 1.6v.2h-2.6V20a1.7 1.7 0 0 0-1-1.6 1.7 1.7 0 0 0-1.9.3l-.1.1-1.8-1.8.1-.1A1.7 1.7 0 0 0 8 15a1.7 1.7 0 0 0-1.6-1H6v-2.6h.4A1.7 1.7 0 0 0 8 10a1.7 1.7 0 0 0-.3-1.9l-.1-.1 1.8-1.8.1.1a1.7 1.7 0 0 0 1.9.3 1.7 1.7 0 0 0 1-1.6v-.2H15V5a1.7 1.7 0 0 0 1 1.6 1.7 1.7 0 0 0 1.9-.3l.1-.1 1.8 1.8-.1.1a1.7 1.7 0 0 0-.3 1.9 1.7 1.7 0 0 0 1.6 1h.2V14H21a1.7 1.7 0 0 0-1.6 1z"
+                        ></path>
+
+                    </svg>
+
+                </span>
+
+                <span>
+                    Configuración
+                </span>
+
+            </a>
+
+
+        </nav>
+
+
+        <!-- CERRAR SESIÓN -->
+
+        <div class="sidebar-footer">
+
+            <button
+                id="btnCerrarSesion"
+                class="logout-button"
+            >
+
+                <span class="nav-icon">
+
+                    <svg
+                        viewBox="0 0 24 24"
+                        aria-hidden="true"
+                    >
+
+                        <path
+                            d="M10 4H5a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h5"
+                        ></path>
+
+                        <path
+                            d="M14 8l4 4-4 4"
+                        ></path>
+
+                        <path
+                            d="M9 12h9"
+                        ></path>
+
+                    </svg>
+
+                </span>
+
+                <span>
+                    Cerrar sesión
+                </span>
+
+            </button>
+
+        </div>
+
+
+    </aside>
+
+
+
+    <!-- =====================================================
+         CONTENIDO PRINCIPAL
+    ====================================================== -->
+
+    <main class="main-content">
+
+
+        <section class="dashboard">
+
+
+            <!-- =================================================
+                 HEADER
+            ================================================== -->
+
+            <div class="page-header">
+
+                <div>
+
+                    <h1>
+                        Pagos
+                    </h1>
+
+                    <p>
+                        Control de pagos de los pacientes.
+                    </p>
+
+                </div>
+
+
+                
+            </div>
+
+
+<!-- =================================================
+     RESUMEN
+================================================== -->
+
+<div class="payment-summary">
+
+
+    <!-- TOTAL COBRADO -->
+
+    <div class="summary-card">
+
+        <span class="summary-label">
+            Total cobrado
+        </span>
+
+        <strong id="totalCobrado">
+            $0
+        </strong>
+
+    </div>
+
+
+    <!-- PAGOS REGISTRADOS -->
+
+    <div class="summary-card">
+
+        <span class="summary-label">
+            Pagos registrados
+        </span>
+
+        <strong id="totalPagos">
+            0
+        </strong>
+
+    </div>
+<!-- COBRADO HOY --> 
+ <div class="summary-card"> 
+    
+        <span class="summary-label"> Cobrado hoy </span> 
+    
+    <strong id="pagadoHoy"> $0 </strong> 
+
+</div>
+</div>
+
+
+
+            <!-- =================================================
+                 REGISTRO DE PAGOS
+            ================================================== -->
+
+            <div class="payments-card">
+
+
+                <!-- HEADER DE TABLA -->
+
+                <div class="payments-header">
+
+
+                    <div>
+
+                        <h2>
+                            Registro de pagos
+                        </h2>
+
+                        <span>
+                            Historial de pagos registrados en el consultorio.
+                        </span>
+
+                    </div>
+
+
+                    <!-- FILTROS -->
+
+                    <div class="payments-filters">
+
+
+                        <!-- PERÍODO -->
+
+                        <select
+                            id="filtroPeriodo"
+                        >
+
+                            <option value="">
+                                Todos los períodos
+                            </option>
+
+                            <option value="hoy">
+                                Hoy
+                            </option>
+
+                            <option value="semana">
+                                Esta semana
+                            </option>
+
+                            <option value="mes">
+                                Este mes
+                            </option>
+
+                        </select>
+
+
+                        <!-- MÉTODO -->
+
+                        <select
+                            id="filtroMetodoPago"
+                        >
+
+                            <option value="">
+                                Todos los métodos
+                            </option>
+
+                            <option value="transferencia">
+                                Transferencia
+                            </option>
+
+                            <option value="mercado_pago">
+                                Mercado Pago
+                            </option>
+
+                            <option value="efectivo">
+                                Efectivo
+                            </option>
+
+                            <option value="tarjeta">
+                                Tarjeta
+                            </option>
+
+                            <option value="otro">
+                                Otro
+                            </option>
+
+                        </select>
+
+
+                    </div>
+
+
+
+                <!-- TABLA -->
+
+                <div class="payments-table-container">
+
+
+                    <table class="payments-table">
+
+
+                        <thead>
+
+                            <tr>
+
+                                <th>
+                                    Fecha
+                                </th>
+
+                                <th>
+                                    Paciente
+                                </th>
+
+                                <th>
+                                    Turno
+                                </th>
+
+                                <th>
+                                    Monto
+                                </th>
+
+                                <th>
+                                    Método
+                                </th>
+
+                                <th>
+                                    Estado
+                                </th>
+
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody id="tablaPagos">
+
+                            <tr>
+
+                                <td
+                                    colspan="6"
+                                    style="
+                                        text-align:center;
+                                        padding:30px;
+                                    "
+                                >
+
+                                    Cargando pagos...
+
+                                </td>
+
+                            </tr>
+
+                        </tbody>
+
+
+                    </table>
+
+
+                </div>
+
+
+            </div>
+
+
+        </section>
+
+
+    </main>
+
+
+
+    <!-- =====================================================
+         MODAL — REGISTRAR PAGO
+    ====================================================== -->
+
+    <div
+        class="modal-overlay"
+        id="modalNuevoPago"
+        hidden
+    >
+
+
+        <div class="modal-pago">
+
+
+            <!-- HEADER DEL MODAL -->
+
+            <div class="modal-header">
+
+
+                <div>
+
+                    <h2>
+                        Registrar pago
+                    </h2>
+
+                    <p>
+                        Registrá manualmente el pago realizado por el paciente.
+                    </p>
+
+                </div>
+
+
+                <button
+                    type="button"
+                    class="modal-close"
+                    id="btnCerrarModalPago"
+                    title="Cerrar"
+                >
+
+                    <svg
+                        viewBox="0 0 24 24"
+                        aria-hidden="true"
+                    >
+
+                        <path
+                            d="M6 6l12 12"
+                        ></path>
+
+                        <path
+                            d="M18 6L6 18"
+                        ></path>
+
+                    </svg>
+
+                </button>
+
+
+            </div>
+
+
+
+            <!-- FORMULARIO -->
+
+            <form id="formNuevoPago">
+
+
+                <div class="form-grid">
+
+
+                    <!-- TURNO -->
+
+                    <div class="form-group form-group-full">
+
+                        <label for="pagoTurno">
+
+                            Turno
+                            <span>*</span>
+
+                        </label>
+
+
+                        <select
+                            id="pagoTurno"
+                            required
+                        >
+
+                            <option value="">
+                                Seleccionar turno
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+
+                    <!-- MONTO -->
+
+                    <div class="form-group">
+
+                        <label for="pagoMonto">
+
+                            Monto
+                            <span>*</span>
+
+                        </label>
+
+
+                        <input
+                            type="number"
+                            id="pagoMonto"
+                            min="0"
+                            step="0.01"
+                            placeholder="Ej. 25000"
+                            required
+                        >
+
+                    </div>
+
+
+
+                    <!-- MÉTODO -->
+
+                    <div class="form-group">
+
+                        <label for="pagoMetodo">
+
+                            Método de pago
+                            <span>*</span>
+
+                        </label>
+
+
+                        <select
+                            id="pagoMetodo"
+                            required
+                        >
+
+                            <option value="">
+                                Seleccionar método
+                            </option>
+
+                            <option value="transferencia">
+                                Transferencia
+                            </option>
+
+                            <option value="mercado_pago">
+                                Mercado Pago
+                            </option>
+
+                            <option value="efectivo">
+                                Efectivo
+                            </option>
+
+                            <option value="tarjeta">
+                                Tarjeta
+                            </option>
+
+                            <option value="otro">
+                                Otro
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+
+                    <!-- OBSERVACIONES -->
+
+                    <div class="form-group form-group-full">
+
+                        <label for="pagoObservaciones">
+
+                            Observaciones
+
+                        </label>
+
+
+                        <textarea
+                            id="pagoObservaciones"
+                            placeholder="Observaciones opcionales..."
+                        ></textarea>
+
+                    </div>
+
+
+                </div>
+
+
+
+                <!-- CAMPOS OBLIGATORIOS -->
+
+                <div class="form-required">
+
+                    * Campos obligatorios
+
+                </div>
+
+
+
+                <!-- BOTONES -->
+
+                <div class="modal-footer">
+
+
+                    <button
+                        type="button"
+                        class="secondary-button"
+                        id="btnCancelarPago"
+                    >
+
+                        Cancelar
+
+                    </button>
+
+
+                    <button
+                        type="submit"
+                        class="primary-button"
+                    >
+
+                        Registrar pago
+
+                    </button>
+
+
+                </div>
+
+
+            </form>
+
+
+        </div>
+
+
+    </div>
+
+
+
+    <!-- =====================================================
+         JAVASCRIPT
+    ====================================================== -->
+
+    <script src="js/auth.js"></script>
+
+    <script src="js/layout.js"></script>
+
+    <script src="js/notificaciones.js"></script>
+
+    <script src="js/pagos.js"></script>
+
+
+</body>
+
+</html>

@@ -1,0 +1,1719 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>QUIROGEST - Turnos</title>
+
+    <link
+        rel="stylesheet"
+        href="css/style.css"
+    >
+
+    <link
+        rel="stylesheet"
+        href="css/turnos.css"
+    >
+    <link
+        rel="stylesheet"
+        href="css/notificaciones.css"
+    >
+
+</head>
+
+
+<body class="app">
+
+
+    <!-- =========================
+         SIDEBAR
+    ========================== -->
+
+    <aside class="sidebar">
+
+
+        <!-- CABECERA -->
+
+        <div class="sidebar-header">
+
+            <div class="sidebar-logo">
+                Q
+            </div>
+
+            <div>
+
+                <div class="sidebar-title">
+                    QUIROGEST
+                </div>
+
+                <div class="sidebar-subtitle">
+                    Gestión del consultorio
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- NAVEGACIÓN -->
+
+        <nav class="sidebar-nav">
+
+
+            <!-- INICIO -->
+
+            <a
+                href="index.html"
+                class="nav-item"
+            >
+
+                <span class="nav-icon">
+
+                    <svg
+                        viewBox="0 0 24 24"
+                        aria-hidden="true"
+                    >
+
+                        <path d="M3 10.5L12 3l9 7.5"></path>
+
+                        <path d="M5 9.5V21h14V9.5"></path>
+
+                        <path d="M9 21v-6h6v6"></path>
+
+                    </svg>
+
+                </span>
+
+                <span>
+                    Inicio
+                </span>
+
+            </a>
+
+
+            <!-- PACIENTES -->
+
+            <a
+                href="pacientes.html"
+                class="nav-item"
+            >
+
+                <span class="nav-icon">
+
+                    <svg
+                        viewBox="0 0 24 24"
+                        aria-hidden="true"
+                    >
+
+                        <circle
+                            cx="9"
+                            cy="8"
+                            r="3"
+                        ></circle>
+
+                        <path
+                            d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"
+                        ></path>
+
+                        <path
+                            d="M16 11c2.2 0 4 1.8 4 4"
+                        ></path>
+
+                        <path
+                            d="M16 5.5a3 3 0 0 1 0 5"
+                        ></path>
+
+                    </svg>
+
+                </span>
+
+                <span>
+                    Pacientes
+                </span>
+
+            </a>
+
+
+            <!-- TURNOS -->
+
+            <a
+                href="turnos.html"
+                class="nav-item active"
+            >
+
+                <span class="nav-icon">
+
+                    <svg
+                        viewBox="0 0 24 24"
+                        aria-hidden="true"
+                    >
+
+                        <rect
+                            x="3"
+                            y="5"
+                            width="18"
+                            height="16"
+                            rx="2"
+                        ></rect>
+
+                        <path d="M16 3v4"></path>
+
+                        <path d="M8 3v4"></path>
+
+                        <path d="M3 10h18"></path>
+
+                        <path d="M8 14h2"></path>
+
+                        <path d="M14 14h2"></path>
+
+                        <path d="M8 18h2"></path>
+
+                    </svg>
+
+                </span>
+
+                <span>
+                    Turnos
+                </span>
+
+            </a>
+
+
+            <!-- PAGOS -->
+
+            <a
+                href="pagos.html"
+                class="nav-item"
+            >
+
+                <span class="nav-icon">
+
+                    <svg
+                        viewBox="0 0 24 24"
+                        aria-hidden="true"
+                    >
+
+                        <rect
+                            x="3"
+                            y="6"
+                            width="18"
+                            height="13"
+                            rx="2"
+                        ></rect>
+
+                        <path d="M3 10h18"></path>
+
+                        <path d="M8 15h3"></path>
+
+                    </svg>
+
+                </span>
+
+                <span>
+                    Pagos
+                </span>
+
+            </a>
+
+
+            <!-- SEPARADOR -->
+
+            <div class="nav-separator"></div>
+
+
+            <!-- CONFIGURACIÓN -->
+
+            <a
+                href="#"
+                class="nav-item"
+            >
+
+                <span class="nav-icon">
+
+                    <svg
+                        viewBox="0 0 24 24"
+                        aria-hidden="true"
+                    >
+
+                        <circle
+                            cx="12"
+                            cy="12"
+                            r="3"
+                        ></circle>
+
+                        <path
+                            d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1-1.8 1.8-.1-.1a1.7 1.7 0 0 0-1.9-.3 1.7 1.7 0 0 0-1 1.6v.2h-2.6V20a1.7 1.7 0 0 0-1-1.6 1.7 1.7 0 0 0-1.9.3l-.1.1-1.8-1.8.1-.1A1.7 1.7 0 0 0 8 15a1.7 1.7 0 0 0-1.6-1H6v-2.6h.4A1.7 1.7 0 0 0 8 10a1.7 1.7 0 0 0-.3-1.9l-.1-.1 1.8-1.8.1.1a1.7 1.7 0 0 0 1.9.3 1.7 1.7 0 0 0 1-1.6v-.2H15V5a1.7 1.7 0 0 0 1 1.6 1.7 1.7 0 0 0 1.9-.3l.1-.1 1.8 1.8-.1.1a1.7 1.7 0 0 0-.3 1.9 1.7 1.7 0 0 0 1.6 1h.2V14H21a1.7 1.7 0 0 0-1.6 1z"
+                        ></path>
+
+                    </svg>
+
+                </span>
+
+                <span>
+                    Configuración
+                </span>
+
+            </a>
+
+
+        </nav>
+
+
+        <!-- FOOTER -->
+
+        <div class="sidebar-footer">
+
+            <button
+                id="btnCerrarSesion"
+                class="logout-button"
+            >
+
+                <span class="nav-icon">
+
+                    <svg
+                        viewBox="0 0 24 24"
+                        aria-hidden="true"
+                    >
+
+                        <path
+                            d="M10 4H5a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h5"
+                        ></path>
+
+                        <path
+                            d="M14 8l4 4-4 4"
+                        ></path>
+
+                        <path
+                            d="M9 12h9"
+                        ></path>
+
+                    </svg>
+
+                </span>
+
+                <span>
+                    Cerrar sesión
+                </span>
+
+            </button>
+
+        </div>
+
+
+    </aside>
+
+
+
+    <!-- =========================
+         CONTENIDO PRINCIPAL
+    ========================== -->
+
+    <main class="main-content">
+
+
+        <!-- CONTENEDOR -->
+
+        <section class="dashboard">
+
+
+            <!-- =========================
+                 HEADER
+            ========================== -->
+
+            <header class="page-header">
+
+                <div>
+
+                    <h1>
+                        Turnos
+                    </h1>
+
+                    <p>
+                        Administración de turnos del consultorio
+                    </p>
+
+                </div>
+
+
+                <button
+                    class="btn-primary"
+                    id="btnNuevoTurno"
+                >
+
+                    <span>
+                        +
+                    </span>
+
+                    Nuevo turno
+
+                </button>
+
+            </header>
+
+
+
+            <!-- =========================
+                 NAVEGACIÓN DE FECHA
+            ========================== -->
+
+            <section class="date-navigation">
+
+
+                <button
+                    class="date-button"
+                    id="btnDiaAnterior"
+                    title="Día anterior"
+                >
+
+                    <svg viewBox="0 0 24 24">
+
+                        <path
+                            d="M15 18l-6-6 6-6"
+                        ></path>
+
+                    </svg>
+
+                </button>
+
+
+                <div class="current-date">
+
+                    <span>
+                        Hoy
+                    </span>
+
+                    <strong id="fechaActual">
+                        Lunes 17 de Agosto de 2026
+                    </strong>
+
+                </div>
+
+
+                <button
+                    class="date-button"
+                    id="btnDiaSiguiente"
+                    title="Día siguiente"
+                >
+
+                    <svg viewBox="0 0 24 24">
+
+                        <path
+                            d="M9 18l6-6-6-6"
+                        ></path>
+
+                    </svg>
+
+                </button>
+
+
+            </section>
+
+
+
+            <!-- =========================
+                 RESUMEN DEL DÍA
+            ========================== -->
+
+            <section class="appointment-summary">
+
+
+                <div class="summary-card">
+
+                    <span class="summary-label">
+                        Turnos del día
+                    </span>
+
+                    <strong>
+                        8
+                    </strong>
+
+                </div>
+
+
+                <div class="summary-card">
+
+                    <span class="summary-label">
+                        Confirmados
+                    </span>
+
+                    <strong>
+                        5
+                    </strong>
+
+                </div>
+
+
+                <div class="summary-card">
+
+                    <span class="summary-label">
+                        Pendientes
+                    </span>
+
+                    <strong>
+                        2
+                    </strong>
+
+                </div>
+
+
+                <div class="summary-card">
+
+                    <span class="summary-label">
+                        Atendidos
+                    </span>
+
+                    <strong>
+                        1
+                    </strong>
+
+                </div>
+
+
+            </section>
+
+
+
+            <!-- =========================
+                 AGENDA
+            ========================== -->
+
+            <section class="appointments-card">
+
+
+                <!-- CABECERA -->
+
+                <div class="appointments-header">
+
+                    <div>
+
+                        <h2>
+                            Agenda del día
+                        </h2>
+
+                        <span>
+                            Turnos programados
+                        </span>
+
+                    </div>
+
+
+                    <div class="appointments-filter">
+
+                        <select id="filtroTurnos">
+
+                            <option value="todos">
+                                Todos
+                            </option>
+
+                            <option value="pendientes">
+                                Pendientes
+                            </option>
+
+                            <option value="confirmados">
+                                Confirmados
+                            </option>
+
+                            <option value="atendidos">
+                                Atendidos
+                            </option>
+
+                            <option value="cancelados">
+                                Cancelados
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- TABLA -->
+
+                <div class="appointments-table-container">
+
+                    <table class="appointments-table">
+
+
+                        <thead>
+
+                            <tr>
+
+                                <th>
+                                    Hora
+                                </th>
+
+                                <th>
+                                    Paciente
+                                </th>
+
+                                <th>
+                                    DNI
+                                </th>
+
+                                <th>
+                                    Estado
+                                </th>
+
+                                <th>Pago</th>
+
+                                <th>
+                                    Acciones
+                                </th>
+
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody id="tablaTurnos">
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+
+            </section>
+
+
+        <!-- =========================
+     CALENDARIO MENSUAL
+========================= -->
+
+<section class="calendar-card">
+
+    <!-- CABECERA -->
+
+    <div class="calendar-header">
+
+        <div>
+
+            <h2>
+                Calendario
+            </h2>
+
+            <span id="calendarioMesActual">
+                Agosto 2026
+            </span>
+
+        </div>
+
+
+        <div class="calendar-navigation">
+
+            <button
+                type="button"
+                class="calendar-nav-button"
+                id="btnMesAnterior"
+                title="Mes anterior"
+            >
+
+                <svg viewBox="0 0 24 24">
+
+                    <path
+                        d="M15 18l-6-6 6-6"
+                    ></path>
+
+                </svg>
+
+            </button>
+
+
+            <button
+                type="button"
+                class="calendar-hoy"
+                id="btnCalendarioHoy"
+            >
+                Hoy
+            </button>
+
+
+            <button
+                type="button"
+                class="calendar-nav-button"
+                id="btnMesSiguiente"
+                title="Mes siguiente"
+            >
+
+                <svg viewBox="0 0 24 24">
+
+                    <path
+                        d="M9 18l6-6-6-6"
+                    ></path>
+
+                </svg>
+
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- DÍAS DE LA SEMANA -->
+
+    <div class="calendar-weekdays">
+
+        <span>Lun</span>
+        <span>Mar</span>
+        <span>Mié</span>
+        <span>Jue</span>
+        <span>Vie</span>
+        <span>Sáb</span>
+        <span>Dom</span>
+
+    </div>
+
+
+    <!-- DÍAS -->
+
+    <div
+        class="calendar-grid"
+        id="calendarioGrid"
+    ></div>
+
+
+    <!-- REFERENCIAS -->
+
+    <div class="calendar-legend">
+
+        <span>
+
+            <i class="legend-dot legend-hoy"></i>
+
+            Hoy
+
+        </span>
+
+
+        <span>
+
+            <i class="legend-dot legend-turno"></i>
+
+            Con turnos
+
+        </span>
+
+
+        <span>
+
+            <i class="legend-dot legend-feriado"></i>
+
+            Feriado
+
+        </span>
+
+    </div>
+
+</section>
+
+<!-- =========================
+     MODAL VER TURNO
+========================= -->
+
+<div
+    class="modal-overlay"
+    id="modalVerTurno"
+    hidden
+>
+
+    <div class="modal modal-turno">
+
+        <!-- CABECERA -->
+
+        <div class="modal-header">
+
+            <div>
+
+                <h2>
+                    Detalle del turno
+                </h2>
+
+                <p>
+                    Información del turno seleccionado
+                </p>
+
+            </div>
+
+            <button
+                type="button"
+                class="modal-close"
+                id="btnCerrarModalVerTurno"
+                aria-label="Cerrar"
+            >
+
+                <svg viewBox="0 0 24 24">
+
+                    <path d="M6 6l12 12"></path>
+
+                    <path d="M18 6L6 18"></path>
+
+                </svg>
+
+            </button>
+
+        </div>
+
+
+        <!-- INFORMACIÓN -->
+
+        <div class="turno-detalle">
+
+            <div class="detalle-item">
+
+                <span>
+                    Paciente
+                </span>
+
+                <strong id="verTurnoPaciente">
+                    -
+                </strong>
+
+            </div>
+
+
+            <div class="detalle-item">
+
+                <span>
+                    Número de identificación
+                </span>
+
+                <strong id="verTurnoIdentificacion">
+                    -
+                </strong>
+
+            </div>
+
+
+            <div class="detalle-item">
+
+                <span>
+                    DNI
+                </span>
+
+                <strong id="verTurnoDni">
+                    -
+                </strong>
+
+            </div>
+
+
+            <div class="detalle-item">
+
+                <span>
+                    Fecha
+                </span>
+
+                <strong id="verTurnoFecha">
+                    -
+                </strong>
+
+            </div>
+
+
+            <div class="detalle-item">
+
+                <span>
+                    Hora
+                </span>
+
+                <strong id="verTurnoHora">
+                    -
+                </strong>
+
+            </div>
+
+
+            <div class="detalle-item">
+
+                <span>
+                    Estado
+                </span>
+
+                <strong id="verTurnoEstado">
+                    -
+                </strong>
+
+            </div>
+
+
+            <div class="detalle-item detalle-item-full">
+
+                <span>
+                    Observaciones
+                </span>
+
+                <strong id="verTurnoObservaciones">
+                    -
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <!-- FOOTER -->
+
+        <div class="modal-footer">
+
+            <button
+                type="button"
+                class="secondary-button"
+                id="btnCerrarVerTurno"
+            >
+                Cerrar
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+        </section>
+
+
+    </main>
+
+
+
+    <!-- =========================
+         JAVASCRIPT
+    ========================== -->
+
+    <script src="js/auth.js"></script>
+
+    <script src="js/layout.js"></script>
+<!-- =========================
+     MODAL NUEVO TURNO
+========================= -->
+
+<div
+    class="modal-overlay"
+    id="modalNuevoTurno"
+    hidden
+>
+
+    <div class="modal modal-turno">
+
+        <!-- CABECERA -->
+
+        <div class="modal-header">
+
+            <div>
+
+                <h2>
+                    Nuevo turno
+                </h2>
+
+                <p>
+                    Registrar un nuevo turno para un paciente
+                </p>
+
+            </div>
+
+            <button
+                type="button"
+                class="modal-close"
+                id="btnCerrarModalTurno"
+                aria-label="Cerrar"
+            >
+
+                <svg viewBox="0 0 24 24">
+
+                    <path d="M6 6l12 12"></path>
+
+                    <path d="M18 6L6 18"></path>
+
+                </svg>
+
+            </button>
+
+        </div>
+
+
+        <!-- FORMULARIO -->
+
+        <form id="formNuevoTurno">
+
+            <div class="form-grid">
+
+                <!-- PACIENTE -->
+
+                <div class="form-group form-group-full">
+
+                    <label for="turnoPaciente">
+
+                        Paciente
+                        <span>*</span>
+
+                    </label>
+
+                    <select
+                        id="turnoPaciente"
+                        name="paciente"
+                        required
+                    >
+
+                        <option value="">
+                            Seleccionar paciente
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- FECHA -->
+
+                <div class="form-group">
+
+                    <label for="turnoFecha">
+
+                        Fecha
+                        <span>*</span>
+
+                    </label>
+
+                    <input
+                        type="date"
+                        id="turnoFecha"
+                        name="fecha"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- HORA -->
+
+                <div class="form-group">
+
+                    <label for="turnoHora">
+
+                        Hora
+                        <span>*</span>
+
+                    </label>
+
+                    <input
+                        type="time"
+                        id="turnoHora"
+                        name="hora"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- OBSERVACIONES -->
+
+                <div class="form-group form-group-full">
+
+                    <label for="turnoObservaciones">
+
+                        Observaciones
+
+                    </label>
+
+                    <textarea
+                        id="turnoObservaciones"
+                        name="observaciones"
+                        rows="3"
+                        placeholder="Observaciones del turno..."
+                    ></textarea>
+
+                </div>
+
+            </div>
+
+
+            <p class="form-required">
+                * Campos obligatorios
+            </p>
+
+
+            <!-- FOOTER -->
+
+            <div class="modal-footer">
+
+                <button
+                    type="button"
+                    class="secondary-button"
+                    id="btnCancelarTurno"
+                >
+                    Cancelar
+                </button>
+
+                <button
+                    type="submit"
+                    class="primary-button"
+                >
+                    Guardar turno
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+<!-- =========================
+     MODAL EDITAR TURNO
+========================= -->
+
+<div
+    class="modal-overlay"
+    id="modalEditarTurno"
+    hidden
+>
+
+    <div class="modal modal-turno">
+
+        <!-- CABECERA -->
+
+        <div class="modal-header">
+
+            <div>
+
+                <h2>
+                    Editar turno
+                </h2>
+
+                <p>
+                    Modificar los datos del turno
+                </p>
+
+            </div>
+
+            <button
+                type="button"
+                class="modal-close"
+                id="btnCerrarModalEditarTurno"
+                aria-label="Cerrar"
+            >
+
+                <svg viewBox="0 0 24 24">
+
+                    <path d="M6 6l12 12"></path>
+
+                    <path d="M18 6L6 18"></path>
+
+                </svg>
+
+            </button>
+
+        </div>
+
+
+        <!-- FORMULARIO -->
+
+        <form id="formEditarTurno">
+
+            <div class="form-grid">
+
+                <!-- PACIENTE -->
+
+                <div class="form-group form-group-full">
+
+                    <label for="editarTurnoPaciente">
+
+                        Paciente
+
+                    </label>
+
+                    <select
+                        id="editarTurnoPaciente"
+                        disabled
+                    >
+
+                        <option>
+                            Cargando paciente...
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- FECHA -->
+
+                <div class="form-group">
+
+                    <label for="editarTurnoFecha">
+
+                        Fecha
+                        <span>*</span>
+
+                    </label>
+
+                    <input
+                        type="date"
+                        id="editarTurnoFecha"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- HORA -->
+
+                <div class="form-group">
+
+                    <label for="editarTurnoHora">
+
+                        Hora
+                        <span>*</span>
+
+                    </label>
+
+                    <input
+                        type="time"
+                        id="editarTurnoHora"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- ESTADO -->
+
+                <div class="form-group">
+
+                    <label for="editarTurnoEstado">
+
+                        Estado
+                        <span>*</span>
+
+                    </label>
+
+                    <select
+                        id="editarTurnoEstado"
+                        required
+                    >
+
+                        <option value="pendiente">
+                            Pendiente
+                        </option>
+
+                        <option value="confirmado">
+                            Confirmado
+                        </option>
+
+                        <option value="atendido">
+                            Atendido
+                        </option>
+
+                        <option value="cancelado">
+                            Cancelado
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- OBSERVACIONES -->
+
+                <div class="form-group form-group-full">
+
+                    <label for="editarTurnoObservaciones">
+
+                        Observaciones
+
+                    </label>
+
+                    <textarea
+                        id="editarTurnoObservaciones"
+                        rows="3"
+                        placeholder="Observaciones del turno..."
+                    ></textarea>
+
+                </div>
+
+            </div>
+
+
+            <p class="form-required">
+                * Campos obligatorios
+            </p>
+
+
+            <!-- FOOTER -->
+
+            <div class="modal-footer">
+
+                <button
+                    type="button"
+                    class="secondary-button"
+                    id="btnCancelarEditarTurno"
+                >
+                    Cancelar
+                </button>
+
+                <button
+                    type="submit"
+                    class="primary-button"
+                >
+                    Guardar cambios
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+<!-- =====================================================
+     MODAL REGISTRAR PAGO
+===================================================== -->
+
+<div
+    id="modalRegistrarPago"
+    class="modal-overlay"
+    hidden
+>
+
+    <div
+        class="modal-turno modal-pago"
+    >
+
+        <!-- CABECERA -->
+
+        <div class="modal-header">
+
+            <div>
+
+                <h2>
+                    Registrar pago
+                </h2>
+
+                <p>
+                    Registrar manualmente el pago del turno.
+                </p>
+
+            </div>
+
+            <button
+                type="button"
+                class="modal-close"
+                id="btnCerrarModalPago"
+                title="Cerrar"
+            >
+
+                <svg
+                    viewBox="0 0 24 24"
+                >
+
+                    <path
+                        d="M6 6l12 12"
+                    ></path>
+
+                    <path
+                        d="M18 6L6 18"
+                    ></path>
+
+                </svg>
+
+            </button>
+
+        </div>
+
+
+        <!-- FORMULARIO -->
+
+        <form
+            id="formRegistrarPago"
+        >
+
+            <div class="form-grid">
+
+                <!-- PACIENTE -->
+
+                <div
+                    class="form-group form-group-full"
+                >
+
+                    <label>
+                        Paciente
+                    </label>
+
+                    <input
+                        type="text"
+                        id="pagoPaciente"
+                        readonly
+                    >
+
+                </div>
+
+
+                <!-- FECHA DEL TURNO -->
+
+                <div
+                    class="form-group"
+                >
+
+                    <label>
+                        Fecha del turno
+                    </label>
+
+                    <input
+                        type="text"
+                        id="pagoFecha"
+                        readonly
+                    >
+
+                </div>
+
+
+                <!-- HORA -->
+
+                <div
+                    class="form-group"
+                >
+
+                    <label>
+                        Hora
+                    </label>
+
+                    <input
+                        type="text"
+                        id="pagoHora"
+                        readonly
+                    >
+
+                </div>
+
+
+                <!-- MONTO -->
+
+                <div
+                    class="form-group"
+                >
+
+                    <label>
+                        Monto <span>*</span>
+                    </label>
+
+                    <input
+                        type="number"
+                        id="pagoMonto"
+                        min="0"
+                        step="0.01"
+                        placeholder="Ej. 25000"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- MÉTODO -->
+
+                <div
+                    class="form-group"
+                >
+
+                    <label>
+                        Método de pago <span>*</span>
+                    </label>
+
+                    <select
+                        id="pagoMetodo"
+                        required
+                    >
+
+                        <option value="">
+                            Seleccionar
+                        </option>
+
+                        <option value="efectivo">
+                            Efectivo
+                        </option>
+
+                        <option value="transferencia">
+                            Transferencia
+                        </option>
+
+                        <option value="mercado_pago">
+                            Mercado Pago
+                        </option>
+
+                        <option value="tarjeta">
+                            Tarjeta
+                        </option>
+
+                        <option value="otro">
+                            Otro
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- OBSERVACIONES -->
+
+                <div
+                    class="form-group form-group-full"
+                >
+
+                    <label>
+                        Observaciones
+                    </label>
+
+                    <textarea
+                        id="pagoObservaciones"
+                        placeholder="Observaciones del pago..."
+                    ></textarea>
+
+                </div>
+
+            </div>
+
+
+            <!-- FOOTER -->
+
+            <div
+                class="modal-footer"
+            >
+
+                <button
+                    type="button"
+                    class="secondary-button"
+                    id="btnCancelarPago"
+                >
+                    Cancelar
+                </button>
+
+                <button
+                    type="submit"
+                    class="primary-button"
+                >
+                    Registrar pago
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+<!-- =====================================================
+     MODAL DETALLE DEL PAGO
+===================================================== -->
+
+<div
+    id="modalDetallePago"
+    class="modal-overlay"
+    hidden
+>
+
+    <div
+        class="modal-turno modal-pago"
+    >
+
+        <!-- CABECERA -->
+
+        <div class="modal-header">
+
+            <div>
+
+                <h2>
+                    Pago registrado
+                </h2>
+
+                <p>
+                    Detalle del pago realizado para este turno.
+                </p>
+
+            </div>
+
+            <button
+                type="button"
+                class="modal-close"
+                id="btnCerrarModalDetallePago"
+                title="Cerrar"
+            >
+
+                <svg
+                    viewBox="0 0 24 24"
+                >
+
+                    <path
+                        d="M6 6l12 12"
+                    ></path>
+
+                    <path
+                        d="M18 6L6 18"
+                    ></path>
+
+                </svg>
+
+            </button>
+
+        </div>
+
+
+        <!-- INFORMACIÓN DEL PAGO -->
+
+        <div class="form-grid">
+
+            <!-- PACIENTE -->
+
+            <div
+                class="form-group form-group-full"
+            >
+
+                <label>
+                    Paciente
+                </label>
+
+                <input
+                    type="text"
+                    id="detallePagoPaciente"
+                    readonly
+                >
+
+            </div>
+
+
+            <!-- IDENTIFICACIÓN -->
+
+            <div
+                class="form-group"
+            >
+
+                <label>
+                    Identificación
+                </label>
+
+                <input
+                    type="text"
+                    id="detallePagoIdentificacion"
+                    readonly
+                >
+
+            </div>
+
+
+            <!-- MONTO -->
+
+            <div
+                class="form-group"
+            >
+
+                <label>
+                    Monto
+                </label>
+
+                <input
+                    type="text"
+                    id="detallePagoMonto"
+                    readonly
+                >
+
+            </div>
+
+
+            <!-- MÉTODO -->
+
+            <div
+                class="form-group"
+            >
+
+                <label>
+                    Método de pago
+                </label>
+
+                <input
+                    type="text"
+                    id="detallePagoMetodo"
+                    readonly
+                >
+
+            </div>
+
+
+            <!-- FECHA -->
+
+            <div
+                class="form-group"
+            >
+
+                <label>
+                    Fecha y hora del pago
+                </label>
+
+                <input
+                    type="text"
+                    id="detallePagoFecha"
+                    readonly
+                >
+
+            </div>
+
+
+            <!-- OBSERVACIONES -->
+
+            <div
+                class="form-group form-group-full"
+            >
+
+                <label>
+                    Observaciones
+                </label>
+
+                <textarea
+                    id="detallePagoObservaciones"
+                    readonly
+                ></textarea>
+
+            </div>
+
+        </div>
+
+
+        <!-- FOOTER -->
+
+        <div
+            class="modal-footer"
+        >
+
+            <button
+                type="button"
+                class="secondary-button"
+                id="btnCerrarDetallePago"
+            >
+                Cerrar
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+    <script src="js/turnos.js"></script>
+    <script src="js/notificaciones.js"></script>
+    <script src="js/pagos.js"></script>
+
+
+</body>
+
+</html>
