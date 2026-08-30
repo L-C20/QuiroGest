@@ -1,4 +1,4 @@
-const API_URL = "http://localhost:3000";
+const API_URL = "https://quirogest.onrender.com";
 
 const formulario = document.getElementById("loginForm");
 const mensajeError = document.getElementById("loginError");

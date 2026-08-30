@@ -298,7 +298,7 @@ window.cambiarFechaDesdeCalendario =
 
             const respuesta =
                 await fetch(
-                    "http://localhost:3000/pacientes",
+                    "https://quirogest.onrender.com/pacientes",
                     {
                         headers: {
                             Authorization:
@@ -406,7 +406,7 @@ window.cambiarFechaDesdeCalendario =
 
             const respuesta =
                 await fetch(
-                    `http://localhost:3000/turnos?fecha=${fecha}`,
+                    `https://quirogest.onrender.com/turnos?fecha=${fecha}`,
                     {
                         headers: {
                             Authorization:
@@ -815,7 +815,7 @@ window.cambiarFechaDesdeCalendario =
 
                     const respuesta =
                         await fetch(
-                            "http://localhost:3000/turnos",
+                            "https://quirogest.onrender.com/turnos",
                             {
                                 method: "POST",
 
@@ -1000,7 +1000,7 @@ window.cambiarFechaDesdeCalendario =
 
                     const respuesta =
                         await fetch(
-                            `http://localhost:3000/turnos/${turnoId}`,
+                            `https://quirogest.onrender.com/turnos/${turnoId}`,
                             {
                                 headers: {
                                     Authorization:
@@ -1239,7 +1239,7 @@ window.cambiarFechaDesdeCalendario =
 
                     const respuesta =
                         await fetch(
-                            `http://localhost:3000/turnos/${turnoId}`,
+                            `https://quirogest.onrender.com/turnos/${turnoId}`,
                             {
                                 headers: {
                                     Authorization:
@@ -1394,7 +1394,7 @@ window.cambiarFechaDesdeCalendario =
 
                     const respuesta =
                         await fetch(
-                            `http://localhost:3000/turnos/${turnoEditandoId}`,
+                            `https://quirogest.onrender.com/turnos/${turnoEditandoId}`,
                             {
                                 method: "PUT",
 
@@ -1742,7 +1742,7 @@ window.cambiarFechaDesdeCalendario =
 
                             const respuesta =
                                 await fetch(
-                                    `http://localhost:3000/turnos/${turnoId}/estado`,
+                                    `https://quirogest.onrender.com/turnos/${turnoId}/estado`,
                                     {
                                         method: "PATCH",
 
@@ -1978,7 +1978,7 @@ window.cambiarFechaDesdeCalendario =
 
             const respuesta =
                 await fetch(
-                    `http://localhost:3000/pagos/turno/${turnoId}`,
+                    `https://quirogest.onrender.com/pagos/turno/${turnoId}`,
                     {
                         headers: {
                             Authorization:
@@ -2265,7 +2265,7 @@ window.cambiarFechaDesdeCalendario =
 
                     const respuesta =
                         await fetch(
-                            `http://localhost:3000/turnos/${turnoId}`,
+                            `https://quirogest.onrender.com/turnos/${turnoId}`,
                             {
                                 headers: {
                                     Authorization:
@@ -2418,7 +2418,7 @@ window.cambiarFechaDesdeCalendario =
 
                     const respuesta =
                         await fetch(
-                            "http://localhost:3000/pagos",
+                            "https://quirogest.onrender.com/pagos",
                             {
                                 method: "POST",
 
@@ -2755,7 +2755,7 @@ async function cargarTurnosCalendario() {
             consultas.push(
 
                 fetch(
-                    `http://localhost:3000/turnos?fecha=${fecha}`,
+                    `https://quirogest.onrender.com/turnos?fecha=${fecha}`,
                     {
                         headers: {
                             Authorization:
