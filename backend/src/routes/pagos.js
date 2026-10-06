@@ -34,6 +34,29 @@ router.post("/", async (req, res) => {
 
 
         /* =============================================
+           VERIFICAR QUE EL TURNO SEA DEL CONSULTORIO
+        ============================================= */
+
+        const turno = await pool.query(
+            `
+            SELECT id
+            FROM turnos
+            WHERE id = $1
+              AND consultorio_id = $2
+            `,
+            [turno_id, req.usuario.consultorioId]
+        );
+
+        if (turno.rows.length === 0) {
+
+            return res.status(404).json({
+                mensaje: "Turno no encontrado."
+            });
+
+        }
+
+
+        /* =============================================
            REGISTRAR PAGO
         ============================================= */
 
@@ -46,7 +69,8 @@ router.post("/", async (req, res) => {
                 metodo_pago,
                 estado,
                 fecha_pago,
-                observaciones
+                observaciones,
+                consultorio_id
             )
             VALUES
             (
@@ -55,7 +79,8 @@ router.post("/", async (req, res) => {
                 $3,
                 'pagado',
                 CURRENT_TIMESTAMP,
-                $4
+                $4,
+                $5
             )
             RETURNING *
             `,
@@ -63,7 +88,8 @@ router.post("/", async (req, res) => {
                 turno_id,
                 monto,
                 metodo_pago,
-                observaciones || null
+                observaciones || null,
+                req.usuario.consultorioId
             ]
         );
 
@@ -138,9 +164,12 @@ router.get("/", async (req, res) => {
                 INNER JOIN pacientes p
                     ON p.id = t.paciente_id
 
+                WHERE pg.consultorio_id = $1
+
                 ORDER BY
                     pg.fecha_pago DESC
-                `
+                `,
+                [req.usuario.consultorioId]
             );
 
 
@@ -207,13 +236,14 @@ router.get("/turno/:turno_id", async (req, res) => {
                     ON p.id = t.paciente_id
 
                 WHERE pg.turno_id = $1
+                AND pg.consultorio_id = $2
                 AND pg.estado = 'pagado'
 
                 ORDER BY pg.fecha_pago DESC
 
                 LIMIT 1
                 `,
-                [turno_id]
+                [turno_id, req.usuario.consultorioId]
             );
 
 
@@ -293,11 +323,12 @@ router.get("/paciente/:paciente_id", async (req, res) => {
                     ON t.id = pg.turno_id
 
                 WHERE t.paciente_id = $1
+                AND pg.consultorio_id = $2
 
                 ORDER BY
                     pg.fecha_pago DESC
                 `,
-                [paciente_id]
+                [paciente_id, req.usuario.consultorioId]
             );
 
 
@@ -331,6 +362,4 @@ router.get("/paciente/:paciente_id", async (req, res) => {
     }
 
 });
-console.log("RUTAS DE PAGOS CARGADAS");
-
 module.exports = router;

@@ -11,6 +11,7 @@ const turnosRoutes = require("./routes/turnos");
 const pagosRoutes = require("./routes/pagos");
 const recordatoriosRoutes = require("./routes/recordatorios");
 const recordatorios = require("./services/recordatorios");
+const { migrar } = require("./database/migraciones");
 const verificarToken = require("./middleware/authMiddleware");
 
 app.use(cors());
@@ -37,7 +38,18 @@ app.get("/", (req, res) => {
 const PORT = process.env.PORT || 3000;
 
 
-app.listen(PORT, "0.0.0.0", () => {
-    console.log(`Servidor QUIROGEST funcionando en el puerto ${PORT}`);
-    recordatorios.iniciar();
-});
+migrar()
+    .then(() => {
+
+        app.listen(PORT, "0.0.0.0", () => {
+            console.log(`Servidor QUIROGEST funcionando en el puerto ${PORT}`);
+            recordatorios.iniciar();
+        });
+
+    })
+    .catch(error => {
+
+        console.error("No se pudo preparar la base de datos:", error);
+        process.exit(1);
+
+    });

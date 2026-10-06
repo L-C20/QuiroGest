@@ -85,9 +85,11 @@ async function turnosPorRecordar(o) {
             p.nombre,
             p.apellido,
             p.telefono,
-            p.email
+            p.email,
+            c.nombre AS consultorio
         FROM turnos t
         INNER JOIN pacientes p ON p.id = t.paciente_id
+        INNER JOIN consultorios c ON c.id = t.consultorio_id AND c.activo = true
         WHERE p.activo = true
           AND t.estado IN ('pendiente', 'confirmado')
           AND (t.fecha + t.hora) > (NOW() AT TIME ZONE $1) + interval '1 hour'
@@ -233,7 +235,7 @@ async function procesar() {
 }
 
 
-async function listarRecientes(limite = 50) {
+async function listarRecientes(consultorioId, limite = 50) {
 
     const { rows } = await pool.query(
         `
@@ -253,10 +255,11 @@ async function listarRecientes(limite = 50) {
         FROM recordatorios r
         INNER JOIN turnos t ON t.id = r.turno_id
         INNER JOIN pacientes p ON p.id = t.paciente_id
+        WHERE t.consultorio_id = $1
         ORDER BY r.creado_en DESC
-        LIMIT $1
+        LIMIT $2
         `,
-        [limite]
+        [consultorioId, limite]
     );
 
     return rows;

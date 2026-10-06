@@ -97,7 +97,7 @@ function datosMensaje(turno) {
         apellido: turno.apellido,
         fecha: turno.fecha_txt,
         hora: turno.hora_txt,
-        consultorio: process.env.CONSULTORIO_NOMBRE || "el consultorio"
+        consultorio: turno.consultorio || process.env.CONSULTORIO_NOMBRE || "el consultorio"
     };
 }
 

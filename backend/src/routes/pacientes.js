@@ -23,9 +23,10 @@ router.get("/", verificarToken, async (req, res) => {
                 created_at,
                 activo
             FROM pacientes
-            
+            WHERE consultorio_id = $1
             ORDER BY apellido ASC, nombre ASC
-            `
+            `,
+            [req.usuario.consultorioId]
         );
 
         res.json({
@@ -64,8 +65,9 @@ router.get("/:id", verificarToken, async (req, res) => {
                 created_at
             FROM pacientes
             WHERE id = $1
+              AND consultorio_id = $2
             `,
-            [id]
+            [id, req.usuario.consultorioId]
         );
 
         if (resultado.rows.length === 0) {
@@ -132,6 +134,7 @@ router.put("/:id", verificarToken, async (req, res) => {
                 telefono = $5,
                 email = $6
             WHERE id = $7
+              AND consultorio_id = $8
             RETURNING *
             `,
             [
@@ -141,7 +144,8 @@ router.put("/:id", verificarToken, async (req, res) => {
                 dni || null,
                 telefono || null,
                 email || null,
-                id
+                id,
+                req.usuario.consultorioId
             ]
         );
 
@@ -166,6 +170,15 @@ router.put("/:id", verificarToken, async (req, res) => {
     } catch (error) {
 
         console.error("Error actualizando paciente:", error);
+
+        if (error.code === "23505") {
+
+            return res.status(409).json({
+                mensaje:
+                    "Ya existe otro paciente con ese DNI o número de identificación."
+            });
+
+        }
 
         res.status(500).json({
             mensaje: "Error interno del servidor"
@@ -212,9 +225,10 @@ router.post("/", verificarToken, async (req, res) => {
                 apellido,
                 dni,
                 telefono,
-                email
+                email,
+                consultorio_id
             )
-            VALUES ($1, $2, $3, $4, $5, $6)
+            VALUES ($1, $2, $3, $4, $5, $6, $7)
             RETURNING *
             `,
             [
@@ -223,7 +237,8 @@ router.post("/", verificarToken, async (req, res) => {
                 apellido,
                 dni || null,
                 telefono || null,
-                email || null
+                email || null,
+                req.usuario.consultorioId
             ]
         );
 
@@ -245,12 +260,24 @@ router.post("/", verificarToken, async (req, res) => {
 
     if (
         error.code === "23505" &&
-        error.constraint === "pacientes_dni_key"
+        error.constraint === "pacientes_consultorio_dni_key"
     ) {
 
         return res.status(409).json({
             mensaje:
                 "Ya existe un paciente registrado con ese DNI."
+        });
+
+    }
+
+    if (
+        error.code === "23505" &&
+        error.constraint === "pacientes_consultorio_numero_key"
+    ) {
+
+        return res.status(409).json({
+            mensaje:
+                "Ya existe un paciente con ese número de identificación."
         });
 
     }
@@ -282,9 +309,10 @@ router.delete("/:id", verificarToken, async (req, res) => {
             UPDATE pacientes
             SET activo = false
             WHERE id = $1
+              AND consultorio_id = $2
             RETURNING *
             `,
-            [id]
+            [id, req.usuario.consultorioId]
         );
 
 
@@ -327,9 +355,10 @@ router.patch("/:id/reactivar", verificarToken, async (req, res) => {
             UPDATE pacientes
             SET activo = true
             WHERE id = $1
+              AND consultorio_id = $2
             RETURNING *
             `,
-            [id]
+            [id, req.usuario.consultorioId]
         );
 
         if (resultado.rows.length === 0) {

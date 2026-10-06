@@ -52,9 +52,10 @@ router.post("/", verificarToken, async (req, res) => {
                 SELECT id
                 FROM pacientes
                 WHERE id = $1
+                AND consultorio_id = $2
                 AND activo = true
                 `,
-                [paciente_id]
+                [paciente_id, req.usuario.consultorioId]
             );
 
 
@@ -83,7 +84,8 @@ router.post("/", verificarToken, async (req, res) => {
                     fecha,
                     hora,
                     estado,
-                    observaciones
+                    observaciones,
+                    consultorio_id
                 )
                 VALUES
                 (
@@ -91,7 +93,8 @@ router.post("/", verificarToken, async (req, res) => {
                     $2,
                     $3,
                     'pendiente',
-                    $4
+                    $4,
+                    $5
                 )
                 RETURNING *
                 `,
@@ -99,7 +102,8 @@ router.post("/", verificarToken, async (req, res) => {
                     paciente_id,
                     fecha,
                     hora,
-                    observaciones || null
+                    observaciones || null,
+                    req.usuario.consultorioId
                 ]
             );
 
@@ -173,8 +177,8 @@ router.get("/", verificarToken, async (req, res) => {
                 });
             }
 
-            const condiciones = [];
-            const valores = [];
+            const condiciones = ["t.consultorio_id = $1"];
+            const valores = [req.usuario.consultorioId];
 
             if (desde) {
                 valores.push(desde);
@@ -292,16 +296,12 @@ router.get("/", verificarToken, async (req, res) => {
             ON p.id = t.paciente_id
 
         WHERE t.fecha = $1
+          AND t.consultorio_id = $2
 
         ORDER BY t.hora ASC
         `,
-        [fecha]
+        [fecha, req.usuario.consultorioId]
     );
-
-    console.log(
-    "TURNOS DESDE POSTGRES:",
-    resultado.rows
-);
 
         res.json({
 
@@ -365,8 +365,9 @@ router.get("/:id", verificarToken, async (req, res) => {
                     ON p.id = t.paciente_id
 
                 WHERE t.id = $1
+                AND t.consultorio_id = $2
                 `,
-                [id]
+                [id, req.usuario.consultorioId]
             );
 
 
@@ -489,6 +490,7 @@ router.put("/:id", verificarToken, async (req, res) => {
                     observaciones = $4
 
                 WHERE id = $5
+                AND consultorio_id = $6
 
                 RETURNING *
                 `,
@@ -497,7 +499,8 @@ router.put("/:id", verificarToken, async (req, res) => {
                     hora,
                     estado,
                     observaciones || null,
-                    id
+                    id,
+                    req.usuario.consultorioId
                 ]
             );
 
@@ -615,12 +618,14 @@ router.patch("/:id/estado", verificarToken, async (req, res) => {
                     estado = $1
 
                 WHERE id = $2
+                AND consultorio_id = $3
 
                 RETURNING *
                 `,
                 [
                     estado,
-                    id
+                    id,
+                    req.usuario.consultorioId
                 ]
             );
 

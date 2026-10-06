@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 
 const recordatorios = require("../services/recordatorios");
+const { requerirRol } = require("../middleware/authMiddleware");
 
 
 /* Estado de la configuración (qué canales están listos) */
@@ -21,7 +22,10 @@ router.get("/", async (req, res) => {
         const limite = Math.min(Number(req.query.limite) || 50, 200);
 
         res.json({
-            recordatorios: await recordatorios.listarRecientes(limite)
+            recordatorios: await recordatorios.listarRecientes(
+                req.usuario.consultorioId,
+                limite
+            )
         });
 
     } catch (error) {
@@ -37,7 +41,7 @@ router.get("/", async (req, res) => {
 
 /* Ejecuta una revisión ahora mismo (útil para probar) */
 
-router.post("/ejecutar", async (req, res) => {
+router.post("/ejecutar", requerirRol("superadmin"), async (req, res) => {
 
     try {
 
