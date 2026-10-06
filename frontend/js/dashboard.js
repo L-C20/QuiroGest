@@ -3,7 +3,7 @@
    QUIROGEST — DASHBOARD
 ===================================================== */
 
-const API_URL = "https://quirogest.onrender.com";
+const API_URL = "";
 
 
 /* =====================================================

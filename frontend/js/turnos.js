@@ -298,7 +298,7 @@ window.cambiarFechaDesdeCalendario =
 
             const respuesta =
                 await fetch(
-                    "https://quirogest.onrender.com/pacientes",
+                    "/pacientes",
                     {
                         headers: {
                             Authorization:
@@ -406,7 +406,7 @@ window.cambiarFechaDesdeCalendario =
 
             const respuesta =
                 await fetch(
-                    `https://quirogest.onrender.com/turnos?fecha=${fecha}`,
+                    `/turnos?fecha=${fecha}`,
                     {
                         headers: {
                             Authorization:
@@ -815,7 +815,7 @@ window.cambiarFechaDesdeCalendario =
 
                     const respuesta =
                         await fetch(
-                            "https://quirogest.onrender.com/turnos",
+                            "/turnos",
                             {
                                 method: "POST",
 
@@ -1000,7 +1000,7 @@ window.cambiarFechaDesdeCalendario =
 
                     const respuesta =
                         await fetch(
-                            `https://quirogest.onrender.com/turnos/${turnoId}`,
+                            `/turnos/${turnoId}`,
                             {
                                 headers: {
                                     Authorization:
@@ -1239,7 +1239,7 @@ window.cambiarFechaDesdeCalendario =
 
                     const respuesta =
                         await fetch(
-                            `https://quirogest.onrender.com/turnos/${turnoId}`,
+                            `/turnos/${turnoId}`,
                             {
                                 headers: {
                                     Authorization:
@@ -1394,7 +1394,7 @@ window.cambiarFechaDesdeCalendario =
 
                     const respuesta =
                         await fetch(
-                            `https://quirogest.onrender.com/turnos/${turnoEditandoId}`,
+                            `/turnos/${turnoEditandoId}`,
                             {
                                 method: "PUT",
 
@@ -1742,7 +1742,7 @@ window.cambiarFechaDesdeCalendario =
 
                             const respuesta =
                                 await fetch(
-                                    `https://quirogest.onrender.com/turnos/${turnoId}/estado`,
+                                    `/turnos/${turnoId}/estado`,
                                     {
                                         method: "PATCH",
 
@@ -1978,7 +1978,7 @@ window.cambiarFechaDesdeCalendario =
 
             const respuesta =
                 await fetch(
-                    `https://quirogest.onrender.com/pagos/turno/${turnoId}`,
+                    `/pagos/turno/${turnoId}`,
                     {
                         headers: {
                             Authorization:
@@ -2265,7 +2265,7 @@ window.cambiarFechaDesdeCalendario =
 
                     const respuesta =
                         await fetch(
-                            `https://quirogest.onrender.com/turnos/${turnoId}`,
+                            `/turnos/${turnoId}`,
                             {
                                 headers: {
                                     Authorization:
@@ -2418,7 +2418,7 @@ window.cambiarFechaDesdeCalendario =
 
                     const respuesta =
                         await fetch(
-                            "https://quirogest.onrender.com/pagos",
+                            "/pagos",
                             {
                                 method: "POST",
 
@@ -2755,7 +2755,7 @@ async function cargarTurnosCalendario() {
             consultas.push(
 
                 fetch(
-                    `https://quirogest.onrender.com/turnos?fecha=${fecha}`,
+                    `/turnos?fecha=${fecha}`,
                     {
                         headers: {
                             Authorization:

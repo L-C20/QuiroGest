@@ -1,5 +1,6 @@
 require("dotenv").config();
 
+const path = require("path");
 const express = require("express");
 const cors = require("cors");
 
@@ -16,15 +17,22 @@ app.use("/pacientes", pacientesRoutes);
 app.use("/turnos", turnosRoutes);
 app.use("/pagos", pagosRoutes);
 
-app.get("/", (req, res) => {
+app.get("/health", (req, res) => {
     res.json({
         mensaje: "QUIROGEST API funcionando"
     });
 });
 
+// Frontend estatico servido por el mismo servicio
+const frontendDir = path.join(__dirname, "..", "..", "frontend");
+app.use(express.static(frontendDir));
+app.get("/", (req, res) => {
+    res.redirect("/login.html");
+});
+
 const PORT = process.env.PORT || 3000;
 
 
-app.listen(PORT, () => {
+app.listen(PORT, "0.0.0.0", () => {
     console.log(`Servidor QUIROGEST funcionando en el puerto ${PORT}`);
 });
