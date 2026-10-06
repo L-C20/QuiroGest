@@ -1,0 +1,513 @@
+/* =====================================================
+   QUIROGEST — Responsive y modo oscuro
+   (se carga después de theme.css)
+===================================================== */
+
+
+/* =====================================================
+   BOTÓN DE TEMA Y MENÚ MÓVIL
+===================================================== */
+
+.sidebar-footer {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.tema-toggle {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    padding: 10px 12px;
+    border: 0;
+    border-radius: 10px;
+    background: transparent;
+    color: rgba(255, 255, 255, .72);
+    font: inherit;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background .18s ease, color .18s ease;
+}
+
+.tema-toggle:hover {
+    background: rgba(255, 255, 255, .07);
+    color: #fff;
+}
+
+.tema-icono {
+    display: inline-flex;
+    width: 20px;
+    height: 20px;
+}
+
+.tema-icono svg {
+    width: 20px;
+    height: 20px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.menu-toggle,
+.sidebar-backdrop {
+    display: none;
+}
+
+
+/* =====================================================
+   RESPONSIVE
+===================================================== */
+
+/* Tablets y celulares: el menú pasa a ser un panel deslizable */
+@media (max-width: 900px) {
+
+    .app {
+        display: block;
+    }
+
+    .sidebar {
+        position: fixed;
+        inset: 0 auto 0 0;
+        z-index: 1200;
+        width: 272px;
+        max-width: 84vw;
+        min-height: 100dvh;
+        height: 100dvh;
+        overflow-y: auto;
+        padding: 24px 14px;
+        transform: translateX(-102%);
+        transition: transform .26s cubic-bezier(.3, .8, .3, 1);
+    }
+
+    /* anula el modo "solo íconos" del CSS anterior */
+    .sidebar-header {
+        justify-content: flex-start;
+        padding: 4px 8px 22px;
+    }
+
+    .sidebar-header > div:not(.sidebar-logo) {
+        display: block;
+    }
+
+    .nav-item {
+        justify-content: flex-start;
+        padding: 11px 12px;
+    }
+
+    .nav-item > span:not(.nav-icon),
+    .logout-button > span:not(.nav-icon) {
+        display: inline;
+    }
+
+    body.menu-abierto {
+        overflow: hidden;
+    }
+
+    body.menu-abierto .sidebar {
+        transform: translateX(0);
+        box-shadow: var(--shadow-lg);
+    }
+
+    .sidebar-backdrop {
+        display: block;
+        position: fixed;
+        inset: 0;
+        z-index: 1100;
+        background: rgba(8, 24, 17, .5);
+        -webkit-backdrop-filter: blur(3px);
+        backdrop-filter: blur(3px);
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity .22s ease;
+    }
+
+    body.menu-abierto .sidebar-backdrop {
+        opacity: 1;
+        pointer-events: auto;
+    }
+
+    .menu-toggle {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        position: fixed;
+        top: 14px;
+        left: 14px;
+        z-index: 1000;
+        width: 42px;
+        height: 42px;
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        background: var(--surface);
+        color: var(--brand-700);
+        box-shadow: var(--shadow-sm);
+        cursor: pointer;
+    }
+
+    .menu-toggle svg {
+        width: 22px;
+        height: 22px;
+        fill: none;
+        stroke: currentColor;
+        stroke-width: 2;
+        stroke-linecap: round;
+    }
+
+    body.menu-abierto .menu-toggle {
+        display: none;
+    }
+
+    .main-content {
+        width: 100%;
+    }
+
+    .topbar {
+        height: auto;
+        min-height: 72px;
+        padding: 12px 18px 12px 70px;
+        gap: 12px;
+    }
+
+    .topbar h1 {
+        font-size: 21px;
+    }
+
+    .page-header {
+        padding-left: 56px;
+    }
+
+    .stats-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+
+@media (max-width: 700px) {
+
+    /* el CSS anterior encogía el menú a 68px: lo dejamos como panel completo */
+    .sidebar {
+        width: 272px;
+        padding: 24px 14px;
+    }
+
+    .topbar {
+        padding: 10px 14px 10px 66px;
+    }
+
+    .topbar p {
+        display: none;
+    }
+
+    .user-info {
+        display: none;
+    }
+
+    .user-menu {
+        padding: 4px;
+    }
+
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+
+    /* Las tablas se desplazan horizontalmente en vez de romper el layout */
+    .table-container,
+    .appointments-table-container,
+    .payments-table-container {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .patients-table,
+    .appointments-table,
+    .payments-table {
+        min-width: 640px;
+    }
+
+    .patients-toolbar {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 10px;
+    }
+
+    .patients-toolbar .search-box,
+    .patients-toolbar select {
+        width: 100%;
+    }
+
+    .section-header {
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+
+    .modal,
+    .modal-turno,
+    .modal-pago {
+        width: calc(100vw - 24px);
+        max-width: 100%;
+        max-height: 92dvh;
+        overflow-y: auto;
+        border-radius: 18px;
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+
+@media (max-width: 420px) {
+
+    .topbar h1 {
+        font-size: 19px;
+    }
+
+    .welcome-card h2 {
+        font-size: 18px;
+    }
+
+    .stat-card strong,
+    .summary-card strong {
+        font-size: 24px;
+    }
+}
+
+
+/* =====================================================
+   MODO OSCURO
+===================================================== */
+
+:root[data-theme="dark"] {
+
+    color-scheme: dark;
+
+    --bg: #0b1511;
+    --surface: #111e18;
+    --surface-soft: #15251d;
+    --line: #223329;
+    --line-strong: #2f4539;
+
+    --ink: #e8f1ec;
+    --ink-soft: #c3d2ca;
+    --ink-muted: #8ea599;
+
+    --teal-50: rgba(20, 184, 166, .10);
+    --teal-100: rgba(20, 184, 166, .20);
+    --lime-100: rgba(127, 191, 63, .16);
+
+    --ok: #6fdc95;
+    --ok-bg: rgba(60, 190, 110, .16);
+    --warn: #f2c15c;
+    --warn-bg: rgba(242, 184, 75, .16);
+    --info: #6cc0ee;
+    --info-bg: rgba(74, 163, 216, .18);
+    --bad: #f28b8b;
+    --bad-bg: rgba(228, 90, 90, .18);
+
+    --shadow-xs: 0 1px 2px rgba(0, 0, 0, .4);
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, .45);
+    --shadow-md: 0 8px 24px -8px rgba(0, 0, 0, .6);
+    --shadow-lg: 0 24px 60px -20px rgba(0, 0, 0, .8);
+
+    --ring: 0 0 0 3px rgba(20, 184, 166, .32);
+}
+
+[data-theme="dark"] body,
+[data-theme="dark"] .app,
+[data-theme="dark"] .main-content {
+    background: var(--bg);
+    color: var(--ink);
+}
+
+[data-theme="dark"] .topbar {
+    background: transparent;
+    border-bottom-color: var(--line);
+}
+
+[data-theme="dark"] .topbar h1,
+[data-theme="dark"] .page-header h1,
+[data-theme="dark"] .section-header h3,
+[data-theme="dark"] .modal-header h2,
+[data-theme="dark"] .stat-card strong,
+[data-theme="dark"] .summary-card strong,
+[data-theme="dark"] .payment-amount,
+[data-theme="dark"] .login-header .logo-text,
+[data-theme="dark"] .proximo-turno-fecha strong {
+    color: var(--ink);
+}
+
+[data-theme="dark"] .appointments-table td:first-child {
+    color: var(--teal-500);
+}
+
+[data-theme="dark"] .secondary-button,
+[data-theme="dark"] .menu-toggle,
+[data-theme="dark"] .calendar-nav-button,
+[data-theme="dark"] .date-button,
+[data-theme="dark"] .calendar-hoy {
+    color: var(--ink-soft);
+}
+
+[data-theme="dark"] .secondary-button:hover,
+[data-theme="dark"] .calendar-nav-button:hover,
+[data-theme="dark"] .date-button:hover,
+[data-theme="dark"] .calendar-hoy:hover {
+    color: var(--teal-500);
+}
+
+[data-theme="dark"] .form-group input,
+[data-theme="dark"] .form-group select,
+[data-theme="dark"] .form-group textarea,
+[data-theme="dark"] .search-box input,
+[data-theme="dark"] select,
+[data-theme="dark"] input,
+[data-theme="dark"] textarea {
+    background: var(--surface-soft);
+    color: var(--ink);
+    border-color: var(--line-strong);
+}
+
+[data-theme="dark"] input:focus,
+[data-theme="dark"] select:focus,
+[data-theme="dark"] textarea:focus {
+    background: var(--surface-soft);
+}
+
+[data-theme="dark"] ::placeholder {
+    color: #6c8277;
+}
+
+[data-theme="dark"] option {
+    background: var(--surface);
+    color: var(--ink);
+}
+
+[data-theme="dark"] .login-page {
+    background:
+        radial-gradient(60% 55% at 12% 8%, rgba(20, 184, 166, .18), transparent 60%),
+        radial-gradient(55% 50% at 92% 90%, rgba(127, 191, 63, .14), transparent 60%),
+        var(--bg);
+}
+
+[data-theme="dark"] .login-card {
+    background: var(--surface);
+    border-color: var(--line);
+}
+
+[data-theme="dark"] .modal-overlay,
+[data-theme="dark"] .modal-confirmacion {
+    background: rgba(0, 0, 0, .6);
+}
+
+[data-theme="dark"] .welcome-card {
+    background:
+        radial-gradient(60% 140% at 100% 0%, rgba(127, 191, 63, .22), transparent 60%),
+        radial-gradient(70% 120% at 85% 100%, rgba(20, 184, 166, .30), transparent 60%),
+        linear-gradient(120deg, var(--brand-800), var(--brand-950));
+    border: 1px solid var(--line);
+}
+
+[data-theme="dark"] .sidebar {
+    background:
+        radial-gradient(120% 60% at 0% 0%, rgba(20, 184, 166, .16), transparent 55%),
+        linear-gradient(180deg, #0f2a1f 0%, #07140d 100%);
+    border-right-color: var(--line);
+}
+
+
+/* Ajustes finos de modo oscuro (mayor especificidad que el CSS por página) */
+
+[data-theme="dark"] input[type],
+[data-theme="dark"] .form-group input,
+[data-theme="dark"] .form-group select,
+[data-theme="dark"] .form-group textarea,
+[data-theme="dark"] .modal select,
+[data-theme="dark"] .modal textarea {
+    background: var(--surface-soft);
+    color: var(--ink);
+    border-color: var(--line-strong);
+}
+
+[data-theme="dark"] .modal .secondary-button,
+[data-theme="dark"] .modal-footer .secondary-button,
+[data-theme="dark"] .btn-confirmacion-cancelar {
+    background: var(--surface-soft);
+    color: var(--ink-soft);
+    border-color: var(--line-strong);
+}
+
+[data-theme="dark"] .detalle-item,
+[data-theme="dark"] .detalle-item-full,
+[data-theme="dark"] .ficha-dato,
+[data-theme="dark"] .historial-pago,
+[data-theme="dark"] .proximo-turno {
+    background: var(--surface-soft);
+    border-color: var(--line);
+}
+
+[data-theme="dark"] .calendar-day.other-month {
+    background: rgba(255, 255, 255, .02);
+}
+
+[data-theme="dark"] .calendar-day.other-month .calendar-day-number {
+    color: #4b6155;
+}
+
+[data-theme="dark"] .calendar-day.holiday {
+    background: rgba(228, 90, 90, .08);
+}
+
+[data-theme="dark"] .modal-turno strong,
+[data-theme="dark"] .modal-pago strong,
+[data-theme="dark"] .modal strong,
+[data-theme="dark"] .turno-detalle strong,
+[data-theme="dark"] .patient-name strong,
+[data-theme="dark"] .appointment-patient strong,
+[data-theme="dark"] .payment-patient strong {
+    color: var(--ink);
+}
+
+[data-theme="dark"] .modal-footer,
+[data-theme="dark"] .modal-header {
+    border-color: var(--line);
+}
+
+[data-theme="dark"] .estado-menu,
+[data-theme="dark"] .notificacion,
+[data-theme="dark"] .notificacion-quirogest {
+    background: var(--surface);
+    color: var(--ink);
+    border-color: var(--line);
+}
+
+/* Los formularios de cada página usan selectores por ID; en oscuro se fuerzan */
+[data-theme="dark"] input:not([type="checkbox"]):not([type="radio"]),
+[data-theme="dark"] select,
+[data-theme="dark"] textarea {
+    background-color: var(--surface-soft) !important;
+    color: var(--ink) !important;
+    border-color: var(--line-strong) !important;
+}
+
+[data-theme="dark"] button.secondary-button,
+[data-theme="dark"] .btn-confirmacion-cancelar {
+    background-color: var(--surface-soft) !important;
+    color: var(--ink-soft) !important;
+    border-color: var(--line-strong) !important;
+}
+
+/* Botón primario unificado en todas las páginas */
+button.primary-button,
+.modal-footer .primary-button,
+.page-header .btn-primary {
+    background: linear-gradient(135deg, var(--brand-600), var(--teal-700)) !important;
+    color: #fff !important;
+}
+
+.sidebar-footer .logout-button {
+    width: 100%;
+    justify-content: flex-start;
+}
