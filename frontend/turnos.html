@@ -679,6 +679,54 @@
 
 
 <!-- =========================
+     RECORDATORIOS DE TURNOS
+========================= -->
+
+<section class="appointments-card" id="tarjetaRecordatorios">
+
+    <div class="appointments-header">
+
+        <div>
+            <h2>Recordatorios</h2>
+            <span id="recordatoriosResumen">Cargando estado…</span>
+        </div>
+
+        <span class="recordatorio-insignia" id="recordatoriosInsignia" hidden></span>
+
+    </div>
+
+    <div class="recordatorio-canales" id="recordatoriosCanales"></div>
+
+    <div class="appointments-table-container">
+
+        <table class="appointments-table">
+
+            <thead>
+                <tr>
+                    <th>Turno</th>
+                    <th>Paciente</th>
+                    <th>Canal</th>
+                    <th>Estado</th>
+                    <th>Cuándo</th>
+                </tr>
+            </thead>
+
+            <tbody id="tablaRecordatorios">
+                <tr>
+                    <td colspan="5" style="text-align:center;padding:24px;">
+                        Todavía no se envió ningún recordatorio.
+                    </td>
+                </tr>
+            </tbody>
+
+        </table>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
      CALENDARIO MENSUAL
 ========================= -->
 
@@ -1804,6 +1852,7 @@
 
     <script src="js/turnos.js"></script>
     <script src="js/turnos-busqueda.js"></script>
+    <script src="js/recordatorios.js"></script>
     <script src="js/notificaciones.js"></script>
     <script src="js/pagos.js"></script>
 

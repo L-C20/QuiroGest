@@ -3,7 +3,8 @@ const { Pool } = require("pg");
 const url = process.env.DATABASE_URL;
 
 // La red interna de Railway (*.railway.internal) no usa SSL; el proxy publico si.
-const usaSSL = !(url && url.includes(".railway.internal"));
+const usaSSL = process.env.DB_SSL !== "false" &&
+    !(url && url.includes(".railway.internal"));
 const ssl = usaSSL ? { rejectUnauthorized: false } : false;
 
 const pool = url

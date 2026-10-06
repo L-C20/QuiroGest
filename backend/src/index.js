@@ -9,6 +9,8 @@ const authRoutes = require("./routes/auth");
 const pacientesRoutes = require("./routes/pacientes");
 const turnosRoutes = require("./routes/turnos");
 const pagosRoutes = require("./routes/pagos");
+const recordatoriosRoutes = require("./routes/recordatorios");
+const recordatorios = require("./services/recordatorios");
 const verificarToken = require("./middleware/authMiddleware");
 
 app.use(cors());
@@ -17,6 +19,7 @@ app.use("/auth", authRoutes);
 app.use("/pacientes", pacientesRoutes);
 app.use("/turnos", turnosRoutes);
 app.use("/pagos", verificarToken, pagosRoutes);
+app.use("/recordatorios", verificarToken, recordatoriosRoutes);
 
 app.get("/health", (req, res) => {
     res.json({
@@ -36,4 +39,5 @@ const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, "0.0.0.0", () => {
     console.log(`Servidor QUIROGEST funcionando en el puerto ${PORT}`);
+    recordatorios.iniciar();
 });
