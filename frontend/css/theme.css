@@ -1,0 +1,967 @@
+/* =====================================================
+   QUIROGEST — TEMA VISUAL (se carga al final de todo)
+   Verde institucional + lima + teal · Tipografía Inter
+===================================================== */
+
+:root {
+
+    /* Marca */
+    --brand-950: #0c2a1d;
+    --brand-900: #123826;
+    --brand-800: #17452f;
+    --brand-700: #1f4d3a;
+    --brand-600: #2a6249;
+
+    --lime-500: #7fbf3f;
+    --lime-400: #98d35a;
+    --lime-100: #ecf7dc;
+
+    --teal-700: #0b7a72;
+    --teal-600: #0f9488;
+    --teal-500: #14b8a6;
+    --teal-100: #d5f3ef;
+    --teal-50: #eefaf8;
+
+    /* Superficies y texto */
+    --bg: #f0f4f3;
+    --surface: #ffffff;
+    --surface-soft: #f7faf9;
+    --line: #e1e8e5;
+    --line-strong: #cfd9d5;
+
+    --ink: #14231c;
+    --ink-soft: #3d4f46;
+    --ink-muted: #6b7c74;
+
+    /* Estados */
+    --ok: #17803d;
+    --ok-bg: #e3f6e9;
+    --warn: #a15c07;
+    --warn-bg: #fdf1d6;
+    --info: #0b6f9e;
+    --info-bg: #dff1fb;
+    --bad: #b42323;
+    --bad-bg: #fde6e6;
+
+    /* Forma */
+    --radius-sm: 8px;
+    --radius: 12px;
+    --radius-lg: 18px;
+
+    --shadow-xs: 0 1px 2px rgba(18, 56, 38, .06);
+    --shadow-sm: 0 1px 3px rgba(18, 56, 38, .07), 0 1px 2px rgba(18, 56, 38, .04);
+    --shadow-md: 0 6px 20px -6px rgba(18, 56, 38, .14), 0 2px 6px rgba(18, 56, 38, .05);
+    --shadow-lg: 0 24px 60px -20px rgba(12, 42, 29, .35);
+
+    --ring: 0 0 0 3px rgba(20, 184, 166, .22);
+
+    /* Compatibilidad con variables previas */
+    --color-primary: var(--brand-700);
+    --color-accent: var(--lime-500);
+    --color-background: var(--bg);
+    --color-surface: var(--surface);
+    --color-border: var(--line);
+    --color-text: var(--ink);
+    --color-text-muted: var(--ink-muted);
+}
+
+
+/* =====================================================
+   BASE
+===================================================== */
+
+html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+}
+
+body,
+button,
+input,
+select,
+textarea {
+    font-family: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+    font-feature-settings: "cv11", "ss01";
+}
+
+body {
+    color: var(--ink);
+    background: var(--bg);
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+h1, h2, h3, h4 {
+    letter-spacing: -0.015em;
+    color: var(--ink);
+}
+
+strong {
+    font-weight: 600;
+}
+
+::selection {
+    background: var(--teal-100);
+    color: var(--brand-900);
+}
+
+:focus-visible {
+    outline: 2px solid var(--teal-500);
+    outline-offset: 2px;
+}
+
+/* Barra de scroll discreta */
+* {
+    scrollbar-width: thin;
+    scrollbar-color: var(--line-strong) transparent;
+}
+
+
+/* =====================================================
+   LAYOUT / SIDEBAR
+===================================================== */
+
+.app {
+    background: var(--bg);
+}
+
+.sidebar {
+    background:
+        radial-gradient(120% 60% at 0% 0%, rgba(20, 184, 166, .22), transparent 55%),
+        radial-gradient(90% 50% at 100% 100%, rgba(127, 191, 63, .16), transparent 60%),
+        linear-gradient(180deg, var(--brand-800) 0%, var(--brand-950) 100%);
+    padding: 24px 14px;
+    border-right: 1px solid rgba(255, 255, 255, .05);
+    box-shadow: 4px 0 24px -12px rgba(12, 42, 29, .5);
+}
+
+.sidebar-header {
+    padding: 4px 8px 22px;
+    margin-bottom: 8px;
+    border-bottom: 1px solid rgba(255, 255, 255, .08);
+}
+
+.sidebar-logo {
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    font-weight: 800;
+    font-size: 18px;
+    color: var(--brand-950);
+    background: linear-gradient(135deg, var(--lime-400), var(--teal-500));
+    box-shadow: 0 6px 16px -4px rgba(20, 184, 166, .55);
+}
+
+.sidebar-title {
+    font-weight: 800;
+    letter-spacing: .08em;
+    font-size: 14px;
+    color: #fff;
+}
+
+.sidebar-subtitle {
+    color: rgba(255, 255, 255, .55);
+    font-size: 11.5px;
+    letter-spacing: .01em;
+}
+
+.nav-item {
+    position: relative;
+    border-radius: 10px;
+    padding: 10px 12px;
+    font-weight: 500;
+    color: rgba(255, 255, 255, .72);
+    transition: background .18s ease, color .18s ease, transform .18s ease;
+}
+
+.nav-item:hover {
+    background: rgba(255, 255, 255, .07);
+    color: #fff;
+}
+
+.nav-item.active {
+    background: linear-gradient(90deg, rgba(20, 184, 166, .28), rgba(127, 191, 63, .10));
+    color: #fff;
+    font-weight: 600;
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .06);
+}
+
+.nav-item.active::before {
+    content: "";
+    position: absolute;
+    left: -14px;
+    top: 9px;
+    bottom: 9px;
+    width: 4px;
+    border-radius: 0 4px 4px 0;
+    background: var(--lime-400);
+}
+
+.nav-item.active .nav-icon {
+    color: var(--lime-400);
+}
+
+.nav-separator {
+    background: rgba(255, 255, 255, .09);
+}
+
+.logout-button {
+    border-radius: 10px;
+    font-weight: 500;
+}
+
+
+/* =====================================================
+   TOPBAR
+===================================================== */
+
+.topbar {
+    background: transparent;
+    padding-bottom: 6px;
+}
+
+.topbar h1 {
+    font-size: 26px;
+    font-weight: 700;
+    letter-spacing: -0.025em;
+    color: var(--brand-900);
+}
+
+.topbar p {
+    color: var(--ink-muted);
+    font-size: 13.5px;
+}
+
+.user-menu {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 5px 14px 5px 6px;
+    box-shadow: var(--shadow-xs);
+}
+
+.user-avatar {
+    background: linear-gradient(135deg, var(--teal-500), var(--brand-600));
+    color: #fff;
+    font-weight: 700;
+}
+
+.user-info strong {
+    color: var(--ink);
+}
+
+.user-info span {
+    color: var(--ink-muted);
+}
+
+
+/* =====================================================
+   TARJETAS
+===================================================== */
+
+.welcome-card,
+.stat-card,
+.dashboard-section,
+.table-container,
+.patients-toolbar {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+}
+
+.welcome-card {
+    position: relative;
+    overflow: hidden;
+    border: none;
+    color: #fff;
+    background:
+        radial-gradient(60% 140% at 100% 0%, rgba(127, 191, 63, .38), transparent 60%),
+        radial-gradient(70% 120% at 85% 100%, rgba(20, 184, 166, .45), transparent 60%),
+        linear-gradient(120deg, var(--brand-700), var(--brand-900));
+    box-shadow: var(--shadow-md);
+}
+
+.welcome-card h2 {
+    color: #fff;
+    font-size: 22px;
+    font-weight: 700;
+}
+
+.welcome-card p {
+    color: rgba(255, 255, 255, .78);
+}
+
+.stat-card {
+    position: relative;
+    overflow: hidden;
+    transition: transform .2s ease, box-shadow .2s ease;
+}
+
+.stat-card::after {
+    content: "";
+    position: absolute;
+    inset: auto 0 0 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--lime-500), var(--teal-500));
+    opacity: .85;
+}
+
+.stat-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+.stat-card strong {
+    font-weight: 700;
+    font-size: 30px;
+    letter-spacing: -0.03em;
+    color: var(--brand-900);
+    font-variant-numeric: tabular-nums;
+}
+
+.stat-card span {
+    color: var(--ink-muted);
+    font-weight: 500;
+}
+
+.stats-grid .stat-card:nth-child(1) .stat-icon {
+    background: var(--lime-100);
+    color: var(--brand-600);
+}
+
+.stats-grid .stat-card:nth-child(2) .stat-icon {
+    background: var(--teal-100);
+    color: var(--teal-700);
+}
+
+.stats-grid .stat-card:nth-child(3) .stat-icon {
+    background: var(--info-bg);
+    color: var(--info);
+}
+
+.stats-grid .stat-card:nth-child(4) .stat-icon {
+    background: var(--warn-bg);
+    color: var(--warn);
+}
+
+.stat-icon {
+    border-radius: 14px;
+}
+
+.section-header h3 {
+    font-size: 16px;
+    font-weight: 650;
+    color: var(--brand-900);
+}
+
+.section-header p {
+    color: var(--ink-muted);
+}
+
+.empty-icon {
+    background: var(--teal-50);
+    color: var(--teal-600);
+}
+
+
+/* =====================================================
+   BOTONES
+===================================================== */
+
+.btn-primary,
+.primary-button,
+.modal-footer .primary-button {
+    background: linear-gradient(135deg, var(--brand-600), var(--teal-700));
+    color: #fff;
+    border: 0;
+    border-radius: var(--radius);
+    font-weight: 600;
+    letter-spacing: .005em;
+    box-shadow: 0 6px 16px -6px rgba(15, 148, 136, .55), inset 0 1px 0 rgba(255, 255, 255, .15);
+    transition: transform .15s ease, box-shadow .2s ease, filter .2s ease;
+}
+
+.btn-primary:hover,
+.primary-button:hover,
+.modal-footer .primary-button:hover {
+    filter: brightness(1.06);
+    transform: translateY(-1px);
+    box-shadow: 0 10px 22px -8px rgba(15, 148, 136, .6), inset 0 1px 0 rgba(255, 255, 255, .18);
+}
+
+.btn-primary:active,
+.primary-button:active {
+    transform: translateY(0);
+    filter: brightness(.97);
+}
+
+.secondary-button {
+    background: var(--surface);
+    border: 1px solid var(--line-strong);
+    color: var(--brand-700);
+    border-radius: var(--radius);
+    font-weight: 600;
+    transition: background .18s ease, border-color .18s ease;
+}
+
+.secondary-button:hover {
+    background: var(--teal-50);
+    border-color: var(--teal-500);
+    color: var(--teal-700);
+}
+
+
+/* =====================================================
+   FORMULARIOS
+===================================================== */
+
+.form-group label {
+    color: var(--ink-soft);
+    font-weight: 600;
+    font-size: 12.5px;
+    letter-spacing: .01em;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea,
+.search-box input,
+.patients-toolbar select,
+.filtro-proximos-turnos,
+input[type="date"],
+input[type="time"],
+input[type="number"],
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="search"],
+select,
+textarea {
+    background: var(--surface);
+    border: 1px solid var(--line-strong);
+    border-radius: var(--radius);
+    color: var(--ink);
+    transition: border-color .15s ease, box-shadow .15s ease, background .15s ease;
+}
+
+.form-group input:hover,
+.search-box input:hover,
+select:hover {
+    border-color: var(--teal-500);
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus,
+.search-box input:focus,
+.patients-toolbar select:focus,
+.filtro-proximos-turnos:focus,
+input:focus,
+select:focus,
+textarea:focus {
+    outline: none;
+    border-color: var(--teal-500);
+    box-shadow: var(--ring);
+    background: #fff;
+}
+
+::placeholder {
+    color: #9aa9a2;
+}
+
+.search-box svg {
+    color: var(--teal-600);
+}
+
+.login-error {
+    color: var(--bad);
+    font-weight: 500;
+}
+
+.login-error:not(:empty) {
+    background: var(--bad-bg);
+    border: 1px solid #f6c3c3;
+    border-radius: var(--radius);
+    padding: 10px 12px;
+}
+
+
+/* =====================================================
+   TABLAS
+===================================================== */
+
+.table-container {
+    overflow: hidden;
+}
+
+.patients-table thead,
+.patients-table th {
+    background: var(--surface-soft);
+}
+
+.patients-table th {
+    color: var(--ink-muted);
+    font-size: 11.5px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .07em;
+    border-bottom: 1px solid var(--line);
+}
+
+.patients-table td {
+    border-bottom: 1px solid var(--line);
+    color: var(--ink-soft);
+}
+
+.patients-table tbody tr {
+    transition: background .15s ease;
+}
+
+.patients-table tbody tr:hover {
+    background: var(--teal-50);
+}
+
+.patients-table tbody tr:last-child td {
+    border-bottom: 0;
+}
+
+.patient-name strong {
+    color: var(--ink);
+    font-weight: 600;
+}
+
+.patient-name span {
+    color: var(--ink-muted);
+}
+
+.table-action {
+    border-radius: 10px;
+    color: var(--ink-muted);
+    transition: background .15s ease, color .15s ease;
+}
+
+.table-action:hover {
+    background: var(--teal-100);
+    color: var(--teal-700);
+}
+
+
+/* =====================================================
+   ESTADOS (badges)
+===================================================== */
+
+.appointment-status,
+.status-pending,
+.status-confirmed,
+.status-attended,
+.status-cancelled {
+    font-weight: 600;
+    border-radius: 999px;
+    letter-spacing: .005em;
+}
+
+.status-pending,
+.appointment-status.status-pending,
+.estado-opcion.status-pending {
+    background: var(--warn-bg);
+    color: var(--warn);
+    border-color: #f1d98f;
+}
+
+.status-confirmed,
+.appointment-status.status-confirmed,
+.estado-opcion.status-confirmed {
+    background: var(--ok-bg);
+    color: var(--ok);
+    border-color: #b7e4c4;
+}
+
+.status-attended,
+.appointment-status.status-attended,
+.estado-opcion.status-attended {
+    background: var(--info-bg);
+    color: var(--info);
+    border-color: #b4dcf0;
+}
+
+.status-cancelled,
+.appointment-status.status-cancelled,
+.estado-opcion.status-cancelled {
+    background: var(--bad-bg);
+    color: var(--bad);
+    border-color: #f3c0c0;
+}
+
+.estado-menu {
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-md);
+}
+
+.proximo-turno {
+    border-radius: var(--radius);
+    transition: background .15s ease;
+}
+
+.proximo-turno:hover {
+    background: var(--teal-50);
+}
+
+.proximo-turno-fecha strong {
+    color: var(--brand-800);
+    font-variant-numeric: tabular-nums;
+}
+
+
+/* =====================================================
+   MODALES
+===================================================== */
+
+.modal-overlay,
+.modal-confirmacion {
+    background: rgba(12, 42, 29, .45);
+    -webkit-backdrop-filter: blur(5px);
+    backdrop-filter: blur(5px);
+}
+
+.modal,
+.modal-confirmacion-contenido {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 20px;
+    box-shadow: var(--shadow-lg);
+}
+
+.modal-header h2 {
+    font-weight: 700;
+    color: var(--brand-900);
+}
+
+.modal-header p {
+    color: var(--ink-muted);
+}
+
+.modal-close {
+    border-radius: 10px;
+    color: var(--ink-muted);
+}
+
+.modal-close:hover {
+    background: var(--teal-50);
+    color: var(--teal-700);
+}
+
+.modal-footer {
+    border-top: 1px solid var(--line);
+}
+
+.btn-confirmacion-aceptar {
+    background: linear-gradient(135deg, var(--brand-600), var(--teal-700));
+    color: #fff;
+    border-radius: var(--radius);
+}
+
+.btn-confirmacion-cancelar {
+    border-radius: var(--radius);
+}
+
+.ficha-avatar {
+    background: linear-gradient(135deg, var(--teal-500), var(--brand-600));
+    color: #fff;
+}
+
+.ficha-dato {
+    border-radius: var(--radius);
+}
+
+.ficha-dato span {
+    color: var(--ink-muted);
+}
+
+.historial-pago {
+    border-radius: var(--radius);
+    border-color: var(--line);
+}
+
+.historial-pago:hover {
+    background: var(--teal-50);
+}
+
+
+/* =====================================================
+   LOGIN
+===================================================== */
+
+.login-page {
+    min-height: 100vh;
+    background:
+        radial-gradient(60% 55% at 12% 8%, rgba(20, 184, 166, .30), transparent 60%),
+        radial-gradient(55% 50% at 92% 90%, rgba(127, 191, 63, .30), transparent 60%),
+        linear-gradient(160deg, var(--brand-900), var(--brand-950));
+}
+
+.login-card {
+    background: rgba(255, 255, 255, .97);
+    border: 1px solid rgba(255, 255, 255, .6);
+    border-radius: 24px;
+    box-shadow: var(--shadow-lg);
+}
+
+.login-header .logo-icon {
+    background: linear-gradient(135deg, var(--lime-400), var(--teal-500));
+    color: var(--brand-950);
+    font-weight: 800;
+    box-shadow: 0 8px 18px -6px rgba(20, 184, 166, .6);
+}
+
+.login-header .logo-text {
+    color: var(--brand-900);
+    font-weight: 800;
+    letter-spacing: .08em;
+}
+
+.login-header p {
+    color: var(--ink-muted);
+}
+
+
+/* =====================================================
+   NOTIFICACIONES
+===================================================== */
+
+.notificacion {
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-md);
+    font-family: inherit;
+}
+
+
+/* =====================================================
+   MOVIMIENTO REDUCIDO
+===================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+    * {
+        transition: none !important;
+        animation: none !important;
+    }
+}
+
+
+/* =====================================================
+   TURNOS Y PAGOS (clases propias de cada página)
+===================================================== */
+
+.page-header h1 {
+    font-size: 26px;
+    font-weight: 700;
+    letter-spacing: -0.025em;
+    color: var(--brand-900);
+}
+
+.page-header p {
+    color: var(--ink-muted);
+}
+
+.page-header .btn-primary {
+    background: linear-gradient(135deg, var(--brand-600), var(--teal-700));
+    color: #fff;
+    border-radius: var(--radius);
+    font-weight: 600;
+    box-shadow: 0 6px 16px -6px rgba(15, 148, 136, .55), inset 0 1px 0 rgba(255, 255, 255, .15);
+}
+
+.page-header .btn-primary:hover {
+    background: linear-gradient(135deg, var(--brand-600), var(--teal-600));
+    filter: brightness(1.06);
+}
+
+/* Tarjetas de resumen */
+.summary-card {
+    position: relative;
+    overflow: hidden;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+    transition: transform .2s ease, box-shadow .2s ease;
+}
+
+.summary-card::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 14px;
+    bottom: 14px;
+    width: 4px;
+    border-radius: 0 4px 4px 0;
+    background: var(--lime-500);
+}
+
+.appointment-summary .summary-card:nth-child(2)::before,
+.payment-summary .summary-card:nth-child(2)::before {
+    background: var(--teal-500);
+}
+
+.appointment-summary .summary-card:nth-child(3)::before,
+.payment-summary .summary-card:nth-child(3)::before {
+    background: #f2b84b;
+}
+
+.appointment-summary .summary-card:nth-child(4)::before,
+.payment-summary .summary-card:nth-child(4)::before {
+    background: #4aa3d8;
+}
+
+.summary-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+.summary-label {
+    color: var(--ink-muted);
+    font-weight: 500;
+}
+
+.summary-card strong {
+    color: var(--brand-900);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    font-variant-numeric: tabular-nums;
+}
+
+/* Contenedores y tablas */
+.appointments-card,
+.payments-card,
+.calendar-card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+}
+
+.appointments-table thead,
+.payments-table thead {
+    background: var(--surface-soft);
+}
+
+.appointments-table th,
+.payments-table th {
+    color: var(--ink-muted);
+    font-size: 11.5px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .07em;
+}
+
+.appointments-table td,
+.payments-table td {
+    color: var(--ink-soft);
+}
+
+.appointments-table tbody tr:hover,
+.payments-table tbody tr:hover {
+    background: var(--teal-50);
+}
+
+.appointments-table td:first-child {
+    color: var(--brand-700);
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+}
+
+.appointments-table .table-action:hover,
+.payments-table .table-action:hover {
+    background: var(--teal-100);
+    border-color: var(--teal-500);
+    color: var(--teal-700);
+}
+
+.payment-amount {
+    font-weight: 700;
+    color: var(--brand-800);
+    font-variant-numeric: tabular-nums;
+}
+
+/* Estado de pago */
+.payment-paid,
+.payment-status,
+.payment-status.paid {
+    background: var(--ok-bg);
+    color: var(--ok);
+    border: 1px solid #b7e4c4;
+    font-weight: 600;
+}
+
+.payment-pending,
+.payment-status.pending {
+    background: var(--warn-bg);
+    color: var(--warn);
+    border: 1px solid #f1d98f;
+    font-weight: 600;
+}
+
+.payment-status.cancelled,
+.payment-status.anulado {
+    background: var(--bad-bg);
+    color: var(--bad);
+    border: 1px solid #f3c0c0;
+}
+
+/* Calendario */
+.calendar-day {
+    background: var(--surface);
+    border-color: var(--line);
+}
+
+.calendar-day:hover {
+    background: var(--teal-50);
+}
+
+.calendar-day.today .calendar-day-number {
+    background: linear-gradient(135deg, var(--brand-600), var(--teal-600));
+    color: #fff;
+    box-shadow: 0 4px 10px -3px rgba(15, 148, 136, .55);
+}
+
+.calendar-day.selected {
+    background: var(--teal-50);
+    box-shadow: inset 0 0 0 2px var(--teal-500);
+}
+
+.calendar-weekdays {
+    background: var(--surface-soft);
+    color: var(--ink-muted);
+}
+
+.calendar-nav-button,
+.date-button,
+.calendar-hoy {
+    border-radius: var(--radius-sm);
+    border-color: var(--line-strong);
+    color: var(--brand-700);
+    background: var(--surface);
+}
+
+.calendar-nav-button:hover,
+.date-button:hover,
+.calendar-hoy:hover {
+    background: var(--teal-50);
+    border-color: var(--teal-500);
+    color: var(--teal-700);
+}
+
+.calendar-appointments-count,
+.calendar-day-appointments {
+    color: var(--teal-700);
+}
+
+.modal-turno,
+.modal-pago {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 20px;
+    box-shadow: var(--shadow-lg);
+}
