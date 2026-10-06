@@ -142,7 +142,109 @@ router.get("/", verificarToken, async (req, res) => {
 
     try {
 
-        const { fecha } = req.query;
+        const { fecha, desde, hasta, estado, q } = req.query;
+
+
+        /* BÚSQUEDA AVANZADA: texto, estado y/o rango de fechas */
+
+        if (!fecha && (desde || hasta || estado || q)) {
+
+            const estadosValidos = [
+                "pendiente",
+                "confirmado",
+                "atendido",
+                "cancelado"
+            ];
+
+            const fechaValida = /^\d{4}-\d{2}-\d{2}$/;
+
+            if (
+                (desde && !fechaValida.test(desde)) ||
+                (hasta && !fechaValida.test(hasta))
+            ) {
+                return res.status(400).json({
+                    mensaje: "Formato de fecha inválido"
+                });
+            }
+
+            if (estado && !estadosValidos.includes(estado)) {
+                return res.status(400).json({
+                    mensaje: "Estado inválido"
+                });
+            }
+
+            const condiciones = [];
+            const valores = [];
+
+            if (desde) {
+                valores.push(desde);
+                condiciones.push(`t.fecha >= $${valores.length}`);
+            }
+
+            if (hasta) {
+                valores.push(hasta);
+                condiciones.push(`t.fecha <= $${valores.length}`);
+            }
+
+            if (estado) {
+                valores.push(estado);
+                condiciones.push(`t.estado = $${valores.length}`);
+            }
+
+            if (q && q.trim()) {
+                valores.push(`%${q.trim()}%`);
+                const i = valores.length;
+                condiciones.push(
+                    `(p.nombre ILIKE $${i}
+                      OR p.apellido ILIKE $${i}
+                      OR (p.apellido || ' ' || p.nombre) ILIKE $${i}
+                      OR (p.nombre || ' ' || p.apellido) ILIKE $${i}
+                      OR p.dni ILIKE $${i}
+                      OR CAST(p.numero_identificacion AS TEXT) ILIKE $${i})`
+                );
+            }
+
+            const busqueda = await pool.query(
+                `
+                SELECT
+                    t.id,
+                    t.fecha,
+                    t.hora,
+                    t.estado,
+                    t.observaciones,
+
+                    p.id AS paciente_id,
+                    p.numero_identificacion,
+                    p.nombre,
+                    p.apellido,
+                    p.dni,
+
+                    EXISTS (
+                        SELECT 1
+                        FROM pagos pg
+                        WHERE pg.turno_id = t.id
+                        AND pg.estado = 'pagado'
+                    ) AS pago_registrado
+
+                FROM turnos t
+
+                INNER JOIN pacientes p
+                    ON p.id = t.paciente_id
+
+                ${condiciones.length ? "WHERE " + condiciones.join(" AND ") : ""}
+
+                ORDER BY t.fecha DESC, t.hora ASC
+
+                LIMIT 300
+                `,
+                valores
+            );
+
+            return res.json({
+                turnos: busqueda.rows
+            });
+
+        }
 
 
         if (!fecha) {

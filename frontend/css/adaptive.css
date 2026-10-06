@@ -511,3 +511,109 @@ button.primary-button,
     width: 100%;
     justify-content: flex-start;
 }
+
+
+/* =====================================================
+   FILTROS AVANZADOS
+===================================================== */
+
+.payments-filters,
+.turnos-filtros {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    gap: 10px;
+}
+
+.filtro-busqueda {
+    position: relative;
+    flex: 1 1 240px;
+    min-width: 200px;
+}
+
+.filtro-busqueda svg {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    width: 16px;
+    height: 16px;
+    transform: translateY(-50%);
+    fill: none;
+    stroke: var(--teal-600);
+    stroke-width: 2;
+    stroke-linecap: round;
+    pointer-events: none;
+}
+
+.filtro-busqueda input {
+    width: 100%;
+    height: 36px;
+    padding: 0 12px 0 36px;
+    font: inherit;
+    font-size: 13px;
+}
+
+.filtro-fecha {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+}
+
+.filtro-fecha input,
+.payments-filters select,
+.turnos-filtros select,
+.turnos-filtros input[type="date"] {
+    height: 36px;
+    padding: 0 10px;
+    font: inherit;
+    font-size: 13px;
+    text-transform: none;
+    letter-spacing: 0;
+    font-weight: 500;
+    color: var(--ink);
+}
+
+.payments-filters .secondary-button,
+.turnos-filtros .secondary-button {
+    height: 36px;
+    padding: 0 14px;
+    font-size: 13px;
+}
+
+.filtro-resultados {
+    margin-left: auto;
+    align-self: center;
+    font-size: 12.5px;
+    font-weight: 600;
+    color: var(--ink-muted);
+    font-variant-numeric: tabular-nums;
+}
+
+@media (max-width: 700px) {
+
+    .payments-filters,
+    .turnos-filtros {
+        align-items: stretch;
+    }
+
+    .payments-filters select,
+    .filtro-fecha {
+        flex: 1 1 140px;
+        width: auto;
+    }
+
+    .filtro-resultados {
+        flex-basis: 100%;
+        margin-left: 0;
+    }
+}
+
+.turnos-filtros {
+    padding: 14px 20px 16px;
+    border-bottom: 1px solid var(--line);
+}

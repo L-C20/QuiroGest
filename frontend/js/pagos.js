@@ -27,6 +27,15 @@ const filtroPeriodo =
 const filtroMetodoPago =
     document.getElementById("filtroMetodoPago");
 
+const filtroBusqueda =
+    document.getElementById("filtroBusqueda");
+
+const filtroDesde =
+    document.getElementById("filtroDesde");
+
+const filtroHasta =
+    document.getElementById("filtroHasta");
+
 const btnNuevoPago =
     document.getElementById("btnNuevoPago");
 
@@ -252,155 +261,145 @@ async function cargarPagos() {
 
 
 /* =====================================================
+   FILTRAR PAGOS
+   (búsqueda, método, período rápido y rango de fechas)
+===================================================== */
+
+function fechaLocalISO(fecha) {
+
+    const anio = fecha.getFullYear();
+    const mes = String(fecha.getMonth() + 1).padStart(2, "0");
+    const dia = String(fecha.getDate()).padStart(2, "0");
+
+    return `${anio}-${mes}-${dia}`;
+
+}
+
+
+function normalizarTexto(texto) {
+
+    return String(texto || "")
+        .normalize("NFD")
+        .replace(/[̀-ͯ]/g, "")
+        .toLowerCase()
+        .trim();
+
+}
+
+
+function filtrarPagos() {
+
+    const metodo = filtroMetodoPago.value;
+    const periodo = filtroPeriodo.value;
+    const busqueda = normalizarTexto(
+        filtroBusqueda ? filtroBusqueda.value : ""
+    );
+    const desde = filtroDesde ? filtroDesde.value : "";
+    const hasta = filtroHasta ? filtroHasta.value : "";
+
+    const hoy = new Date();
+
+    const inicioSemana = new Date(hoy);
+    inicioSemana.setDate(
+        inicioSemana.getDate() -
+        (hoy.getDay() === 0 ? 6 : hoy.getDay() - 1)
+    );
+    inicioSemana.setHours(0, 0, 0, 0);
+
+    const finSemana = new Date(inicioSemana);
+    finSemana.setDate(finSemana.getDate() + 7);
+
+    return pagos.filter(pago => {
+
+        if (metodo && pago.metodo_pago !== metodo) {
+            return false;
+        }
+
+        if (busqueda) {
+
+            const texto = normalizarTexto(
+                `${pago.nombre} ${pago.apellido} ` +
+                `${pago.apellido} ${pago.nombre} ` +
+                `${pago.numero_identificacion}`
+            );
+
+            if (!texto.includes(busqueda)) {
+                return false;
+            }
+
+        }
+
+        const necesitaFecha = periodo || desde || hasta;
+
+        if (!necesitaFecha) {
+            return true;
+        }
+
+        if (!pago.fecha_pago) {
+            return false;
+        }
+
+        const fechaPago = new Date(pago.fecha_pago);
+
+        if (periodo === "hoy" &&
+            fechaLocalISO(fechaPago) !== fechaLocalISO(hoy)) {
+            return false;
+        }
+
+        if (periodo === "semana" &&
+            !(fechaPago >= inicioSemana && fechaPago < finSemana)) {
+            return false;
+        }
+
+        if (periodo === "mes" &&
+            !(fechaPago.getMonth() === hoy.getMonth() &&
+              fechaPago.getFullYear() === hoy.getFullYear())) {
+            return false;
+        }
+
+        const fechaISO = fechaLocalISO(fechaPago);
+
+        if (desde && fechaISO < desde) {
+            return false;
+        }
+
+        if (hasta && fechaISO > hasta) {
+            return false;
+        }
+
+        return true;
+
+    });
+
+}
+
+
+function refrescarVista() {
+
+    actualizarResumen();
+    mostrarPagos();
+
+    const cantidad = filtrarPagos().length;
+    const aviso = document.getElementById("resultadosFiltro");
+
+    if (aviso) {
+        aviso.textContent =
+            cantidad === pagos.length
+                ? `${pagos.length} pagos`
+                : `${cantidad} de ${pagos.length} pagos`;
+    }
+
+}
+
+
+/* =====================================================
    MOSTRAR PAGOS
 ===================================================== */
 
 function mostrarPagos() {
 
-    const filtroMetodo =
-        filtroMetodoPago.value;
-
-    const filtroPeriodoValor =
-        filtroPeriodo.value;
-
-
-    let pagosFiltrados =
-        pagos;
-
-
-    /* =============================================
-       FILTRO POR MÉTODO
-    ============================================= */
-
-    if (filtroMetodo) {
-
-        pagosFiltrados =
-            pagosFiltrados.filter(
-                pago =>
-                    pago.metodo_pago ===
-                    filtroMetodo
-            );
-
-    }
-
-
-    /* =============================================
-       FILTRO POR PERÍODO
-    ============================================= */
-
-    if (filtroPeriodoValor) {
-
-        const hoy =
-            new Date();
-
-        pagosFiltrados =
-            pagosFiltrados.filter(
-                pago => {
-
-                    if (!pago.fecha_pago) {
-                        return false;
-                    }
-
-
-                    const fechaPago =
-                        new Date(
-                            pago.fecha_pago
-                        );
-
-
-                    if (
-                        filtroPeriodoValor ===
-                        "hoy"
-                    ) {
-
-                        return (
-                            fechaPago.getDate() ===
-                                hoy.getDate() &&
-
-                            fechaPago.getMonth() ===
-                                hoy.getMonth() &&
-
-                            fechaPago.getFullYear() ===
-                                hoy.getFullYear()
-                        );
-
-                    }
-
-
-                    if (
-                        filtroPeriodoValor ===
-                        "semana"
-                    ) {
-
-                        const inicioSemana =
-                            new Date(hoy);
-
-                        const dia =
-                            inicioSemana.getDay();
-
-                        const diferencia =
-                            dia === 0
-                                ? 6
-                                : dia - 1;
-
-
-                        inicioSemana.setDate(
-                            inicioSemana.getDate() -
-                            diferencia
-                        );
-
-
-                        inicioSemana.setHours(
-                            0,
-                            0,
-                            0,
-                            0
-                        );
-
-
-                        const finSemana =
-                            new Date(
-                                inicioSemana
-                            );
-
-                        finSemana.setDate(
-                            finSemana.getDate() +
-                            7
-                        );
-
-
-                        return (
-                            fechaPago >=
-                                inicioSemana &&
-                            fechaPago <
-                                finSemana
-                        );
-
-                    }
-
-
-                    if (
-                        filtroPeriodoValor ===
-                        "mes"
-                    ) {
-
-                        return (
-                            fechaPago.getMonth() ===
-                                hoy.getMonth() &&
-
-                            fechaPago.getFullYear() ===
-                                hoy.getFullYear()
-                        );
-
-                    }
-
-
-                    return true;
-
-                }
-            );
-
-    }
+    const pagosFiltrados =
+        filtrarPagos();
 
 
     /* =============================================
@@ -512,156 +511,8 @@ function mostrarPagos() {
 
 function actualizarResumen() {
 
-    const filtroMetodo =
-        filtroMetodoPago.value;
-
-    const filtroPeriodoValor =
-        filtroPeriodo.value;
-
-
-    let pagosFiltrados =
-        pagos;
-
-
-    /* =============================================
-       FILTRO POR MÉTODO
-    ============================================= */
-
-    if (filtroMetodo) {
-
-        pagosFiltrados =
-            pagosFiltrados.filter(
-                pago =>
-                    pago.metodo_pago ===
-                    filtroMetodo
-            );
-
-    }
-
-
-    /* =============================================
-       FILTRO POR PERÍODO
-    ============================================= */
-
-    if (filtroPeriodoValor) {
-
-        const hoy =
-            new Date();
-
-        pagosFiltrados =
-            pagosFiltrados.filter(
-                pago => {
-
-                    if (!pago.fecha_pago) {
-                        return false;
-                    }
-
-
-                    const fechaPago =
-                        new Date(
-                            pago.fecha_pago
-                        );
-
-
-                    /* HOY */
-
-                    if (
-                        filtroPeriodoValor ===
-                        "hoy"
-                    ) {
-
-                        return (
-                            fechaPago.getDate() ===
-                                hoy.getDate() &&
-
-                            fechaPago.getMonth() ===
-                                hoy.getMonth() &&
-
-                            fechaPago.getFullYear() ===
-                                hoy.getFullYear()
-                        );
-
-                    }
-
-
-                    /* ESTA SEMANA */
-
-                    if (
-                        filtroPeriodoValor ===
-                        "semana"
-                    ) {
-
-                        const inicioSemana =
-                            new Date(hoy);
-
-                        const dia =
-                            inicioSemana.getDay();
-
-                        const diferencia =
-                            dia === 0
-                                ? 6
-                                : dia - 1;
-
-
-                        inicioSemana.setDate(
-                            inicioSemana.getDate() -
-                            diferencia
-                        );
-
-
-                        inicioSemana.setHours(
-                            0,
-                            0,
-                            0,
-                            0
-                        );
-
-
-                        const finSemana =
-                            new Date(
-                                inicioSemana
-                            );
-
-                        finSemana.setDate(
-                            finSemana.getDate() +
-                            7
-                        );
-
-
-                        return (
-                            fechaPago >=
-                                inicioSemana &&
-                            fechaPago <
-                                finSemana
-                        );
-
-                    }
-
-
-                    /* ESTE MES */
-
-                    if (
-                        filtroPeriodoValor ===
-                        "mes"
-                    ) {
-
-                        return (
-                            fechaPago.getMonth() ===
-                                hoy.getMonth() &&
-
-                            fechaPago.getFullYear() ===
-                                hoy.getFullYear()
-                        );
-
-                    }
-
-
-                    return true;
-
-                }
-            );
-
-    }
+    const pagosFiltrados =
+        filtrarPagos();
 
 
     /* =============================================
@@ -1150,34 +1001,37 @@ if (btnCancelarPago) {
 
 }
 
-if (filtroMetodoPago) {
-
-    filtroMetodoPago.addEventListener(
-        "change",
-        function () {
-
-            actualizarResumen();
-            mostrarPagos();
-
+[filtroMetodoPago, filtroPeriodo, filtroDesde, filtroHasta]
+    .forEach(control => {
+        if (control) {
+            control.addEventListener("change", refrescarVista);
         }
-    );
+    });
+
+if (filtroBusqueda) {
+    filtroBusqueda.addEventListener("input", refrescarVista);
+}
+
+const btnLimpiarFiltros =
+    document.getElementById("btnLimpiarFiltros");
+
+if (btnLimpiarFiltros) {
+
+    btnLimpiarFiltros.addEventListener("click", function () {
+
+        filtroBusqueda.value = "";
+        filtroMetodoPago.value = "";
+        filtroPeriodo.value = "";
+        filtroDesde.value = "";
+        filtroHasta.value = "";
+
+        refrescarVista();
+
+    });
 
 }
 
 
-if (filtroPeriodo) {
-
-    filtroPeriodo.addEventListener(
-        "change",
-        function () {
-
-            actualizarResumen();
-            mostrarPagos();
-
-        }
-    );
-
-}
 
 
 /* =====================================================

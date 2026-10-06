@@ -422,6 +422,22 @@
 
                     <div class="payments-filters">
 
+                        <!-- BÚSQUEDA -->
+
+                        <label class="filtro-busqueda">
+                            <svg viewBox="0 0 24 24" aria-hidden="true">
+                                <circle cx="11" cy="11" r="7"></circle>
+                                <path d="M20 20l-3.5-3.5"></path>
+                            </svg>
+                            <input
+                                type="search"
+                                id="filtroBusqueda"
+                                placeholder="Buscar paciente o N° de ID"
+                                autocomplete="off"
+                            >
+                        </label>
+
+
 
                         <!-- PERÍODO -->
 
@@ -480,6 +496,31 @@
 
                         </select>
 
+                        <!-- RANGO DE FECHAS -->
+
+                        <label class="filtro-fecha">
+                            <span>Desde</span>
+                            <input type="date" id="filtroDesde">
+                        </label>
+
+                        <label class="filtro-fecha">
+                            <span>Hasta</span>
+                            <input type="date" id="filtroHasta">
+                        </label>
+
+                        <button
+                            type="button"
+                            class="secondary-button"
+                            id="btnLimpiarFiltros"
+                        >
+                            Limpiar
+                        </button>
+
+                        <span
+                            class="filtro-resultados"
+                            id="resultadosFiltro"
+                            aria-live="polite"
+                        ></span>
 
                     </div>
 

@@ -593,6 +593,92 @@
 
 
         <!-- =========================
+     BÚSQUEDA AVANZADA DE TURNOS
+========================= -->
+
+<section class="appointments-card" id="busquedaTurnos">
+
+    <div class="appointments-header">
+
+        <div>
+            <h2>Buscar turnos</h2>
+            <span>Por paciente, estado o rango de fechas</span>
+        </div>
+
+    </div>
+
+    <form class="turnos-filtros" id="formBusquedaTurnos" autocomplete="off">
+
+        <label class="filtro-busqueda">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+                <circle cx="11" cy="11" r="7"></circle>
+                <path d="M20 20l-3.5-3.5"></path>
+            </svg>
+            <input
+                type="search"
+                id="busquedaTexto"
+                placeholder="Nombre, apellido, DNI o N° de ID"
+            >
+        </label>
+
+        <label class="filtro-fecha">
+            <span>Estado</span>
+            <select id="busquedaEstado">
+                <option value="">Todos</option>
+                <option value="pendiente">Pendiente</option>
+                <option value="confirmado">Confirmado</option>
+                <option value="atendido">Atendido</option>
+                <option value="cancelado">Cancelado</option>
+            </select>
+        </label>
+
+        <label class="filtro-fecha">
+            <span>Desde</span>
+            <input type="date" id="busquedaDesde">
+        </label>
+
+        <label class="filtro-fecha">
+            <span>Hasta</span>
+            <input type="date" id="busquedaHasta">
+        </label>
+
+        <button type="submit" class="primary-button" id="btnBuscarTurnos">
+            Buscar
+        </button>
+
+        <button type="button" class="secondary-button" id="btnLimpiarBusqueda">
+            Limpiar
+        </button>
+
+        <span class="filtro-resultados" id="resultadosBusqueda" aria-live="polite"></span>
+
+    </form>
+
+    <div class="appointments-table-container" id="contenedorBusqueda" hidden>
+
+        <table class="appointments-table">
+
+            <thead>
+                <tr>
+                    <th>Fecha</th>
+                    <th>Hora</th>
+                    <th>Paciente</th>
+                    <th>DNI</th>
+                    <th>Estado</th>
+                    <th>Pago</th>
+                </tr>
+            </thead>
+
+            <tbody id="tablaBusqueda"></tbody>
+
+        </table>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
      CALENDARIO MENSUAL
 ========================= -->
 
@@ -1717,6 +1803,7 @@
 
 
     <script src="js/turnos.js"></script>
+    <script src="js/turnos-busqueda.js"></script>
     <script src="js/notificaciones.js"></script>
     <script src="js/pagos.js"></script>
 
