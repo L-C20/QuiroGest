@@ -17,26 +17,48 @@
             }
         } catch (e) { /* almacenamiento no disponible */ }
 
-        return window.matchMedia &&
-            window.matchMedia("(prefers-color-scheme: dark)").matches
-            ? "dark"
-            : "light";
+        return "light";
     }
 
     function aplicarTema(tema) {
 
         document.documentElement.setAttribute("data-theme", tema);
 
-        const boton = document.getElementById("botonTema");
+        const oscuro = tema === "dark";
 
-        if (boton) {
-            const oscuro = tema === "dark";
+        document.querySelectorAll("[data-tema-boton]").forEach(boton => {
+
             boton.setAttribute("aria-pressed", String(oscuro));
-            boton.querySelector(".tema-texto").textContent =
-                oscuro ? "Modo claro" : "Modo oscuro";
-            boton.querySelector(".tema-icono").innerHTML =
-                oscuro ? ICONO_SOL : ICONO_LUNA;
-        }
+            boton.setAttribute(
+                "title",
+                oscuro ? "Cambiar a modo claro" : "Cambiar a modo oscuro"
+            );
+
+            const icono = boton.querySelector(".tema-icono");
+            const texto = boton.querySelector(".tema-texto");
+
+            if (icono) {
+                icono.innerHTML = oscuro ? ICONO_SOL : ICONO_LUNA;
+            }
+
+            if (texto) {
+                texto.textContent = oscuro ? "Modo claro" : "Modo oscuro";
+            }
+        });
+    }
+
+    function alternarTema() {
+
+        const nuevo =
+            document.documentElement.getAttribute("data-theme") === "dark"
+                ? "light"
+                : "dark";
+
+        try {
+            localStorage.setItem(CLAVE_TEMA, nuevo);
+        } catch (e) { /* ignorar */ }
+
+        aplicarTema(nuevo);
     }
 
     const ICONO_LUNA =
@@ -49,34 +71,38 @@
 
         const pie = document.querySelector(".sidebar-footer");
 
-        if (!pie || document.getElementById("botonTema")) {
-            return;
+        if (pie && !document.getElementById("botonTema")) {
+
+            const boton = document.createElement("button");
+
+            boton.type = "button";
+            boton.id = "botonTema";
+            boton.className = "tema-toggle";
+            boton.setAttribute("data-tema-boton", "");
+            boton.innerHTML =
+                '<span class="tema-icono"></span>' +
+                '<span class="tema-texto"></span>';
+
+            boton.addEventListener("click", alternarTema);
+
+            pie.insertBefore(boton, pie.firstChild);
         }
 
-        const boton = document.createElement("button");
+        if (!document.getElementById("botonTemaFlotante")) {
 
-        boton.type = "button";
-        boton.id = "botonTema";
-        boton.className = "tema-toggle";
-        boton.innerHTML =
-            '<span class="tema-icono"></span>' +
-            '<span class="tema-texto"></span>';
+            const flotante = document.createElement("button");
 
-        boton.addEventListener("click", function () {
+            flotante.type = "button";
+            flotante.id = "botonTemaFlotante";
+            flotante.className = "tema-flotante";
+            flotante.setAttribute("data-tema-boton", "");
+            flotante.setAttribute("aria-label", "Cambiar tema claro u oscuro");
+            flotante.innerHTML = '<span class="tema-icono"></span>';
 
-            const nuevo =
-                document.documentElement.getAttribute("data-theme") === "dark"
-                    ? "light"
-                    : "dark";
+            flotante.addEventListener("click", alternarTema);
 
-            try {
-                localStorage.setItem(CLAVE_TEMA, nuevo);
-            } catch (e) { /* ignorar */ }
-
-            aplicarTema(nuevo);
-        });
-
-        pie.insertBefore(boton, pie.firstChild);
+            document.body.appendChild(flotante);
+        }
 
         aplicarTema(leerTema());
     }
