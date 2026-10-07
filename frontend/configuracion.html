@@ -252,6 +252,11 @@
                     Mi cuenta
                 </button>
 
+                <button type="button" class="config-tab" role="tab" data-panel="privacidad">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l8 3v6c0 4.5-3.2 8-8 9-4.8-1-8-4.5-8-9V6l8-3z"></path><path d="M9 12l2 2 4-4"></path></svg>
+                    Privacidad y seguridad
+                </button>
+
             </nav>
 
 
@@ -512,6 +517,73 @@
                     </div>
 
                 </article>
+
+
+                <!-- ================= PRIVACIDAD Y SEGURIDAD ================= -->
+
+                <article class="config-panel" id="panel-privacidad" role="tabpanel" hidden>
+
+                    <header class="config-panel-cabecera">
+                        <h2>Privacidad y seguridad</h2>
+                        <p>Cómo se protegen los datos de tu consultorio y de tus pacientes.</p>
+                    </header>
+
+                    <ul class="privacidad-lista">
+
+                        <li>
+                            <span class="privacidad-icono"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="10" width="16" height="11" rx="2"></rect><path d="M8 10V7a4 4 0 0 1 8 0v3"></path></svg></span>
+                            <div>
+                                <strong>Tus datos son solo tuyos</strong>
+                                <span>Cada consultorio ve únicamente su propia información. El sistema impide el acceso a los datos de otro consultorio.</span>
+                            </div>
+                        </li>
+
+                        <li>
+                            <span class="privacidad-icono"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"></circle><path d="M4 21c0-4 3.6-7 8-7s8 3 8 7"></path></svg></span>
+                            <div>
+                                <strong>Accesos por rol</strong>
+                                <span>Solo los administradores gestionan usuarios y eliminan pacientes. El resto del personal trabaja con pacientes, turnos y pagos.</span>
+                            </div>
+                        </li>
+
+                        <li>
+                            <span class="privacidad-icono"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l8 3v6c0 4.5-3.2 8-8 9-4.8-1-8-4.5-8-9V6l8-3z"></path><path d="M9 12l2 2 4-4"></path></svg></span>
+                            <div>
+                                <strong>Contraseñas y sesiones</strong>
+                                <span>Las contraseñas se guardan protegidas, nunca en texto legible. Las sesiones vencen a las 8 horas y, al cambiar una contraseña, se cierran las demás sesiones abiertas de esa cuenta.</span>
+                            </div>
+                        </li>
+
+                        <li>
+                            <span class="privacidad-icono"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6S2 12 2 12z"></path><circle cx="12" cy="12" r="2.5"></circle></svg></span>
+                            <div>
+                                <strong>Soporte con registro</strong>
+                                <span>Si el proveedor ingresa a tu consultorio para ayudarte, la sesión dura 2 horas y cada cambio que hace queda registrado.</span>
+                            </div>
+                        </li>
+
+                        <li>
+                            <span class="privacidad-icono"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9a6 6 0 0 1 12 0c0 6 2 7 2 7H4s2-1 2-7"></path><path d="M10 20a2 2 0 0 0 4 0"></path></svg></span>
+                            <div>
+                                <strong>Mensajes a tus pacientes</strong>
+                                <span>Los recordatorios se envían solo si los activás en la sección Recordatorios.</span>
+                            </div>
+                        </li>
+
+                    </ul>
+
+                    <div class="privacidad-acciones">
+
+                        <a class="primary-button privacidad-boton" href="privacidad.html" target="_blank" rel="noopener">Leer la política completa</a>
+
+                        <button type="button" class="secondary-button" id="btnIrPassword">Cambiar mi contraseña</button>
+
+                    </div>
+
+                    <p class="privacidad-contacto" id="privacidadContacto"></p>
+
+                </article>
+
 
 
             </div>

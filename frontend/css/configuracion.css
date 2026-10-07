@@ -783,3 +783,111 @@ button.primary-button.peligro:disabled {
     filter: none;
     transform: none;
 }
+
+
+/* ---------- privacidad y seguridad ---------- */
+
+.privacidad-lista {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin: 20px 0 0;
+    padding: 0;
+    list-style: none;
+}
+
+.privacidad-lista li {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 14px 16px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    background: var(--surface-soft);
+}
+
+.privacidad-icono {
+    flex: 0 0 auto;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    height: 38px;
+    border-radius: 11px;
+    background: var(--teal-100);
+    color: var(--teal-700);
+}
+
+.privacidad-icono svg {
+    width: 19px;
+    height: 19px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+[data-theme="dark"] .privacidad-icono {
+    color: var(--teal-500);
+}
+
+.privacidad-lista strong {
+    display: block;
+    font-size: 14px;
+    font-weight: 650;
+    color: var(--ink);
+}
+
+.privacidad-lista span:not(.privacidad-icono) {
+    display: block;
+    margin-top: 2px;
+    font-size: 13px;
+    line-height: 1.55;
+    color: var(--ink-muted);
+}
+
+.privacidad-acciones {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 22px;
+}
+
+.privacidad-acciones .primary-button,
+.privacidad-acciones .secondary-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 40px;
+    padding: 0 20px;
+    font-size: 13.5px;
+    text-decoration: none;
+}
+
+.privacidad-contacto {
+    margin-top: 16px;
+    font-size: 13px;
+    color: var(--ink-muted);
+}
+
+.privacidad-contacto:empty {
+    display: none;
+}
+
+.privacidad-contacto a {
+    color: var(--teal-700);
+    font-weight: 600;
+}
+
+[data-theme="dark"] .privacidad-contacto a {
+    color: var(--teal-500);
+}
+
+@media (max-width: 700px) {
+
+    .privacidad-acciones .primary-button,
+    .privacidad-acciones .secondary-button {
+        width: 100%;
+    }
+}

@@ -819,6 +819,46 @@
 
 
     /* =====================================================
+       PRIVACIDAD Y SEGURIDAD
+    ===================================================== */
+
+    $("btnIrPassword").addEventListener("click", () => {
+
+        activarPanel("cuenta");
+
+        $("passActual").focus();
+    });
+
+    async function cargarContactoPrivacidad() {
+
+        try {
+
+            const respuesta = await fetch("/publico/contacto");
+
+            if (!respuesta.ok) return;
+
+            const datos = await respuesta.json();
+
+            if (!datos.contacto) return;
+
+            const p = $("privacidadContacto");
+
+            p.textContent = "Contacto de privacidad: ";
+
+            const enlace = document.createElement("a");
+
+            enlace.href = "mailto:" + datos.contacto;
+            enlace.textContent = datos.contacto;
+
+            p.append(enlace);
+
+        } catch (error) {
+            /* sin contacto publicado: se omite */
+        }
+    }
+
+
+    /* =====================================================
        INICIO
     ===================================================== */
 
@@ -835,6 +875,7 @@
         });
 
         cargarCuenta();
+        cargarContactoPrivacidad();
 
         const pedido = (window.location.hash || "").replace("#", "");
 

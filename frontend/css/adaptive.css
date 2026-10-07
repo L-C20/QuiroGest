@@ -744,21 +744,6 @@ body.en-soporte .menu-toggle {
    ENLACE A LA POLÍTICA DE PRIVACIDAD
 ===================================================== */
 
-.sidebar-legal {
-    display: block;
-    padding: 6px 12px 10px;
-    color: rgba(255, 255, 255, .5);
-    font-size: 12px;
-    font-weight: 500;
-    text-decoration: none;
-    transition: color .15s ease;
-}
-
-.sidebar-legal:hover {
-    color: #fff;
-    text-decoration: underline;
-}
-
 .login-legal {
     margin-top: 18px;
     text-align: center;
