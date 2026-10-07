@@ -24,6 +24,7 @@ function invalidarCache(usuarioId) {
 
     if (usuarioId === undefined) {
         cache.clear();
+        cacheConsultorios.clear();
     } else {
         cache.delete(Number(usuarioId));
     }
@@ -60,6 +61,51 @@ async function estadoDeCuenta(usuarioId) {
     cache.set(usuarioId, { hora: Date.now(), datos });
 
     return datos;
+}
+
+
+const cacheConsultorios = new Map();
+
+async function consultorioExiste(id) {
+
+    const guardado = cacheConsultorios.get(id);
+
+    if (guardado && Date.now() - guardado.hora < VIGENCIA_CACHE_MS) {
+        return guardado.existe;
+    }
+
+    const { rowCount } = await pool.query(
+        "SELECT 1 FROM consultorios WHERE id = $1",
+        [id]
+    );
+
+    cacheConsultorios.set(id, { hora: Date.now(), existe: rowCount > 0 });
+
+    return rowCount > 0;
+}
+
+
+/* Deja constancia de lo que el proveedor modifica mientras está en un consultorio ajeno */
+function auditarSoporte(req, res) {
+
+    if (req.method === "GET" || req.method === "HEAD" || req.method === "OPTIONS") {
+        return;
+    }
+
+    res.on("finish", () => {
+
+        if (res.statusCode >= 400) {
+            return;
+        }
+
+        pool.query(
+            `
+            INSERT INTO auditoria (usuario_id, consultorio_id, accion, detalle)
+            VALUES ($1, $2, 'soporte_modificacion', $3)
+            `,
+            [req.usuario.id, req.usuario.consultorioId, `${req.method} ${req.originalUrl.split("?")[0]}`]
+        ).catch(error => console.error("No se pudo registrar la auditoría:", error.message));
+    });
 }
 
 
@@ -134,6 +180,17 @@ async function verificarToken(req, res, next) {
 
         const consultorioId = Number(datosToken.consultorioId);
 
+        // el super admin solo puede entrar a consultorios que existen
+        if (
+            cuenta.rol === "superadmin" &&
+            consultorioId !== Number(cuenta.consultorio_id) &&
+            !(await consultorioExiste(consultorioId))
+        ) {
+            return res.status(401).json({
+                mensaje: "Sesión inválida"
+            });
+        }
+
         if (cuenta.rol !== "superadmin" && !cuenta.consultorio_activo) {
             return res.status(403).json({
                 mensaje: "La cuenta del consultorio está suspendida. Contactá a tu proveedor."
@@ -144,8 +201,16 @@ async function verificarToken(req, res, next) {
             id: cuenta.id,
             email: cuenta.email,
             rol: cuenta.rol,
-            consultorioId
+            consultorioId,
+            // el super admin está dentro de un consultorio que no es el suyo
+            soporte:
+                cuenta.rol === "superadmin" &&
+                consultorioId !== Number(cuenta.consultorio_id)
         };
+
+        if (req.usuario.soporte) {
+            auditarSoporte(req, res);
+        }
 
         next();
 

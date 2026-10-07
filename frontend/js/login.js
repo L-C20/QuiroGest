@@ -49,7 +49,10 @@ formulario.addEventListener("submit", async (e) => {
         localStorage.setItem("token", datos.token);
 
 
-        window.location.href = "index.html";
+        window.location.href =
+            datos.usuario && datos.usuario.rol === "superadmin"
+                ? "superadmin.html"
+                : "index.html";
 
 
     } catch (error) {

@@ -275,6 +275,10 @@
 
         const boton = $("btnGuardarConsultorio");
 
+        if (boton.disabled) {
+            return;
+        }
+
         ocupado(boton, true);
 
         try {
@@ -419,6 +423,10 @@
 
         const boton = $("btnGuardarUsuario");
 
+        if (boton.disabled) {
+            return;
+        }
+
         ocupado(boton, true);
 
         try {
@@ -552,6 +560,10 @@
 
         const boton = $("btnGuardarPasswordUsuario");
 
+        if (boton.disabled) {
+            return;
+        }
+
         ocupado(boton, true);
 
         try {
@@ -634,6 +646,10 @@
 
         const boton = $("btnGuardarRecordatorios");
 
+        if (boton.disabled) {
+            return;
+        }
+
         ocupado(boton, true);
 
         try {
@@ -685,6 +701,10 @@
         mostrarError("errorCuenta", "");
 
         const boton = $("btnGuardarCuenta");
+
+        if (boton.disabled) {
+            return;
+        }
 
         ocupado(boton, true);
 
@@ -739,6 +759,10 @@
         }
 
         const boton = $("btnCambiarPassword");
+
+        if (boton.disabled) {
+            return;
+        }
 
         ocupado(boton, true);
 

@@ -81,6 +81,22 @@ async function migrar() {
         const consultorioInicial = inicial.id;
 
 
+        /* ---------- auditoría de las acciones del proveedor ---------- */
+
+        await client.query(`
+            CREATE TABLE IF NOT EXISTS auditoria (
+                id SERIAL PRIMARY KEY,
+                usuario_id INTEGER REFERENCES usuarios(id) ON DELETE SET NULL,
+                consultorio_id INTEGER REFERENCES consultorios(id) ON DELETE SET NULL,
+                accion VARCHAR(50) NOT NULL,
+                detalle TEXT,
+                creado_en TIMESTAMP NOT NULL DEFAULT NOW()
+            )
+        `);
+
+        await client.query("CREATE INDEX IF NOT EXISTS idx_auditoria_fecha ON auditoria (creado_en DESC)");
+
+
         /* ---------- ajustes de recordatorios y logo por consultorio ---------- */
 
         await client.query(`

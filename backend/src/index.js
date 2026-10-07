@@ -11,6 +11,7 @@ const turnosRoutes = require("./routes/turnos");
 const pagosRoutes = require("./routes/pagos");
 const recordatoriosRoutes = require("./routes/recordatorios");
 const configuracionRoutes = require("./routes/configuracion");
+const superadminRoutes = require("./routes/superadmin");
 const recordatorios = require("./services/recordatorios");
 const { migrar } = require("./database/migraciones");
 const verificarToken = require("./middleware/authMiddleware");
@@ -23,6 +24,7 @@ app.use("/turnos", turnosRoutes);
 app.use("/pagos", verificarToken, pagosRoutes);
 app.use("/recordatorios", verificarToken, recordatoriosRoutes);
 app.use("/configuracion", configuracionRoutes);
+app.use("/superadmin", superadminRoutes);
 
 app.get("/health", (req, res) => {
     res.json({

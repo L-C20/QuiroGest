@@ -152,7 +152,8 @@ router.get("/me", verificarToken, async (req, res) => {
                 id: fila.consultorio_id,
                 nombre: fila.consultorio_nombre,
                 logo: fila.consultorio_logo
-            }
+            },
+            soporte: Boolean(req.usuario.soporte)
         });
 
     } catch (error) {

@@ -1,0 +1,162 @@
+/* =====================================================
+   QUIROGEST — Panel del proveedor y modo soporte
+===================================================== */
+
+.proveedor {
+    padding: 8px 34px 56px;
+    max-width: 1120px;
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+}
+
+.proveedor-resumen {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 14px;
+    margin-top: 6px;
+}
+
+.proveedor-dato {
+    position: relative;
+    padding: 16px 18px 16px 22px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+    overflow: hidden;
+}
+
+.proveedor-dato::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 14px;
+    bottom: 14px;
+    width: 4px;
+    border-radius: 0 4px 4px 0;
+    background: var(--lime-500);
+}
+
+.proveedor-dato:nth-child(2)::before { background: #f2b84b; }
+.proveedor-dato:nth-child(3)::before { background: var(--teal-500); }
+.proveedor-dato:nth-child(4)::before { background: #4aa3d8; }
+
+.proveedor-dato span {
+    display: block;
+    font-size: 12.5px;
+    font-weight: 500;
+    color: var(--ink-muted);
+}
+
+.proveedor-dato strong {
+    font-size: 28px;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    color: var(--brand-900);
+    font-variant-numeric: tabular-nums;
+}
+
+[data-theme="dark"] .proveedor-dato strong {
+    color: var(--ink);
+}
+
+.proveedor-panel {
+    padding: 24px 26px 26px;
+}
+
+.proveedor-herramientas {
+    margin: 18px 0 14px;
+}
+
+.proveedor-herramientas .filtro-busqueda {
+    display: block;
+    max-width: 420px;
+}
+
+.proveedor-tabla {
+    min-width: 760px;
+}
+
+.proveedor-tabla td:nth-child(n+3):nth-child(-n+5) {
+    font-variant-numeric: tabular-nums;
+}
+
+.config-accion.principal {
+    background: linear-gradient(135deg, var(--brand-600), var(--teal-700));
+    border-color: transparent;
+    color: #fff;
+}
+
+.config-accion.principal:hover {
+    filter: brightness(1.08);
+    background: linear-gradient(135deg, var(--brand-600), var(--teal-700));
+    color: #fff;
+}
+
+.proveedor-actividad {
+    max-height: 360px;
+    overflow: auto;
+}
+
+.proveedor-detalle {
+    color: var(--ink-muted);
+    font-size: 12.5px;
+    word-break: break-word;
+}
+
+.proveedor-password {
+    display: flex;
+    gap: 8px;
+}
+
+.proveedor-password input {
+    flex: 1;
+    font-family: ui-monospace, "SFMono-Regular", Consolas, monospace;
+    letter-spacing: .04em;
+}
+
+.proveedor-password .secondary-button {
+    flex: 0 0 auto;
+    min-height: 42px;
+    padding: 0 16px;
+    font-size: 13px;
+}
+
+.proveedor-credenciales {
+    margin: 16px 0 4px;
+    padding: 16px 18px;
+    border: 1px dashed var(--teal-500);
+    border-radius: var(--radius);
+    background: var(--teal-50);
+    color: var(--ink);
+    font-family: ui-monospace, "SFMono-Regular", Consolas, monospace;
+    font-size: 13px;
+    line-height: 1.8;
+    white-space: pre-wrap;
+    word-break: break-all;
+    user-select: all;
+}
+
+
+@media (max-width: 900px) {
+
+    .proveedor {
+        padding: 6px 16px 48px;
+    }
+
+    .proveedor-resumen {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .proveedor-panel {
+        padding: 20px 16px 22px;
+    }
+}
+
+@media (max-width: 460px) {
+
+    .proveedor-password {
+        flex-direction: column;
+    }
+}

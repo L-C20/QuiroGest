@@ -180,6 +180,7 @@
 
         try {
             localStorage.removeItem("token");
+            localStorage.removeItem("token_super");
         } catch (e) { /* ignorar */ }
 
         window.location.href = "login.html";
@@ -201,6 +202,93 @@
         administrador: "Administrador",
         usuario: "Usuario"
     };
+
+    const ICONO_PANEL =
+        '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l8 3v6c0 4.5-3.2 8-8 9-4.8-1-8-4.5-8-9V6l8-3z"></path><path d="M9 12l2 2 4-4"></path></svg>';
+
+    /* El super admin ve un acceso al panel del proveedor en el menú */
+    function enlacePanelProveedor(sesion) {
+
+        const nav = document.querySelector(".sidebar-nav");
+
+        if (!nav || sesion.usuario.rol !== "superadmin" || nav.querySelector("[data-panel-proveedor]")) {
+            return;
+        }
+
+        const enlace = document.createElement("a");
+
+        enlace.href = "superadmin.html";
+        enlace.className = "nav-item";
+        enlace.setAttribute("data-panel-proveedor", "");
+
+        if (/superadmin\.html$/i.test(window.location.pathname)) {
+            enlace.classList.add("active");
+        }
+
+        enlace.innerHTML =
+            '<span class="nav-icon">' + ICONO_PANEL + "</span><span>Panel proveedor</span>";
+
+        const separador = nav.querySelector(".nav-separator");
+
+        nav.insertBefore(enlace, separador || null);
+    }
+
+    /* Aviso permanente cuando el proveedor está dentro de un consultorio ajeno */
+    function bannerSoporte(sesion) {
+
+        const existente = document.querySelector(".banner-soporte");
+
+        if (!sesion.soporte) {
+
+            if (existente) existente.remove();
+            document.body.classList.remove("en-soporte");
+
+            try {
+                // una sesión normal no necesita la copia guardada
+                if (sesion.usuario.rol === "superadmin") {
+                    localStorage.removeItem("token_super");
+                }
+            } catch (e) { /* ignorar */ }
+
+            return;
+        }
+
+        document.body.classList.add("en-soporte");
+
+        if (existente) {
+            existente.querySelector("strong").textContent = sesion.consultorio.nombre;
+            return;
+        }
+
+        const banner = document.createElement("div");
+
+        banner.className = "banner-soporte";
+        banner.setAttribute("role", "status");
+        banner.innerHTML =
+            "<span>Modo soporte · estás dentro de <strong></strong>. Los cambios que hagas quedan registrados.</span>" +
+            '<button type="button">Volver al panel</button>';
+
+        banner.querySelector("strong").textContent = sesion.consultorio.nombre;
+
+        banner.querySelector("button").addEventListener("click", function () {
+
+            let propio = null;
+
+            try {
+                propio = localStorage.getItem("token_super");
+                localStorage.removeItem("token_super");
+            } catch (e) { /* ignorar */ }
+
+            if (propio) {
+                localStorage.setItem("token", propio);
+                window.location.href = "superadmin.html";
+            } else {
+                cerrarSesion();
+            }
+        });
+
+        document.body.insertBefore(banner, document.body.firstChild);
+    }
 
     function pintarSesion(sesion) {
 
@@ -253,6 +341,9 @@
             if (fuerte) fuerte.textContent = nombreVisible;
             if (chico) chico.textContent = ETIQUETA_ROL[sesion.usuario.rol] || "";
         }
+
+        enlacePanelProveedor(sesion);
+        bannerSoporte(sesion);
 
         document.dispatchEvent(new CustomEvent("quirogest:sesion", { detail: sesion }));
     }
