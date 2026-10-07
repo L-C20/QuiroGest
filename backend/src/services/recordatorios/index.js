@@ -86,18 +86,22 @@ async function turnosPorRecordar(o) {
             p.apellido,
             p.telefono,
             p.email,
-            c.nombre AS consultorio
+            c.nombre AS consultorio,
+            c.recordatorio_texto
         FROM turnos t
         INNER JOIN pacientes p ON p.id = t.paciente_id
-        INNER JOIN consultorios c ON c.id = t.consultorio_id AND c.activo = true
+        INNER JOIN consultorios c
+            ON c.id = t.consultorio_id
+           AND c.activo = true
+           AND c.recordatorios_activo = true
         WHERE p.activo = true
           AND t.estado IN ('pendiente', 'confirmado')
           AND (t.fecha + t.hora) > (NOW() AT TIME ZONE $1) + interval '1 hour'
-          AND (t.fecha + t.hora) <= (NOW() AT TIME ZONE $1) + make_interval(hours => $2::int)
+          AND (t.fecha + t.hora) <= (NOW() AT TIME ZONE $1) + make_interval(hours => c.recordatorio_horas)
         ORDER BY t.fecha, t.hora
         LIMIT 200
         `,
-        [o.zona, o.horasAntes]
+        [o.zona]
     );
 
     return rows;

@@ -105,8 +105,10 @@ function textoRecordatorio(turno) {
 
     const d = datosMensaje(turno);
 
-    return process.env.REMINDER_TEXT
-        ? process.env.REMINDER_TEXT
+    const plantilla = turno.recordatorio_texto || process.env.REMINDER_TEXT;
+
+    return plantilla
+        ? plantilla
             .replace(/\{nombre\}/g, d.nombre)
             .replace(/\{fecha\}/g, d.fecha)
             .replace(/\{hora\}/g, d.hora)

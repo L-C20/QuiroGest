@@ -1,0 +1,672 @@
+/* =====================================================
+   QUIROGEST — Pantalla de Configuración
+===================================================== */
+
+.config {
+    padding: 8px 34px 56px;
+    max-width: 980px;
+}
+
+
+/* ---------- pestañas ---------- */
+
+.config-tabs {
+    display: flex;
+    gap: 6px;
+    margin: 6px 0 22px;
+    padding: 5px;
+    width: fit-content;
+    max-width: 100%;
+    overflow-x: auto;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    box-shadow: var(--shadow-xs);
+}
+
+.config-tab {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 9px 16px;
+    border: 0;
+    border-radius: 10px;
+    background: transparent;
+    color: var(--ink-muted);
+    font: inherit;
+    font-size: 13.5px;
+    font-weight: 600;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: background .15s ease, color .15s ease;
+}
+
+.config-tab[hidden] {
+    display: none;
+}
+
+.config-tab svg {
+    width: 17px;
+    height: 17px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.config-tab:hover {
+    background: var(--teal-50);
+    color: var(--teal-700);
+}
+
+.config-tab.activa {
+    background: linear-gradient(135deg, var(--brand-600), var(--teal-700));
+    color: #fff;
+    box-shadow: 0 6px 14px -6px rgba(15, 148, 136, .55);
+}
+
+
+/* ---------- paneles ---------- */
+
+.config-panel {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+    padding: 28px 30px 30px;
+}
+
+.config-panel[hidden] {
+    display: none;
+}
+
+.config-panel-cabecera h2 {
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: var(--brand-900);
+}
+
+.config-panel-cabecera h3 {
+    font-size: 15px;
+    font-weight: 650;
+    color: var(--brand-900);
+}
+
+.config-panel-cabecera p {
+    margin-top: 4px;
+    color: var(--ink-muted);
+    font-size: 13.5px;
+}
+
+.config-panel-cabecera-accion {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+.config-subtitulo {
+    margin-bottom: 14px;
+}
+
+.config-separador {
+    margin: 30px 0 24px;
+    border: 0;
+    border-top: 1px solid var(--line);
+}
+
+
+/* ---------- formularios ---------- */
+
+.config-form {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    margin-top: 20px;
+}
+
+.config-grilla {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px 18px;
+}
+
+.config-campo {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    min-width: 0;
+}
+
+.config-campo-ancho {
+    grid-column: 1 / -1;
+}
+
+.config-campo > span {
+    font-size: 12.5px;
+    font-weight: 600;
+    color: var(--ink-soft);
+}
+
+.config-campo > span b {
+    color: var(--bad);
+}
+
+.config-campo em {
+    font-style: normal;
+    font-weight: 500;
+    color: var(--ink-muted);
+}
+
+.config-campo small {
+    color: var(--ink-muted);
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+.config-campo input,
+.config-campo select,
+.config-campo textarea {
+    width: 100%;
+    min-height: 42px;
+    padding: 10px 12px;
+    font: inherit;
+    font-size: 14px;
+}
+
+.config-campo textarea {
+    resize: vertical;
+    line-height: 1.5;
+}
+
+.config-campo input:disabled {
+    opacity: .7;
+    cursor: not-allowed;
+    background: var(--surface-soft);
+}
+
+.config-error {
+    min-height: 18px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--bad);
+}
+
+.config-nota {
+    padding: 11px 14px;
+    border-radius: var(--radius);
+    background: var(--info-bg);
+    color: var(--info);
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+.config-nota:empty {
+    display: none;
+}
+
+.config-pie {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+.config-pie .primary-button,
+.config-pie .secondary-button,
+.config-panel-cabecera-accion .primary-button {
+    min-height: 40px;
+    padding: 0 20px;
+    font-size: 13.5px;
+}
+
+.config-vacio {
+    color: var(--ink-muted);
+    text-align: center;
+    padding: 26px 12px;
+}
+
+
+/* ---------- logo ---------- */
+
+.config-logo {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+}
+
+.config-logo-vista {
+    flex: 0 0 auto;
+    width: 76px;
+    height: 76px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 18px;
+    background: linear-gradient(135deg, var(--lime-400), var(--teal-500));
+    color: var(--brand-950);
+    font-size: 30px;
+    font-weight: 800;
+    overflow: hidden;
+}
+
+.config-logo-vista.con-imagen {
+    background: #fff;
+    border: 1px solid var(--line-strong);
+}
+
+.config-logo-vista img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.config-logo-acciones {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.config-logo-acciones strong {
+    font-size: 14px;
+}
+
+.config-logo-acciones span {
+    font-size: 12.5px;
+    color: var(--ink-muted);
+}
+
+.config-fila-botones {
+    display: flex;
+    gap: 8px;
+    margin-top: 8px;
+}
+
+.config-archivo {
+    display: inline-flex;
+    align-items: center;
+    height: 36px;
+    padding: 0 14px;
+    font-size: 13px;
+    cursor: pointer;
+}
+
+.config-fila-botones .secondary-button {
+    height: 36px;
+    padding: 0 14px;
+    font-size: 13px;
+}
+
+/* el logo también se ve en el menú lateral */
+.sidebar-logo.con-imagen {
+    background: #fff;
+    padding: 3px;
+}
+
+.sidebar-logo img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    border-radius: 9px;
+}
+
+.sidebar-subtitle {
+    max-width: 150px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+
+/* ---------- usuarios ---------- */
+
+.config-ayuda-roles {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 22px;
+    margin: 16px 0;
+    padding: 11px 14px;
+    border-radius: var(--radius);
+    background: var(--surface-soft);
+    color: var(--ink-muted);
+    font-size: 12.5px;
+}
+
+.config-ayuda-roles b {
+    color: var(--ink-soft);
+}
+
+.config-acciones {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.config-accion {
+    padding: 6px 11px;
+    border: 1px solid var(--line-strong);
+    border-radius: 8px;
+    background: var(--surface);
+    color: var(--ink-soft);
+    font: inherit;
+    font-size: 12.5px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background .15s ease, border-color .15s ease, color .15s ease;
+}
+
+.config-accion:hover {
+    background: var(--teal-50);
+    border-color: var(--teal-500);
+    color: var(--teal-700);
+}
+
+.config-accion.peligro:hover {
+    background: var(--bad-bg);
+    border-color: var(--bad);
+    color: var(--bad);
+}
+
+.config-tu {
+    font-weight: 500;
+    color: var(--ink-muted);
+}
+
+.config-tabla {
+    min-width: 560px;
+}
+
+.table-container {
+    overflow-x: auto;
+}
+
+
+/* ---------- interruptor ---------- */
+
+.config-interruptor {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 16px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    background: var(--surface-soft);
+    cursor: pointer;
+}
+
+.config-interruptor input {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.config-interruptor-barra {
+    position: relative;
+    flex: 0 0 auto;
+    width: 44px;
+    height: 26px;
+    border-radius: 999px;
+    background: var(--line-strong);
+    transition: background .2s ease;
+}
+
+.config-interruptor-barra::after {
+    content: "";
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #fff;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, .3);
+    transition: transform .2s ease;
+}
+
+.config-interruptor input:checked + .config-interruptor-barra {
+    background: var(--teal-600);
+}
+
+.config-interruptor input:checked + .config-interruptor-barra::after {
+    transform: translateX(18px);
+}
+
+.config-interruptor input:focus-visible + .config-interruptor-barra {
+    box-shadow: var(--ring);
+}
+
+.config-interruptor strong {
+    display: block;
+    font-size: 14px;
+}
+
+.config-interruptor small {
+    color: var(--ink-muted);
+    font-size: 12.5px;
+}
+
+.config-estado-canales {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+
+/* ---------- tema ---------- */
+
+.config-temas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+}
+
+.config-tema {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    cursor: pointer;
+}
+
+.config-tema input {
+    position: absolute;
+    opacity: 0;
+}
+
+.config-tema strong {
+    font-size: 13px;
+    text-align: center;
+}
+
+.config-tema-muestra {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    width: 130px;
+    padding: 12px;
+    border: 2px solid var(--line-strong);
+    border-radius: 14px;
+    transition: border-color .15s ease, box-shadow .15s ease;
+}
+
+.config-tema-muestra i {
+    display: block;
+    height: 9px;
+    border-radius: 5px;
+}
+
+.config-tema-muestra i:nth-child(1) { width: 60%; }
+.config-tema-muestra i:nth-child(2) { width: 100%; }
+.config-tema-muestra i:nth-child(3) { width: 80%; }
+
+.config-tema-claro {
+    background: #f0f4f3;
+}
+
+.config-tema-claro i {
+    background: #cfd9d5;
+}
+
+.config-tema-claro i:nth-child(1) {
+    background: #14b8a6;
+}
+
+.config-tema-oscuro {
+    background: #0b1511;
+}
+
+.config-tema-oscuro i {
+    background: #2f4539;
+}
+
+.config-tema-oscuro i:nth-child(1) {
+    background: #7fbf3f;
+}
+
+.config-tema input:checked + .config-tema-muestra {
+    border-color: var(--teal-600);
+    box-shadow: var(--ring);
+}
+
+.config-tema input:focus-visible + .config-tema-muestra {
+    box-shadow: var(--ring);
+}
+
+
+/* ---------- diálogos ---------- */
+
+.config-dialogo {
+    width: min(480px, calc(100vw - 28px));
+    padding: 26px 28px 24px;
+    border: 1px solid var(--line);
+    border-radius: 20px;
+    background: var(--surface);
+    color: var(--ink);
+    box-shadow: var(--shadow-lg);
+}
+
+.config-dialogo::backdrop {
+    background: rgba(12, 42, 29, .5);
+    -webkit-backdrop-filter: blur(4px);
+    backdrop-filter: blur(4px);
+}
+
+.config-dialogo .config-form {
+    margin-top: 0;
+}
+
+.config-dialogo .config-grilla {
+    grid-template-columns: 1fr;
+}
+
+.config-pie-dialogo {
+    margin-top: 4px;
+}
+
+.config-pie-dialogo .secondary-button {
+    background: var(--surface);
+    border: 1px solid var(--line-strong);
+    border-radius: var(--radius);
+    color: var(--brand-700);
+    font-weight: 600;
+}
+
+
+/* ---------- modo oscuro ---------- */
+
+[data-theme="dark"] .config-panel-cabecera h2,
+[data-theme="dark"] .config-panel-cabecera h3 {
+    color: var(--ink);
+}
+
+[data-theme="dark"] .config-logo-vista.con-imagen {
+    background: #fff;
+}
+
+[data-theme="dark"] .config-tab.activa {
+    color: #fff;
+}
+
+[data-theme="dark"] .config-dialogo {
+    background: var(--surface);
+}
+
+[data-theme="dark"] .config-pie-dialogo .secondary-button,
+[data-theme="dark"] .config-accion {
+    background-color: var(--surface-soft);
+    color: var(--ink-soft);
+    border-color: var(--line-strong);
+}
+
+
+/* ---------- celular ---------- */
+
+@media (max-width: 900px) {
+
+    .config {
+        padding: 6px 16px 48px;
+    }
+
+    .config-panel {
+        padding: 22px 18px 24px;
+    }
+}
+
+@media (max-width: 700px) {
+
+    .config-grilla {
+        grid-template-columns: 1fr;
+    }
+
+    .config-logo {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .config-pie {
+        justify-content: stretch;
+    }
+
+    .config-pie .primary-button {
+        width: 100%;
+    }
+
+    .config-pie-dialogo .secondary-button,
+    .config-pie-dialogo .primary-button {
+        flex: 1;
+    }
+
+    .config-tabs {
+        width: 100%;
+    }
+}
+
+
+/* ---------- ajustes ---------- */
+
+.config [hidden],
+.config-dialogo [hidden] {
+    display: none !important;
+}
+
+.config-campo input[type="tel"] {
+    background: var(--surface);
+    border: 1px solid var(--line-strong);
+    border-radius: var(--radius);
+    color: var(--ink);
+    transition: border-color .15s ease, box-shadow .15s ease;
+}
+
+.config-campo input[type="tel"]:focus {
+    outline: none;
+    border-color: var(--teal-500);
+    box-shadow: var(--ring);
+}
+
+[data-theme="dark"] .config-campo input[type="tel"] {
+    background-color: var(--surface-soft) !important;
+    color: var(--ink) !important;
+    border-color: var(--line-strong) !important;
+}

@@ -81,6 +81,16 @@ async function migrar() {
         const consultorioInicial = inicial.id;
 
 
+        /* ---------- ajustes de recordatorios y logo por consultorio ---------- */
+
+        await client.query(`
+            ALTER TABLE consultorios
+                ADD COLUMN IF NOT EXISTS recordatorios_activo BOOLEAN NOT NULL DEFAULT true,
+                ADD COLUMN IF NOT EXISTS recordatorio_horas INTEGER NOT NULL DEFAULT 24,
+                ADD COLUMN IF NOT EXISTS recordatorio_texto TEXT
+        `);
+
+
         /* ---------- usuarios ---------- */
 
         const usuariosYaMigrados = await columnaExiste(client, "usuarios", "rol");
@@ -90,7 +100,8 @@ async function migrar() {
                 ADD COLUMN IF NOT EXISTS rol VARCHAR(20) NOT NULL DEFAULT 'usuario',
                 ADD COLUMN IF NOT EXISTS consultorio_id INTEGER REFERENCES consultorios(id),
                 ADD COLUMN IF NOT EXISTS activo BOOLEAN NOT NULL DEFAULT true,
-                ADD COLUMN IF NOT EXISTS nombre VARCHAR(150)
+                ADD COLUMN IF NOT EXISTS nombre VARCHAR(150),
+                ADD COLUMN IF NOT EXISTS sesion_valida_desde TIMESTAMP
         `);
 
         await client.query(`

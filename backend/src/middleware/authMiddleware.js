@@ -46,6 +46,7 @@ async function estadoDeCuenta(usuarioId) {
             u.rol,
             u.activo,
             u.consultorio_id,
+            u.sesion_valida_desde,
             c.activo AS consultorio_activo
         FROM usuarios u
         LEFT JOIN consultorios c ON c.id = u.consultorio_id
@@ -118,6 +119,16 @@ async function verificarToken(req, res, next) {
         ) {
             return res.status(401).json({
                 mensaje: "Sesión inválida"
+            });
+        }
+
+        // un cambio de contraseña cierra las sesiones abiertas antes de ese momento
+        if (
+            cuenta.sesion_valida_desde &&
+            datosToken.iat < Math.floor(new Date(cuenta.sesion_valida_desde).getTime() / 1000)
+        ) {
+            return res.status(401).json({
+                mensaje: "Sesión vencida. Iniciá sesión nuevamente."
             });
         }
 

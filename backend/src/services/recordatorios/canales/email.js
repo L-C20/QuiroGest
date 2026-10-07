@@ -41,8 +41,9 @@ async function enviar(turno, destino) {
             to: [destino],
             subject: `Recordatorio de turno - ${d.fecha} ${d.hora}`,
             text: textoRecordatorio(turno),
-            html:
-                `<p>Hola ${escaparHtml(d.nombre)},</p>` +
+            html: turno.recordatorio_texto
+                ? `<p>${escaparHtml(textoRecordatorio(turno)).split("\n").join("<br>")}</p>`
+                : `<p>Hola ${escaparHtml(d.nombre)},</p>` +
                 `<p>Te recordamos tu turno en <strong>${escaparHtml(d.consultorio)}</strong> ` +
                 `el <strong>${escaparHtml(d.fecha)}</strong> a las <strong>${escaparHtml(d.hora)}</strong>.</p>` +
                 "<p>Si no podés asistir, avisanos para reprogramarlo.</p>"

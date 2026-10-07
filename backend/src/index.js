@@ -10,17 +10,19 @@ const pacientesRoutes = require("./routes/pacientes");
 const turnosRoutes = require("./routes/turnos");
 const pagosRoutes = require("./routes/pagos");
 const recordatoriosRoutes = require("./routes/recordatorios");
+const configuracionRoutes = require("./routes/configuracion");
 const recordatorios = require("./services/recordatorios");
 const { migrar } = require("./database/migraciones");
 const verificarToken = require("./middleware/authMiddleware");
 
 app.use(cors());
-app.use(express.json());
+app.use(express.json({ limit: "600kb" }));
 app.use("/auth", authRoutes);
 app.use("/pacientes", pacientesRoutes);
 app.use("/turnos", turnosRoutes);
 app.use("/pagos", verificarToken, pagosRoutes);
 app.use("/recordatorios", verificarToken, recordatoriosRoutes);
+app.use("/configuracion", configuracionRoutes);
 
 app.get("/health", (req, res) => {
     res.json({

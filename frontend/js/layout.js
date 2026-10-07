@@ -8,6 +8,14 @@
 
     const CLAVE_TEMA = "quirogest-tema";
 
+    const EN_LOGIN = /login\.html$/i.test(window.location.pathname);
+
+    /* Sin sesión iniciada solo se puede ver el login */
+    if (!EN_LOGIN && !localStorage.getItem("token")) {
+        window.location.replace("login.html");
+        return;
+    }
+
     function leerTema() {
 
         try {
@@ -166,9 +174,147 @@
         });
     }
 
+    /* ---------- cerrar sesión ---------- */
+
+    function cerrarSesion() {
+
+        try {
+            localStorage.removeItem("token");
+        } catch (e) { /* ignorar */ }
+
+        window.location.href = "login.html";
+    }
+
+    document.addEventListener("click", function (evento) {
+
+        if (evento.target.closest(".logout-button, #btnCerrarSesion")) {
+            evento.preventDefault();
+            cerrarSesion();
+        }
+    });
+
+
+    /* ---------- identidad de la sesión (consultorio, usuario, rol) ---------- */
+
+    const ETIQUETA_ROL = {
+        superadmin: "Super administrador",
+        administrador: "Administrador",
+        usuario: "Usuario"
+    };
+
+    function pintarSesion(sesion) {
+
+        window.QG_SESION = sesion;
+
+        const nombreVisible =
+            sesion.usuario.nombre || sesion.usuario.email.split("@")[0];
+
+        const subtitulo = document.querySelector(".sidebar-subtitle");
+
+        if (subtitulo) {
+            subtitulo.textContent = sesion.consultorio.nombre;
+            subtitulo.title = sesion.consultorio.nombre;
+        }
+
+        const logo = document.querySelector(".sidebar-logo");
+
+        if (logo) {
+
+            if (sesion.consultorio.logo) {
+
+                logo.textContent = "";
+                logo.classList.add("con-imagen");
+
+                const imagen = document.createElement("img");
+                imagen.src = sesion.consultorio.logo;
+                imagen.alt = "";
+                logo.replaceChildren(imagen);
+
+            } else {
+
+                logo.classList.remove("con-imagen");
+                logo.textContent = (sesion.consultorio.nombre || "Q").trim().charAt(0).toUpperCase();
+            }
+        }
+
+        const avatar = document.querySelector(".user-avatar");
+
+        if (avatar) {
+            avatar.textContent = nombreVisible.charAt(0).toUpperCase();
+        }
+
+        const info = document.querySelector(".user-info");
+
+        if (info) {
+
+            const fuerte = info.querySelector("strong");
+            const chico = info.querySelector("span");
+
+            if (fuerte) fuerte.textContent = nombreVisible;
+            if (chico) chico.textContent = ETIQUETA_ROL[sesion.usuario.rol] || "";
+        }
+
+        document.dispatchEvent(new CustomEvent("quirogest:sesion", { detail: sesion }));
+    }
+
+    async function cargarSesion() {
+
+        if (EN_LOGIN) {
+            return;
+        }
+
+        try {
+
+            const respuesta = await fetch("/auth/me", {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem("token")}`
+                }
+            });
+
+            if (respuesta.status === 401) {
+                cerrarSesion();
+                return;
+            }
+
+            if (respuesta.status === 403) {
+
+                const datos = await respuesta.json().catch(() => ({}));
+
+                alert(datos.mensaje || "La cuenta está suspendida.");
+                cerrarSesion();
+                return;
+            }
+
+            if (!respuesta.ok) {
+                return;
+            }
+
+            pintarSesion(await respuesta.json());
+
+        } catch (error) {
+            /* sin conexión: se deja la pantalla como está */
+        }
+    }
+
+    /* API mínima para otras pantallas */
+    window.QuiroGest = {
+        obtenerTema: leerTema,
+        aplicarTema: function (tema) {
+
+            try {
+                localStorage.setItem(CLAVE_TEMA, tema);
+            } catch (e) { /* ignorar */ }
+
+            aplicarTema(tema);
+        },
+        cerrarSesion: cerrarSesion,
+        recargarSesion: cargarSesion
+    };
+
     function iniciar() {
         crearMenuMovil();
         crearBotonTema();
+        cargarSesion();
     }
 
     if (document.readyState === "loading") {
