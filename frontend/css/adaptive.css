@@ -14,42 +14,9 @@
     gap: 4px;
 }
 
-.tema-toggle {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    width: 100%;
-    padding: 10px 12px;
-    border: 0;
-    border-radius: 10px;
-    background: transparent;
-    color: rgba(255, 255, 255, .72);
-    font: inherit;
-    font-weight: 500;
-    cursor: pointer;
-    transition: background .18s ease, color .18s ease;
-}
 
-.tema-toggle:hover {
-    background: rgba(255, 255, 255, .07);
-    color: #fff;
-}
 
-.tema-icono {
-    display: inline-flex;
-    width: 20px;
-    height: 20px;
-}
 
-.tema-icono svg {
-    width: 20px;
-    height: 20px;
-    fill: none;
-    stroke: currentColor;
-    stroke-width: 1.8;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-}
 
 .menu-toggle,
 .sidebar-backdrop {
@@ -618,40 +585,9 @@ button.primary-button,
     border-bottom: 1px solid var(--line);
 }
 
-/* Botón flotante de tema (visible en todas las pantallas, incluido el login) */
-.tema-flotante {
-    position: fixed;
-    right: 18px;
-    bottom: 18px;
-    z-index: 1300;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 44px;
-    height: 44px;
-    border: 1px solid var(--line-strong);
-    border-radius: 50%;
-    background: var(--surface);
-    color: var(--brand-700);
-    box-shadow: var(--shadow-md);
-    cursor: pointer;
-    transition: transform .15s ease, background .18s ease, color .18s ease;
-}
 
-.tema-flotante:hover {
-    transform: translateY(-2px);
-    background: var(--teal-50);
-    color: var(--teal-700);
-}
 
-[data-theme="dark"] .tema-flotante {
-    color: var(--lime-400);
-}
 
-.tema-flotante .tema-icono {
-    width: 20px;
-    height: 20px;
-}
 
 
 /* =====================================================
@@ -779,6 +715,26 @@ body.en-soporte .menu-toggle {
     }
 }
 
-body.en-soporte .tema-flotante {
-    bottom: 18px;
+
+/* =====================================================
+   MENÚ LATERAL FIJO (escritorio)
+   Acompaña al scroll: "Cerrar sesión" queda siempre a la vista
+===================================================== */
+
+@media (min-width: 901px) {
+
+    .sidebar {
+        position: sticky;
+        top: 0;
+        align-self: flex-start;
+        height: 100vh;
+        min-height: 0;
+        overflow-y: auto;
+    }
+
+    body.en-soporte .sidebar {
+        top: 40px;
+        height: calc(100vh - 40px);
+        min-height: 0;
+    }
 }

@@ -31,88 +31,6 @@
     function aplicarTema(tema) {
 
         document.documentElement.setAttribute("data-theme", tema);
-
-        const oscuro = tema === "dark";
-
-        document.querySelectorAll("[data-tema-boton]").forEach(boton => {
-
-            boton.setAttribute("aria-pressed", String(oscuro));
-            boton.setAttribute(
-                "title",
-                oscuro ? "Cambiar a modo claro" : "Cambiar a modo oscuro"
-            );
-
-            const icono = boton.querySelector(".tema-icono");
-            const texto = boton.querySelector(".tema-texto");
-
-            if (icono) {
-                icono.innerHTML = oscuro ? ICONO_SOL : ICONO_LUNA;
-            }
-
-            if (texto) {
-                texto.textContent = oscuro ? "Modo claro" : "Modo oscuro";
-            }
-        });
-    }
-
-    function alternarTema() {
-
-        const nuevo =
-            document.documentElement.getAttribute("data-theme") === "dark"
-                ? "light"
-                : "dark";
-
-        try {
-            localStorage.setItem(CLAVE_TEMA, nuevo);
-        } catch (e) { /* ignorar */ }
-
-        aplicarTema(nuevo);
-    }
-
-    const ICONO_LUNA =
-        '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4 8 8 0 1 0 20 14.5z"></path></svg>';
-
-    const ICONO_SOL =
-        '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg>';
-
-    function crearBotonTema() {
-
-        const pie = document.querySelector(".sidebar-footer");
-
-        if (pie && !document.getElementById("botonTema")) {
-
-            const boton = document.createElement("button");
-
-            boton.type = "button";
-            boton.id = "botonTema";
-            boton.className = "tema-toggle";
-            boton.setAttribute("data-tema-boton", "");
-            boton.innerHTML =
-                '<span class="tema-icono"></span>' +
-                '<span class="tema-texto"></span>';
-
-            boton.addEventListener("click", alternarTema);
-
-            pie.insertBefore(boton, pie.firstChild);
-        }
-
-        if (!document.getElementById("botonTemaFlotante")) {
-
-            const flotante = document.createElement("button");
-
-            flotante.type = "button";
-            flotante.id = "botonTemaFlotante";
-            flotante.className = "tema-flotante";
-            flotante.setAttribute("data-tema-boton", "");
-            flotante.setAttribute("aria-label", "Cambiar tema claro u oscuro");
-            flotante.innerHTML = '<span class="tema-icono"></span>';
-
-            flotante.addEventListener("click", alternarTema);
-
-            document.body.appendChild(flotante);
-        }
-
-        aplicarTema(leerTema());
     }
 
     function crearMenuMovil() {
@@ -404,7 +322,7 @@
 
     function iniciar() {
         crearMenuMovil();
-        crearBotonTema();
+        aplicarTema(leerTema());
         cargarSesion();
     }
 
