@@ -1,5 +1,5 @@
 /* =====================================================
-   QUIROGEST — Búsqueda avanzada de turnos
+   GESTIONTEC MEDICAL — Búsqueda avanzada de turnos
    Texto + estado + rango de fechas (consulta al backend)
 ===================================================== */
 

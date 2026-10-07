@@ -1,6 +1,6 @@
 
 /* =====================================================
-   QUIROGEST — SISTEMA GLOBAL DE NOTIFICACIONES
+   GESTIONTEC MEDICAL — SISTEMA GLOBAL DE NOTIFICACIONES
 ===================================================== */
 
 function mostrarNotificacion(
@@ -228,7 +228,7 @@ function cerrarNotificacion(
 }
 
 /* =====================================================
-   QUIROGEST — MODAL GLOBAL DE CONFIRMACIÓN
+   GESTIONTEC MEDICAL — MODAL GLOBAL DE CONFIRMACIÓN
 ===================================================== */
 
 function confirmarAccion(

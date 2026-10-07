@@ -1,6 +1,6 @@
 
 /* =====================================================
-   QUIROGEST — TURNOS
+   GESTIONTEC MEDICAL — TURNOS
 ===================================================== */
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -2577,7 +2577,7 @@ window.cambiarFechaDesdeCalendario =
 
     cargarTurnos();
 /* =====================================================
-   QUIROGEST — CALENDARIO MENSUAL
+   GESTIONTEC MEDICAL — CALENDARIO MENSUAL
 ===================================================== */
 
 

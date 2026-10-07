@@ -1,5 +1,5 @@
 /* =====================================================
-   QUIROGEST — Tarjeta de recordatorios (estado e historial)
+   GESTIONTEC MEDICAL — Tarjeta de recordatorios (estado e historial)
 ===================================================== */
 
 (function () {

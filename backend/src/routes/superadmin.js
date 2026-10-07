@@ -1,5 +1,5 @@
 /* =====================================================
-   QUIROGEST — Panel del proveedor (solo super admin)
+   GESTIONTEC MEDICAL — Panel del proveedor (solo super admin)
 
      GET   /superadmin/consultorios            lista con totales (sin datos de pacientes)
      POST  /superadmin/consultorios            crea consultorio + su primer administrador

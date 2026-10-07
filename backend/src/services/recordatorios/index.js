@@ -1,5 +1,5 @@
 /* =====================================================
-   QUIROGEST — Recordatorios de turnos
+   GESTIONTEC MEDICAL — Recordatorios de turnos
 
    Apagado por defecto. Para activarlo en Railway:
      REMINDERS_ENABLED=true

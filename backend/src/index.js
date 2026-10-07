@@ -28,7 +28,15 @@ app.use("/superadmin", superadminRoutes);
 
 app.get("/health", (req, res) => {
     res.json({
-        mensaje: "QUIROGEST API funcionando"
+        mensaje: "GestionTec Medical API funcionando"
+    });
+});
+
+// Datos publicos para la politica de privacidad (sin autenticacion)
+app.get("/publico/contacto", (req, res) => {
+    res.json({
+        empresa: "GestionTec Medical",
+        contacto: process.env.PRIVACY_CONTACT_EMAIL || null
     });
 });
 
@@ -46,7 +54,7 @@ migrar()
     .then(() => {
 
         app.listen(PORT, "0.0.0.0", () => {
-            console.log(`Servidor QUIROGEST funcionando en el puerto ${PORT}`);
+            console.log(`Servidor GestionTec Medical funcionando en el puerto ${PORT}`);
             recordatorios.iniciar();
         });
 

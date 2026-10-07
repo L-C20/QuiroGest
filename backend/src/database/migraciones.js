@@ -1,5 +1,5 @@
 /* =====================================================
-   QUIROGEST — Migración multi-consultorio y roles
+   GESTIONTEC MEDICAL — Migración multi-consultorio y roles
 
    Es idempotente: se puede ejecutar muchas veces y solo
    hace lo que falta. Corre al iniciar el servidor, dentro

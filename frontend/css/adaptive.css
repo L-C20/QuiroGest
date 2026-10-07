@@ -1,5 +1,5 @@
 /* =====================================================
-   QUIROGEST — Responsive y modo oscuro
+   GESTIONTEC MEDICAL — Responsive y modo oscuro
    (se carga después de theme.css)
 ===================================================== */
 
@@ -736,5 +736,69 @@ body.en-soporte .menu-toggle {
         top: 40px;
         height: calc(100vh - 40px);
         min-height: 0;
+    }
+}
+
+
+/* =====================================================
+   ENLACE A LA POLÍTICA DE PRIVACIDAD
+===================================================== */
+
+.sidebar-legal {
+    display: block;
+    padding: 6px 12px 10px;
+    color: rgba(255, 255, 255, .5);
+    font-size: 12px;
+    font-weight: 500;
+    text-decoration: none;
+    transition: color .15s ease;
+}
+
+.sidebar-legal:hover {
+    color: #fff;
+    text-decoration: underline;
+}
+
+.login-legal {
+    margin-top: 18px;
+    text-align: center;
+    font-size: 12.5px;
+}
+
+.login-legal a {
+    color: var(--ink-muted);
+    text-decoration: none;
+    border-bottom: 1px dotted var(--ink-muted);
+}
+
+.login-legal a:hover {
+    color: var(--teal-700);
+    border-bottom-color: var(--teal-700);
+}
+
+
+/* =====================================================
+   MARCA: GestionTec Medical
+===================================================== */
+
+.login-header .logo-text {
+    font-size: 24px;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    white-space: nowrap;
+}
+
+.sidebar-title {
+    font-size: 14.5px;
+    font-weight: 800;
+    letter-spacing: -0.005em;
+    line-height: 1.2;
+    text-transform: none;
+}
+
+@media (max-width: 420px) {
+
+    .login-header .logo-text {
+        font-size: 21px;
     }
 }

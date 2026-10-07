@@ -1,5 +1,5 @@
 /* =====================================================
-   QUIROGEST — Configuración del consultorio
+   GESTIONTEC MEDICAL — Configuración del consultorio
 
    Cualquier usuario:
      GET  /configuracion/consultorio

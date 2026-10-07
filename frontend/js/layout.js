@@ -1,5 +1,5 @@
 /* =====================================================
-   QUIROGEST — Layout compartido
+   GESTIONTEC MEDICAL — Layout compartido
    · Menú lateral desplegable en pantallas chicas
    · Selector de tema claro / oscuro
 ===================================================== */
@@ -320,9 +320,30 @@
         recargarSesion: cargarSesion
     };
 
+    /* Enlace a la política de privacidad, arriba de "Cerrar sesión" */
+    function enlacePrivacidad() {
+
+        const pie = document.querySelector(".sidebar-footer");
+
+        if (!pie || pie.querySelector(".sidebar-legal")) {
+            return;
+        }
+
+        const enlace = document.createElement("a");
+
+        enlace.href = "privacidad.html";
+        enlace.target = "_blank";
+        enlace.rel = "noopener";
+        enlace.className = "sidebar-legal";
+        enlace.textContent = "Política de privacidad";
+
+        pie.insertBefore(enlace, pie.firstChild);
+    }
+
     function iniciar() {
         crearMenuMovil();
         aplicarTema(leerTema());
+        enlacePrivacidad();
         cargarSesion();
     }
 

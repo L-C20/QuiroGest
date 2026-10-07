@@ -1,5 +1,5 @@
 /* =====================================================
-   QUIROGEST — Panel del proveedor (solo super admin)
+   GESTIONTEC MEDICAL — Panel del proveedor (solo super admin)
 ===================================================== */
 
 (function () {

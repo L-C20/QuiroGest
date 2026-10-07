@@ -1150,7 +1150,7 @@ body {
 
 }
 /* =========================
-   IDENTIDAD QUIROGEST
+   IDENTIDAD GESTIONTEC MEDICAL
 ========================= */
 
 .app {
@@ -1712,7 +1712,7 @@ body {
    ESTADOS
 ========================= */
 /* =====================================================
-   QUIROGEST — ESTADOS DE TURNOS
+   GESTIONTEC MEDICAL — ESTADOS DE TURNOS
 ===================================================== */
 
 /* =====================================================
@@ -3311,7 +3311,7 @@ body {
 }
 
 /* =====================================================
-   QUIROGEST — PRÓXIMOS TURNOS
+   GESTIONTEC MEDICAL — PRÓXIMOS TURNOS
 ===================================================== */
 
 .proximos-turnos-lista {
@@ -3453,7 +3453,7 @@ body {
 }
 
 /* =====================================================
-   NOTIFICACIÓN QUIROGEST
+   NOTIFICACIÓN GESTIONTEC MEDICAL
 ===================================================== */
 
 .notificacion-quirogest {
@@ -3929,7 +3929,7 @@ body {
 
 
 /* =====================================================
-   QUIROGEST — ESTADOS DE TURNOS EN DASHBOARD
+   GESTIONTEC MEDICAL — ESTADOS DE TURNOS EN DASHBOARD
 ===================================================== */
 
 
@@ -4141,7 +4141,7 @@ body {
 }
 
 /* =====================================================
-   QUIROGEST — ESTADOS DE TURNOS EN DASHBOARD
+   GESTIONTEC MEDICAL — ESTADOS DE TURNOS EN DASHBOARD
 ===================================================== */
 
 .appointment-status-select {
@@ -4278,7 +4278,7 @@ body {
 
 
 /* =====================================================
-   QUIROGEST — CONTROLES PRÓXIMOS TURNOS
+   GESTIONTEC MEDICAL — CONTROLES PRÓXIMOS TURNOS
 ===================================================== */
 
 .proximos-turnos-controles {
@@ -4445,7 +4445,7 @@ body {
 
 
 /* =====================================================
-   QUIROGEST — MODAL GLOBAL DE CONFIRMACIÓN
+   GESTIONTEC MEDICAL — MODAL GLOBAL DE CONFIRMACIÓN
 ===================================================== */
 
 .modal-confirmacion {

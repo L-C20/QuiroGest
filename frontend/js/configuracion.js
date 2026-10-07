@@ -1,5 +1,5 @@
 /* =====================================================
-   QUIROGEST — Pantalla de Configuración
+   GESTIONTEC MEDICAL — Pantalla de Configuración
    Consultorio · Usuarios · Recordatorios · Mi cuenta
 ===================================================== */
 
