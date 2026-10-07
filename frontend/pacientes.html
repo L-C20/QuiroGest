@@ -28,6 +28,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
     <link rel="stylesheet" href="css/theme.css">
     <link rel="stylesheet" href="css/adaptive.css">
+    <link rel="stylesheet" href="css/configuracion.css">
 
     <script>try{var t=localStorage.getItem("quirogest-tema");if(t!=="dark"&&t!=="light"){t="light"}document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
 </head>
@@ -1108,6 +1109,36 @@
     <!-- =====================================================
          JAVASCRIPT
     ===================================================== -->
+
+    <!-- DIÁLOGO: ELIMINAR PACIENTE (definitivo) -->
+
+    <dialog class="config-dialogo" id="dialogoEliminar">
+
+        <form method="dialog" id="formEliminar" class="config-form" novalidate>
+
+            <header class="config-panel-cabecera">
+                <h2>Eliminar paciente</h2>
+                <p id="eliminarDetalle"></p>
+            </header>
+
+            <div class="eliminar-aviso" id="eliminarAviso"></div>
+
+            <label class="config-campo" id="campoConfirmarEliminar" hidden>
+                <span>Para confirmar, escribí <b>ELIMINAR</b></span>
+                <input type="text" id="eliminarConfirmacion" autocomplete="off" spellcheck="false">
+            </label>
+
+            <p class="config-error" id="errorEliminar" role="alert"></p>
+
+            <div class="config-pie config-pie-dialogo">
+                <button type="button" class="secondary-button" id="btnCancelarEliminar">Cancelar</button>
+                <button type="submit" class="primary-button peligro" id="btnConfirmarEliminar">Eliminar definitivamente</button>
+            </div>
+
+        </form>
+
+    </dialog>
+
 
     <script src="js/auth.js"></script>
 

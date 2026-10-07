@@ -741,3 +741,45 @@
     background-color: var(--surface-soft);
     border-color: var(--line-strong);
 }
+
+
+/* ---------- eliminar paciente ---------- */
+
+.table-action.peligro:hover {
+    background: var(--bad-bg);
+    border-color: var(--bad);
+    color: var(--bad);
+}
+
+.eliminar-aviso {
+    padding: 14px 16px;
+    border-radius: var(--radius);
+    background: var(--bad-bg);
+    color: var(--bad);
+    font-size: 13.5px;
+    line-height: 1.55;
+}
+
+.eliminar-aviso p + p {
+    margin-top: 8px;
+    color: var(--ink-soft);
+    font-size: 12.5px;
+}
+
+#dialogoEliminar .config-panel-cabecera p {
+    font-weight: 700;
+    color: var(--ink);
+    font-size: 15px;
+}
+
+button.primary-button.peligro {
+    background: linear-gradient(135deg, #c53030, #9b2c2c) !important;
+    box-shadow: 0 6px 16px -6px rgba(197, 48, 48, .6) !important;
+}
+
+button.primary-button.peligro:disabled {
+    opacity: .45;
+    cursor: not-allowed;
+    filter: none;
+    transform: none;
+}

@@ -297,6 +297,46 @@ function renderizarTabla(lista) {
                 `;
 
 
+            // =========================
+            // ACCIÓN ELIMINAR (solo administradores)
+            // =========================
+
+            const accionEliminar =
+                puedeEliminar()
+
+                ? `
+
+                    <button
+                        class="table-action peligro"
+                        title="Eliminar paciente"
+                        aria-label="Eliminar paciente"
+                        onclick="eliminarPaciente(${paciente.id})"
+                    >
+
+                        <svg
+                            viewBox="0 0 24 24"
+                            aria-hidden="true"
+                        >
+
+                            <path d="M4 7h16"></path>
+
+                            <path d="M10 11v6"></path>
+
+                            <path d="M14 11v6"></path>
+
+                            <path d="M6 7l1 12a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2l1-12"></path>
+
+                            <path d="M9 7V4h6v3"></path>
+
+                        </svg>
+
+                    </button>
+
+                `
+
+                : "";
+
+
             return `
 
                 <tr>
@@ -422,6 +462,11 @@ function renderizarTabla(lista) {
                             <!-- DESACTIVAR / REACTIVAR -->
 
                             ${accionEstado}
+
+
+                            <!-- ELIMINAR -->
+
+                            ${accionEliminar}
 
                         </div>
 
@@ -1735,3 +1780,248 @@ async function cargarHistorialPagos(pacienteId) {
     }
 
 }
+
+
+// =========================
+// ELIMINAR PACIENTE (definitivo, solo administradores)
+// =========================
+
+function puedeEliminar() {
+
+    return Boolean(
+        window.QG_SESION &&
+        ["administrador", "superadmin"].includes(
+            window.QG_SESION.usuario.rol
+        )
+    );
+
+}
+
+// el rol llega después de cargar la tabla: se vuelve a dibujar con el botón
+document.addEventListener("quirogest:sesion", () => {
+
+    if (pacientes.length > 0) {
+
+        mostrarPacientes();
+
+    }
+
+});
+
+let pacienteAEliminar = null;
+
+async function eliminarPaciente(id) {
+
+    const paciente =
+        pacientes.find(p => p.id === id);
+
+    if (!paciente) {
+
+        return;
+
+    }
+
+    const token =
+        localStorage.getItem("token");
+
+    if (!token) {
+
+        window.location.href =
+            "login.html";
+
+        return;
+
+    }
+
+    let historial;
+
+    try {
+
+        const respuesta =
+            await fetch(
+                `${API_URL}/pacientes/${id}/historial`,
+                {
+                    headers: {
+                        "Authorization":
+                            `Bearer ${token}`
+                    }
+                }
+            );
+
+        const datos =
+            await respuesta.json();
+
+        if (!respuesta.ok) {
+
+            throw new Error(
+                datos.mensaje ||
+                "No se pudo consultar el paciente"
+            );
+
+        }
+
+        historial = datos;
+
+    } catch (error) {
+
+        mostrarNotificacion(
+            "No se pudo continuar",
+            error.message,
+            "error"
+        );
+
+        return;
+
+    }
+
+    pacienteAEliminar = {
+        id,
+        turnos: historial.turnos,
+        pagos: historial.pagos
+    };
+
+    const conHistorial =
+        historial.turnos > 0 ||
+        historial.pagos > 0;
+
+    document.getElementById("eliminarDetalle").textContent =
+        `${paciente.apellido}, ${paciente.nombre}`;
+
+    const aviso =
+        document.getElementById("eliminarAviso");
+
+    aviso.replaceChildren();
+
+    const linea1 =
+        document.createElement("p");
+
+    linea1.textContent = conHistorial
+        ? `Se borrarán también ${historial.turnos} turno(s) y ${historial.pagos} pago(s) de este paciente. Esta acción no se puede deshacer.`
+        : "Este paciente no tiene turnos ni pagos. Esta acción no se puede deshacer.";
+
+    const linea2 =
+        document.createElement("p");
+
+    linea2.textContent =
+        "Si solo querés que deje de aparecer en la lista, usá Desactivar: así se conservan sus datos.";
+
+    aviso.append(linea1, linea2);
+
+    const campo =
+        document.getElementById("campoConfirmarEliminar");
+
+    const entrada =
+        document.getElementById("eliminarConfirmacion");
+
+    const boton =
+        document.getElementById("btnConfirmarEliminar");
+
+    campo.hidden = !conHistorial;
+    entrada.value = "";
+    boton.disabled = conHistorial;
+    boton.textContent = "Eliminar definitivamente";
+
+    document.getElementById("errorEliminar").textContent = "";
+
+    document.getElementById("dialogoEliminar").showModal();
+
+    (conHistorial ? entrada : boton).focus();
+
+}
+
+document.getElementById("eliminarConfirmacion")
+    .addEventListener("input", evento => {
+
+        document.getElementById("btnConfirmarEliminar").disabled =
+            evento.target.value.trim().toUpperCase() !== "ELIMINAR";
+
+    });
+
+document.getElementById("btnCancelarEliminar")
+    .addEventListener("click", () => {
+
+        document.getElementById("dialogoEliminar").close();
+
+    });
+
+document.getElementById("dialogoEliminar")
+    .addEventListener("click", evento => {
+
+        if (evento.target === evento.currentTarget) {
+
+            evento.currentTarget.close();
+
+        }
+
+    });
+
+document.getElementById("formEliminar")
+    .addEventListener("submit", async evento => {
+
+        evento.preventDefault();
+
+        const boton =
+            document.getElementById("btnConfirmarEliminar");
+
+        if (boton.disabled || !pacienteAEliminar) {
+
+            return;
+
+        }
+
+        boton.disabled = true;
+        boton.textContent = "Eliminando…";
+
+        const error =
+            document.getElementById("errorEliminar");
+
+        error.textContent = "";
+
+        try {
+
+            const respuesta =
+                await fetch(
+                    `${API_URL}/pacientes/${pacienteAEliminar.id}/definitivo`,
+                    {
+                        method: "DELETE",
+                        headers: {
+                            "Authorization":
+                                `Bearer ${localStorage.getItem("token")}`
+                        }
+                    }
+                );
+
+            const datos =
+                await respuesta.json();
+
+            if (!respuesta.ok) {
+
+                throw new Error(
+                    datos.mensaje ||
+                    "No se pudo eliminar el paciente"
+                );
+
+            }
+
+            document.getElementById("dialogoEliminar").close();
+
+            mostrarNotificacion(
+                "Paciente eliminado",
+                "El paciente y su historial se eliminaron definitivamente.",
+                "success"
+            );
+
+            pacienteAEliminar = null;
+
+            await cargarPacientes();
+
+        } catch (e) {
+
+            error.textContent = e.message;
+
+            boton.disabled = false;
+            boton.textContent = "Eliminar definitivamente";
+
+        }
+
+    });
