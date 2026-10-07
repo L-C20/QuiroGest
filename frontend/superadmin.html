@@ -309,6 +309,58 @@
             </article>
 
 
+            <article class="config-panel proveedor-panel" id="panelRespaldos">
+
+                <header class="config-panel-cabecera config-panel-cabecera-accion">
+
+                    <div>
+                        <h2>Respaldos</h2>
+                        <p>Copia completa y cifrada de todos los consultorios, guardada fuera de Railway.</p>
+                    </div>
+
+                    <div class="respaldos-botones">
+                        <button type="button" class="secondary-button" id="btnDescargarRespaldo">Descargar respaldo</button>
+                        <button type="button" class="primary-button" id="btnRespaldarAhora">Respaldar ahora</button>
+                    </div>
+
+                </header>
+
+                <div class="respaldos-estado" id="respaldosEstado"></div>
+
+                <p class="respaldos-alerta" id="respaldosAlerta" role="alert" hidden></p>
+
+                <div class="table-container proveedor-actividad">
+
+                    <table class="patients-table config-tabla">
+
+                        <thead>
+                            <tr>
+                                <th>Cuándo</th>
+                                <th>Tipo</th>
+                                <th>Destino</th>
+                                <th>Estado</th>
+                                <th>Tamaño</th>
+                                <th>Detalle</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="respaldosCuerpo">
+                            <tr><td colspan="6" class="config-vacio">Cargando…</td></tr>
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+                <p class="respaldos-nota">
+                    Guardá la clave de cifrado también <strong>fuera de Railway</strong> (por ejemplo, en un gestor de contraseñas):
+                    sin ella, los respaldos no se pueden abrir. Para restaurar se usa <code>node restaurar.js</code>
+                    (instrucciones en <code>backend/RESPALDOS.md</code>).
+                </p>
+
+            </article>
+
+
             <article class="config-panel proveedor-panel">
 
                 <header class="config-panel-cabecera">

@@ -148,3 +148,62 @@
         flex-direction: column;
     }
 }
+
+
+/* ---------- respaldos ---------- */
+
+.respaldos-botones {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.respaldos-botones .primary-button,
+.respaldos-botones .secondary-button {
+    min-height: 40px;
+    padding: 0 18px;
+    font-size: 13.5px;
+}
+
+.respaldos-botones button:disabled {
+    opacity: .5;
+    cursor: not-allowed;
+}
+
+.respaldos-estado {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 18px 0 14px;
+}
+
+.respaldos-alerta {
+    margin: 0 0 14px;
+    padding: 11px 14px;
+    border-radius: var(--radius);
+    background: var(--warn-bg);
+    color: var(--warn);
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 1.5;
+}
+
+.respaldos-alerta.info {
+    background: var(--info-bg);
+    color: var(--info);
+}
+
+.respaldos-nota {
+    margin-top: 14px;
+    color: var(--ink-muted);
+    font-size: 12.5px;
+    line-height: 1.6;
+}
+
+.respaldos-nota code {
+    padding: 1px 6px;
+    border-radius: 6px;
+    background: var(--surface-soft);
+    border: 1px solid var(--line);
+    font-size: 12px;
+}

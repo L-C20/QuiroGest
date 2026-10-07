@@ -12,6 +12,8 @@ const pagosRoutes = require("./routes/pagos");
 const recordatoriosRoutes = require("./routes/recordatorios");
 const configuracionRoutes = require("./routes/configuracion");
 const superadminRoutes = require("./routes/superadmin");
+const respaldosRoutes = require("./routes/respaldos");
+const respaldos = require("./services/respaldos");
 const recordatorios = require("./services/recordatorios");
 const { migrar } = require("./database/migraciones");
 const verificarToken = require("./middleware/authMiddleware");
@@ -24,6 +26,12 @@ app.use("/turnos", turnosRoutes);
 app.use("/pagos", verificarToken, pagosRoutes);
 app.use("/recordatorios", verificarToken, recordatoriosRoutes);
 app.use("/configuracion", configuracionRoutes);
+app.use(
+    "/superadmin/respaldos",
+    verificarToken,
+    verificarToken.requerirRol("superadmin"),
+    respaldosRoutes
+);
 app.use("/superadmin", superadminRoutes);
 
 app.get("/health", (req, res) => {
@@ -56,6 +64,7 @@ migrar()
         app.listen(PORT, "0.0.0.0", () => {
             console.log(`Servidor GestionTec Medical funcionando en el puerto ${PORT}`);
             recordatorios.iniciar();
+            respaldos.iniciar();
         });
 
     })

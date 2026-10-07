@@ -485,6 +485,239 @@
     }
 
 
+    /* ---------- respaldos ---------- */
+
+    let estadoRespaldos = null;
+
+    function bytes(valor) {
+
+        const n = Number(valor);
+
+        if (!Number.isFinite(n) || n <= 0) return "—";
+
+        return n < 1024 * 1024
+            ? `${(n / 1024).toFixed(1)} KB`
+            : `${(n / 1024 / 1024).toFixed(2)} MB`;
+    }
+
+    function dibujarEstadoRespaldos(estado, historial) {
+
+        estadoRespaldos = estado;
+
+        const chip = (texto, listo) =>
+            `<span class="recordatorio-canal ${listo ? "listo" : ""}"><i></i>${texto}</span>`;
+
+        $("respaldosEstado").innerHTML = [
+            chip(`Clave de cifrado: ${estado.claveConfigurada ? "lista" : "falta"}`, estado.claveConfigurada),
+            chip(`Almacenamiento externo: ${estado.almacenamientoConfigurado ? "listo" : "sin configurar"}`, estado.almacenamientoConfigurado),
+            chip(
+                estado.automatico
+                    ? `Automático: diario desde las ${estado.hora}:00 · conserva ${estado.retencion.diarios} diarios, ${estado.retencion.semanales} semanales y ${estado.retencion.mensuales} mensuales`
+                    : "Automático: desactivado",
+                estado.automatico
+            )
+        ].join("");
+
+        $("btnRespaldarAhora").disabled = !estado.automatico;
+        $("btnRespaldarAhora").title = estado.automatico
+            ? "Crea ahora un respaldo en el almacenamiento externo"
+            : "Primero configurá la clave de cifrado y el almacenamiento externo";
+
+        $("btnDescargarRespaldo").disabled = !estado.claveConfigurada;
+        $("btnDescargarRespaldo").title = estado.claveConfigurada
+            ? "Descarga un respaldo cifrado a tu equipo"
+            : "Primero configurá la clave de cifrado";
+
+        // aviso si el respaldo automático no se está haciendo
+        const alerta = $("respaldosAlerta");
+
+        let mensaje = "";
+        let gravedad = "alerta";
+
+        if (estado.errorClave) {
+
+            mensaje = estado.errorClave;
+
+        } else if (estado.automatico) {
+
+            const ultimoAutomatico = historial.find(h => h.tipo === "automatico");
+
+            const ultimoGuardado = historial.find(
+                h => h.destino === "almacenamiento" && h.estado === "ok"
+            );
+
+            if (ultimoAutomatico && ultimoAutomatico.estado === "error") {
+
+                mensaje = "El último respaldo automático falló. Revisá el detalle en la tabla.";
+
+            } else if (!ultimoGuardado) {
+
+                mensaje = `Todavía no hay respaldos en el almacenamiento externo. El primero automático se hará a partir de las ${estado.hora}:00, o podés crearlo ahora.`;
+                gravedad = "info";
+
+            } else if ((Date.now() - new Date(ultimoGuardado.creado_en).getTime()) / 36e5 > 36) {
+
+                mensaje = "Hace más de 36 horas que no se guarda un respaldo en el almacenamiento externo.";
+            }
+
+        } else if (!estado.claveConfigurada || !estado.almacenamientoConfigurado) {
+
+            mensaje = "Los respaldos automáticos están desactivados: faltan variables en Railway. " +
+                "Sin respaldos externos, un problema con la base podría significar pérdida de datos.";
+        }
+
+        alerta.textContent = mensaje;
+        alerta.hidden = !mensaje;
+        alerta.classList.toggle("info", gravedad === "info");
+    }
+
+    function dibujarHistorialRespaldos(historial) {
+
+        if (historial.length === 0) {
+            $("respaldosCuerpo").innerHTML =
+                "<tr><td colspan=\"6\" class=\"config-vacio\">Todavía no se hizo ningún respaldo.</td></tr>";
+            return;
+        }
+
+        $("respaldosCuerpo").innerHTML = historial.map(h => {
+
+            const estado = h.estado === "ok"
+                ? "<span class=\"appointment-status status-confirmed\">Correcto</span>"
+                : "<span class=\"appointment-status status-cancelled\">Falló</span>";
+
+            const detalle = h.estado === "ok"
+                ? `${h.filas ?? "—"} filas · ${h.duracion_ms ? (h.duracion_ms / 1000).toFixed(1) + " s" : ""}`
+                : (h.error || "");
+
+            return `
+                <tr>
+                    <td>${fecha(h.creado_en, true)}</td>
+                    <td>${h.tipo === "automatico" ? "Automático" : "Manual"}</td>
+                    <td>${h.destino === "descarga" ? "Descarga" : "Almacenamiento"}</td>
+                    <td>${estado}</td>
+                    <td>${bytes(h.bytes)}</td>
+                    <td class="proveedor-detalle">${escapar(detalle)}</td>
+                </tr>`;
+
+        }).join("");
+    }
+
+    async function cargarRespaldos() {
+
+        try {
+
+            const { ok, datos } = await pedir("GET", "/superadmin/respaldos");
+
+            if (!ok) return;
+
+            dibujarEstadoRespaldos(datos.estado, datos.historial);
+            dibujarHistorialRespaldos(datos.historial);
+
+        } catch (error) {
+            /* sesión vencida: ya se redirige */
+        }
+    }
+
+    $("btnRespaldarAhora").addEventListener("click", async () => {
+
+        const boton = $("btnRespaldarAhora");
+
+        if (boton.disabled) return;
+
+        ocupado(boton, true, "Respaldando…");
+
+        try {
+
+            const { ok, datos } = await pedir("POST", "/superadmin/respaldos/ejecutar", {});
+
+            if (!ok) {
+                aviso("No se pudo respaldar", datos.mensaje || "Revisá el historial.", "error");
+            } else {
+                aviso("Respaldo creado", `${datos.filas} filas · ${bytes(datos.bytes)}.`, "success");
+            }
+
+        } catch (error) {
+
+            aviso("No se pudo respaldar", "No se pudo conectar con el servidor.", "error");
+
+        } finally {
+
+            ocupado(boton, false);
+
+            if (estadoRespaldos) {
+                $("btnRespaldarAhora").disabled = !estadoRespaldos.automatico;
+            }
+
+            cargarRespaldos();
+            cargarActividad();
+        }
+    });
+
+    $("btnDescargarRespaldo").addEventListener("click", async () => {
+
+        const boton = $("btnDescargarRespaldo");
+
+        if (boton.disabled) return;
+
+        ocupado(boton, true, "Preparando…");
+
+        try {
+
+            const respuesta = await fetch("/superadmin/respaldos/descargar", {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem("token")}`
+                }
+            });
+
+            if (respuesta.status === 401) {
+                window.QuiroGest.cerrarSesion();
+                return;
+            }
+
+            if (!respuesta.ok) {
+
+                const datos = await respuesta.json().catch(() => ({}));
+
+                aviso("No se pudo descargar", datos.mensaje || "Intentá nuevamente.", "error");
+                return;
+            }
+
+            const disposicion = respuesta.headers.get("Content-Disposition") || "";
+            const coincidencia = /filename="([^"]+)"/.exec(disposicion);
+            const nombre = coincidencia ? coincidencia[1] : "respaldo.gtbak";
+
+            const url = URL.createObjectURL(await respuesta.blob());
+
+            const enlace = document.createElement("a");
+
+            enlace.href = url;
+            enlace.download = nombre;
+
+            document.body.appendChild(enlace);
+            enlace.click();
+            enlace.remove();
+
+            setTimeout(() => URL.revokeObjectURL(url), 5000);
+
+            aviso("Respaldo descargado", "Guardalo en un lugar seguro junto con la clave de cifrado.", "success");
+
+        } catch (error) {
+
+            aviso("No se pudo descargar", "No se pudo conectar con el servidor.", "error");
+
+        } finally {
+
+            ocupado(boton, false);
+
+            if (estadoRespaldos) {
+                $("btnDescargarRespaldo").disabled = !estadoRespaldos.claveConfigurada;
+            }
+
+            cargarRespaldos();
+        }
+    });
+
+
     /* ---------- inicio ---------- */
 
     function iniciar(datosSesion) {
@@ -498,6 +731,7 @@
 
         cargar();
         cargarActividad();
+        cargarRespaldos();
     }
 
     if (window.QG_SESION) {

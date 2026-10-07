@@ -97,6 +97,24 @@ async function migrar() {
         await client.query("CREATE INDEX IF NOT EXISTS idx_auditoria_fecha ON auditoria (creado_en DESC)");
 
 
+        /* ---------- historial de respaldos ---------- */
+
+        await client.query(`
+            CREATE TABLE IF NOT EXISTS respaldos (
+                id SERIAL PRIMARY KEY,
+                creado_en TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+                tipo VARCHAR(20) NOT NULL,
+                destino VARCHAR(20) NOT NULL,
+                estado VARCHAR(10) NOT NULL,
+                archivo TEXT,
+                bytes BIGINT,
+                filas INTEGER,
+                duracion_ms INTEGER,
+                error TEXT
+            )
+        `);
+
+
         /* ---------- ajustes de recordatorios y logo por consultorio ---------- */
 
         await client.query(`
