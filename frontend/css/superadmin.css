@@ -82,16 +82,70 @@
     font-variant-numeric: tabular-nums;
 }
 
-.config-accion.principal {
+/* acciones como íconos */
+
+.icono-accion {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border: 1px solid var(--line-strong);
+    border-radius: 10px;
+    background: var(--surface);
+    color: var(--ink-soft);
+    cursor: pointer;
+    transition: background .15s ease, border-color .15s ease, color .15s ease, transform .15s ease;
+}
+
+.icono-accion svg {
+    width: 18px;
+    height: 18px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.9;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.icono-accion:hover {
+    transform: translateY(-1px);
+    background: var(--teal-50);
+    border-color: var(--teal-500);
+    color: var(--teal-700);
+}
+
+.icono-accion.principal {
     background: linear-gradient(135deg, var(--brand-600), var(--teal-700));
     border-color: transparent;
     color: #fff;
 }
 
-.config-accion.principal:hover {
-    filter: brightness(1.08);
+.icono-accion.principal:hover {
     background: linear-gradient(135deg, var(--brand-600), var(--teal-700));
     color: #fff;
+    filter: brightness(1.1);
+}
+
+.icono-accion.peligro:hover {
+    background: var(--bad-bg);
+    border-color: var(--bad);
+    color: var(--bad);
+}
+
+.icono-accion.reactivar {
+    color: var(--ok);
+}
+
+.icono-accion.reactivar:hover {
+    background: var(--ok-bg);
+    border-color: var(--ok);
+    color: var(--ok);
+}
+
+[data-theme="dark"] .icono-accion:not(.principal) {
+    background-color: var(--surface-soft);
+    border-color: var(--line-strong);
 }
 
 .proveedor-actividad {

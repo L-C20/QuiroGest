@@ -23,6 +23,18 @@
     let sesion = null;
 
 
+    const ICONOS = {
+        entrar: "<svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4\"></path><path d=\"M10 17l5-5-5-5\"></path><path d=\"M15 12H3\"></path></svg>",
+        renombrar: "<svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"M12 20h9\"></path><path d=\"M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4 12.5-12.5z\"></path></svg>",
+        suspender: "<svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><circle cx=\"12\" cy=\"12\" r=\"9\"></circle><path d=\"M10 9v6M14 9v6\"></path></svg>",
+        reactivar: "<svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><circle cx=\"12\" cy=\"12\" r=\"9\"></circle><path d=\"M10 8.5l6 3.5-6 3.5z\"></path></svg>"
+    };
+
+    function botonIcono(accion, id, titulo, nombre, clase) {
+
+        return `<button type="button" class="icono-accion ${clase || ""}" data-accion="${accion}" data-id="${id}" title="${titulo}" aria-label="${titulo}: ${escapar(nombre)}">${ICONOS[clase === "reactivar" ? "reactivar" : accion === "estado" ? "suspender" : accion]}</button>`;
+    }
+
     /* ---------- utilidades ---------- */
 
     function escapar(valor) {
@@ -165,9 +177,11 @@
                     <td>${fecha(c.creado_en)}</td>
                     <td>
                         <div class="config-acciones">
-                            <button type="button" class="config-accion principal" data-accion="entrar" data-id="${c.id}">Entrar</button>
-                            <button type="button" class="config-accion" data-accion="renombrar" data-id="${c.id}">Nombre</button>
-                            <button type="button" class="config-accion ${c.activo ? "peligro" : ""}" data-accion="estado" data-id="${c.id}">${c.activo ? "Suspender" : "Reactivar"}</button>
+                            ${botonIcono("entrar", c.id, "Entrar al consultorio (soporte)", c.nombre, "principal")}
+                            ${botonIcono("renombrar", c.id, "Cambiar nombre", c.nombre)}
+                            ${c.activo
+                                ? botonIcono("estado", c.id, "Suspender consultorio", c.nombre, "peligro")
+                                : botonIcono("estado", c.id, "Reactivar consultorio", c.nombre, "reactivar")}
                         </div>
                     </td>
                 </tr>`;
