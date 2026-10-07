@@ -36,6 +36,18 @@
     let logoActual = null;
 
 
+    const ICONOS = {
+        editar: "<svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"M12 20h9\"></path><path d=\"M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4 12.5-12.5z\"></path></svg>",
+        password: "<svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><circle cx=\"8\" cy=\"15\" r=\"4\"></circle><path d=\"M10.8 12.2L20 3\"></path><path d=\"M16 7l3 3\"></path><path d=\"M14 9l2 2\"></path></svg>",
+        desactivar: "<svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><circle cx=\"12\" cy=\"12\" r=\"9\"></circle><path d=\"M10 9v6M14 9v6\"></path></svg>",
+        activar: "<svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><circle cx=\"12\" cy=\"12\" r=\"9\"></circle><path d=\"M10 8.5l6 3.5-6 3.5z\"></path></svg>"
+    };
+
+    function botonIcono(accion, id, titulo, nombre, icono, clase) {
+
+        return `<button type="button" class="icono-accion ${clase || ""}" data-accion="${accion}" data-id="${id}" title="${titulo}" aria-label="${titulo}: ${escapar(nombre)}">${ICONOS[icono]}</button>`;
+    }
+
     /* ---------- utilidades ---------- */
 
     function escapar(valor) {
@@ -350,9 +362,11 @@
                 ? "<span class=\"config-vacio\">—</span>"
                 : `
                     <div class="config-acciones">
-                        <button type="button" class="config-accion" data-accion="editar" data-id="${u.id}">Editar</button>
-                        <button type="button" class="config-accion" data-accion="password" data-id="${u.id}">Contraseña</button>
-                        ${esYo ? "" : `<button type="button" class="config-accion ${u.activo ? "peligro" : ""}" data-accion="estado" data-id="${u.id}">${u.activo ? "Desactivar" : "Activar"}</button>`}
+                        ${botonIcono("editar", u.id, "Editar usuario", u.nombre || u.email, "editar")}
+                        ${botonIcono("password", u.id, "Cambiar contraseña", u.nombre || u.email, "password")}
+                        ${esYo ? "" : (u.activo
+                            ? botonIcono("estado", u.id, "Desactivar usuario", u.nombre || u.email, "desactivar", "peligro")
+                            : botonIcono("estado", u.id, "Activar usuario", u.nombre || u.email, "activar", "reactivar"))}
                     </div>`;
 
             return `
