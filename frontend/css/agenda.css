@@ -1,0 +1,546 @@
+/* =====================================================
+   GESTIONTEC MEDICAL — Agenda visual
+===================================================== */
+
+.agenda {
+    padding: 8px 34px 40px;
+}
+
+
+/* ---------- barra de herramientas ---------- */
+
+.agenda-barra {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px 18px;
+    margin-bottom: 12px;
+}
+
+.agenda-navegacion,
+.agenda-acciones {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+}
+
+.agenda-titulo {
+    margin: 0 0 0 8px;
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--ink);
+}
+
+.agenda-titulo::first-letter {
+    text-transform: uppercase;
+}
+
+.agenda-flecha {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    height: 38px;
+    padding: 0;
+    border: 1px solid var(--line-strong);
+    border-radius: var(--radius-sm);
+    background: var(--surface);
+    color: var(--ink-soft);
+    cursor: pointer;
+    transition: background .15s ease, color .15s ease;
+}
+
+.agenda-flecha:hover {
+    background: var(--teal-50);
+    color: var(--teal-700);
+}
+
+.agenda-flecha svg {
+    width: 18px;
+    height: 18px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.agenda-vistas {
+    display: inline-flex;
+    padding: 3px;
+    border: 1px solid var(--line);
+    border-radius: 11px;
+    background: var(--surface);
+}
+
+.agenda-vistas button {
+    padding: 7px 14px;
+    border: 0;
+    border-radius: 8px;
+    background: transparent;
+    color: var(--ink-muted);
+    font: inherit;
+    font-size: 13.5px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.agenda-vistas button[aria-pressed="true"] {
+    background: linear-gradient(135deg, var(--brand-600), var(--teal-700));
+    color: #fff;
+}
+
+#agHorario[hidden] {
+    display: none;
+}
+
+
+/* ---------- leyenda ---------- */
+
+.agenda-leyenda {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 16px;
+    margin-bottom: 12px;
+    font-size: 12.5px;
+    color: var(--ink-muted);
+}
+
+.agenda-leyenda span {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.agenda-leyenda i {
+    width: 11px;
+    height: 11px;
+    border-radius: 3px;
+    border: 2px solid transparent;
+}
+
+.est-pendiente { --e-borde: var(--warn); --e-fondo: var(--warn-bg); }
+.est-confirmado { --e-borde: var(--info); --e-fondo: var(--info-bg); }
+.est-atendido { --e-borde: var(--ok); --e-fondo: var(--ok-bg); }
+.est-cancelado { --e-borde: var(--ink-muted); --e-fondo: var(--surface-soft); }
+.est-bloqueo { --e-borde: var(--line-strong); --e-fondo: var(--surface-soft); }
+
+.agenda-leyenda i {
+    border-color: var(--e-borde);
+    background: var(--e-fondo);
+}
+
+
+/* ---------- marco y grilla ---------- */
+
+.agenda-marco {
+    position: relative;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    background: var(--surface);
+    box-shadow: var(--shadow-sm);
+    overflow: hidden;
+}
+
+.agenda-scroll {
+    max-height: calc(100vh - 290px);
+    min-height: 420px;
+    overflow: auto;
+}
+
+.agenda-cargando {
+    position: absolute;
+    top: 10px;
+    right: 14px;
+    z-index: 30;
+    padding: 4px 10px;
+    border-radius: 999px;
+    background: var(--teal-50);
+    color: var(--teal-700);
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.agenda-cargando[hidden] {
+    display: none;
+}
+
+.agenda-grilla {
+    --ancho-min: 128px;
+    min-width: min-content;
+}
+
+.agenda-grilla.una-columna {
+    --ancho-min: 260px;
+}
+
+.ag-cabecera,
+.ag-cuerpo {
+    display: grid;
+    grid-template-columns: 56px repeat(var(--columnas), minmax(var(--ancho-min), 1fr));
+}
+
+.ag-cabecera {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    background: var(--surface);
+    border-bottom: 1px solid var(--line);
+}
+
+.ag-esquina {
+    border-right: 1px solid var(--line);
+}
+
+.ag-dia-titulo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    padding: 9px 4px 8px;
+    border: 0;
+    border-right: 1px solid var(--line);
+    background: transparent;
+    color: var(--ink-soft);
+    font: inherit;
+    cursor: pointer;
+}
+
+.ag-dia-titulo:disabled {
+    cursor: default;
+}
+
+.ag-dia-titulo:not(:disabled):hover {
+    background: var(--teal-50);
+}
+
+.ag-dia-nombre {
+    font-size: 11.5px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: .06em;
+    color: var(--ink-muted);
+}
+
+.ag-dia-numero {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 30px;
+    height: 30px;
+    border-radius: 999px;
+    font-size: 17px;
+    font-weight: 700;
+}
+
+.ag-dia-titulo.hoy .ag-dia-numero {
+    background: linear-gradient(135deg, var(--brand-600), var(--teal-700));
+    color: #fff;
+}
+
+.ag-dia-titulo.hoy .ag-dia-nombre {
+    color: var(--teal-700);
+}
+
+
+/* ---------- cuerpo ---------- */
+
+.ag-cuerpo {
+    position: relative;
+}
+
+.ag-horas {
+    position: relative;
+    border-right: 1px solid var(--line);
+    background: var(--surface);
+}
+
+.ag-hora {
+    position: absolute;
+    right: 8px;
+    transform: translateY(-50%);
+    font-size: 11.5px;
+    color: var(--ink-muted);
+    background: var(--surface);
+    padding: 0 2px;
+}
+
+.ag-col {
+    position: relative;
+    border-right: 1px solid var(--line);
+    cursor: cell;
+    background-image:
+        linear-gradient(var(--line) 1px, transparent 1px),
+        linear-gradient(var(--surface-soft) 1px, transparent 1px);
+    background-size:
+        100% var(--alto-hora),
+        100% var(--alto-slot);
+}
+
+.ag-col.hoy {
+    background-color: var(--teal-50);
+}
+
+.ag-fuera {
+    position: absolute;
+    left: 0;
+    right: 0;
+    background: repeating-linear-gradient(135deg, transparent 0 6px, rgba(107, 124, 116, .09) 6px 7px);
+    pointer-events: none;
+}
+
+.ag-ahora {
+    position: absolute;
+    left: 0;
+    right: 0;
+    z-index: 8;
+    height: 0;
+    border-top: 2px solid var(--bad);
+    pointer-events: none;
+}
+
+.ag-ahora::before {
+    content: "";
+    position: absolute;
+    left: -5px;
+    top: -6px;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--bad);
+}
+
+
+/* ---------- bloqueos ---------- */
+
+.ag-bloqueo {
+    position: absolute;
+    left: 0;
+    right: 0;
+    z-index: 1;
+    background: repeating-linear-gradient(135deg, var(--surface-soft) 0 8px, var(--line) 8px 9px);
+    opacity: .9;
+    pointer-events: none;
+}
+
+.ag-bloqueo-etiqueta {
+    position: sticky;
+    top: 46px;
+    display: block;
+    max-width: calc(100% - 8px);
+    margin: 4px;
+    padding: 3px 8px;
+    border: 1px solid var(--line-strong);
+    border-radius: 6px;
+    background: var(--surface);
+    color: var(--ink-soft);
+    font: inherit;
+    font-size: 11.5px;
+    font-weight: 600;
+    text-align: left;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    cursor: pointer;
+    pointer-events: auto;
+}
+
+.ag-bloqueo-etiqueta:hover {
+    border-color: var(--teal-600);
+    color: var(--teal-700);
+}
+
+
+/* ---------- turnos ---------- */
+
+.ag-turno {
+    position: absolute;
+    z-index: 5;
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    padding: 3px 7px;
+    border: 1px solid var(--e-borde);
+    border-left-width: 4px;
+    border-radius: 7px;
+    background: var(--e-fondo);
+    color: var(--ink);
+    font-size: 12px;
+    line-height: 1.25;
+    overflow: hidden;
+    cursor: pointer;
+    box-shadow: var(--shadow-xs);
+    transition: box-shadow .15s ease, transform .15s ease;
+}
+
+.ag-turno:hover,
+.ag-turno:focus-visible {
+    z-index: 9;
+    box-shadow: var(--shadow-md);
+    outline: none;
+}
+
+.ag-turno:focus-visible {
+    box-shadow: var(--ring);
+}
+
+.ag-turno[draggable="true"] {
+    cursor: grab;
+}
+
+.ag-turno.arrastrando {
+    opacity: .4;
+}
+
+.ag-turno.est-cancelado {
+    left: 2px;
+    right: 2px;
+    z-index: 3;
+    opacity: .6;
+}
+
+.ag-turno.est-cancelado .ag-turno-nombre {
+    text-decoration: line-through;
+}
+
+.ag-turno-nombre {
+    font-weight: 700;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.ag-turno-hora {
+    color: var(--ink-muted);
+    font-size: 11px;
+}
+
+.ag-turno-pago {
+    position: absolute;
+    top: 3px;
+    right: 5px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    background: var(--ok);
+    color: #fff;
+    font-size: 10px;
+    font-weight: 800;
+}
+
+.ag-guia {
+    position: absolute;
+    left: 2px;
+    right: 2px;
+    z-index: 15;
+    padding: 2px 8px;
+    border: 2px dashed var(--teal-600);
+    border-radius: 7px;
+    background: rgba(20, 184, 166, .14);
+    color: var(--teal-700);
+    font-size: 12px;
+    font-weight: 700;
+    pointer-events: none;
+}
+
+
+/* ---------- varios ---------- */
+
+.agenda-ayuda {
+    margin: 12px 2px 0;
+    font-size: 12.5px;
+    color: var(--ink-muted);
+}
+
+.agenda-aviso {
+    margin: 4px 0 0;
+    padding: 9px 12px;
+    border-radius: var(--radius-sm);
+    background: var(--warn-bg);
+    color: var(--warn);
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.agenda-aviso[hidden] {
+    display: none;
+}
+
+.agenda-paciente-fijo strong {
+    font-size: 15px;
+    color: var(--ink);
+}
+
+.agenda-check {
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+}
+
+.agenda-check input {
+    width: auto;
+}
+
+.config-campo textarea {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid var(--line-strong);
+    border-radius: var(--radius-sm);
+    background: var(--surface);
+    color: var(--ink);
+    font: inherit;
+    resize: vertical;
+}
+
+.config-campo textarea:focus {
+    outline: none;
+    border-color: var(--teal-600);
+    box-shadow: var(--ring);
+}
+
+
+/* ---------- adaptación ---------- */
+
+@media (max-width: 900px) {
+
+    .agenda {
+        padding: 6px 14px 32px;
+    }
+
+    .agenda-scroll {
+        max-height: calc(100vh - 330px);
+    }
+
+    .agenda-titulo {
+        flex-basis: 100%;
+        margin: 6px 0 0;
+    }
+}
+
+@media (max-width: 560px) {
+
+    .agenda-acciones {
+        width: 100%;
+    }
+
+    .agenda-acciones .primary-button {
+        flex: 1;
+    }
+}
+
+[data-theme="dark"] .ag-fuera {
+    background: repeating-linear-gradient(135deg, transparent 0 6px, rgba(255, 255, 255, .05) 6px 7px);
+}
+
+[data-theme="dark"] .ag-col.hoy {
+    background-color: rgba(20, 184, 166, .07);
+}
+
+[data-theme="dark"] .ag-turno {
+    color: var(--ink);
+}

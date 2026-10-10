@@ -1,0 +1,421 @@
+/* =====================================================
+   GESTIONTEC MEDICAL — Reportes
+===================================================== */
+
+.reportes {
+    padding: 8px 34px 56px;
+}
+
+
+/* ---------- período ---------- */
+
+.rep-periodo {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    gap: 12px 20px;
+    margin-bottom: 18px;
+}
+
+.rep-atajos {
+    display: inline-flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    padding: 4px;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    background: var(--surface);
+}
+
+.rep-atajos button {
+    padding: 8px 14px;
+    border: 0;
+    border-radius: 9px;
+    background: transparent;
+    color: var(--ink-muted);
+    font: inherit;
+    font-size: 13.5px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.rep-atajos button:hover {
+    background: var(--teal-50);
+    color: var(--teal-700);
+}
+
+.rep-atajos button[aria-pressed="true"] {
+    background: linear-gradient(135deg, var(--brand-600), var(--teal-700));
+    color: #fff;
+}
+
+.rep-rango {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    gap: 10px;
+}
+
+.rep-rango label {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--ink-muted);
+}
+
+.rep-rango input {
+    padding: 8px 10px;
+    border: 1px solid var(--line-strong);
+    border-radius: var(--radius-sm);
+    background: var(--surface);
+    color: var(--ink);
+    font: inherit;
+    font-size: 13.5px;
+}
+
+.rep-rango input:focus {
+    outline: none;
+    border-color: var(--teal-600);
+    box-shadow: var(--ring);
+}
+
+#repExportar {
+    margin-left: auto;
+}
+
+.rep-error {
+    margin: 0 0 14px;
+    padding: 10px 14px;
+    border-radius: var(--radius-sm);
+    background: var(--bad-bg);
+    color: var(--bad);
+    font-size: 13.5px;
+    font-weight: 600;
+}
+
+.rep-error[hidden] {
+    display: none;
+}
+
+
+/* ---------- indicadores ---------- */
+
+.rep-kpis {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 14px;
+    margin-bottom: 18px;
+    transition: opacity .2s ease;
+}
+
+.rep-kpis.cargando {
+    opacity: .5;
+}
+
+.rep-kpi {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 16px 18px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    background: var(--surface);
+    box-shadow: var(--shadow-sm);
+}
+
+.rep-kpi-titulo {
+    font-size: 12.5px;
+    font-weight: 600;
+    color: var(--ink-muted);
+}
+
+.rep-kpi-valor {
+    font-size: 26px;
+    font-weight: 800;
+    letter-spacing: -.02em;
+    color: var(--ink);
+}
+
+.rep-kpi-pie {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+    min-height: 22px;
+}
+
+.rep-kpi-nota {
+    font-size: 12px;
+    color: var(--ink-muted);
+}
+
+.rep-delta {
+    padding: 2px 8px;
+    border-radius: 999px;
+    font-size: 11.5px;
+    font-weight: 700;
+    background: var(--surface-soft);
+    color: var(--ink-muted);
+}
+
+.rep-delta.sube {
+    background: var(--ok-bg);
+    color: var(--ok);
+}
+
+.rep-delta.baja {
+    background: var(--bad-bg);
+    color: var(--bad);
+}
+
+
+/* ---------- tarjetas ---------- */
+
+.rep-grilla {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+}
+
+.rep-tarjeta {
+    padding: 20px 22px 22px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    background: var(--surface);
+    box-shadow: var(--shadow-sm);
+    min-width: 0;
+}
+
+.rep-ancha {
+    grid-column: 1 / -1;
+}
+
+.rep-tarjeta header {
+    margin-bottom: 14px;
+}
+
+.rep-tarjeta h3 {
+    margin: 0;
+    font-size: 15.5px;
+    font-weight: 700;
+    color: var(--ink);
+}
+
+.rep-tarjeta header p {
+    margin: 3px 0 0;
+    font-size: 12.5px;
+    color: var(--ink-muted);
+}
+
+.rep-vacio {
+    margin: 0;
+    padding: 22px 8px;
+    text-align: center;
+    font-size: 13.5px;
+    color: var(--ink-muted);
+}
+
+
+/* ---------- barras verticales ---------- */
+
+.rep-barras-caja {
+    display: flex;
+    align-items: stretch;
+    gap: 3px;
+    height: 220px;
+}
+
+.rep-col {
+    flex: 1 1 0;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: stretch;
+    height: 100%;
+    position: relative;
+    padding-bottom: 20px;
+}
+
+.rep-col:hover {
+    background: var(--teal-50);
+    border-radius: 6px;
+}
+
+.rep-pila {
+    display: flex;
+    flex-direction: column-reverse;
+    width: 100%;
+    min-height: 2px;
+    border-radius: 5px 5px 0 0;
+    overflow: hidden;
+}
+
+.rep-seg {
+    min-height: 2px;
+}
+
+.rep-seg.unica {
+    background: linear-gradient(180deg, var(--teal-500), var(--brand-600));
+}
+
+.rep-seg.atendido { background: var(--ok); }
+.rep-seg.otros { background: var(--info); opacity: .75; }
+.rep-seg.cancelado { background: var(--bad); opacity: .8; }
+
+.rep-etiqueta {
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    transform: translateX(-50%);
+    font-size: 11px;
+    color: var(--ink-muted);
+    white-space: nowrap;
+}
+
+.rep-ref {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    margin-right: 12px;
+}
+
+.rep-ref::before {
+    content: "";
+    width: 10px;
+    height: 10px;
+    border-radius: 3px;
+    background: var(--ink-muted);
+}
+
+.rep-ref.atendido::before { background: var(--ok); }
+.rep-ref.otros::before { background: var(--info); opacity: .75; }
+.rep-ref.cancelado::before { background: var(--bad); opacity: .8; }
+
+.rep-barras-hora .rep-barras-caja {
+    height: 180px;
+}
+
+
+/* ---------- barras horizontales ---------- */
+
+.rep-horizontales {
+    display: flex;
+    flex-direction: column;
+    gap: 11px;
+}
+
+.rep-fila {
+    display: grid;
+    grid-template-columns: 96px minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 12px;
+    font-size: 13px;
+}
+
+.rep-fila-nombre {
+    color: var(--ink-soft);
+    font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-transform: capitalize;
+}
+
+.rep-fila-pista {
+    height: 10px;
+    border-radius: 999px;
+    background: var(--surface-soft);
+    overflow: hidden;
+}
+
+.rep-fila-barra {
+    height: 100%;
+    min-width: 3px;
+    border-radius: 999px;
+    background: linear-gradient(90deg, var(--lime-500), var(--teal-500));
+}
+
+.rep-fila-valor {
+    min-width: 40px;
+    text-align: right;
+    font-weight: 700;
+    color: var(--ink);
+    font-variant-numeric: tabular-nums;
+}
+
+
+/* ---------- tabla ---------- */
+
+.rep-tabla-marco {
+    overflow-x: auto;
+}
+
+.rep-tabla {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13.5px;
+}
+
+.rep-tabla th {
+    padding: 8px 10px;
+    text-align: left;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--ink-muted);
+    border-bottom: 1px solid var(--line);
+}
+
+.rep-tabla td {
+    padding: 10px;
+    border-bottom: 1px solid var(--line);
+    color: var(--ink-soft);
+}
+
+.rep-tabla tr:last-child td {
+    border-bottom: 0;
+}
+
+
+/* ---------- adaptación ---------- */
+
+@media (max-width: 900px) {
+
+    .rep-kpis {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .reportes {
+        padding: 6px 14px 40px;
+    }
+
+    .rep-grilla {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    #repExportar {
+        margin-left: 0;
+    }
+}
+
+@media (max-width: 560px) {
+
+    .rep-fila {
+        grid-template-columns: 78px minmax(0, 1fr) auto;
+        gap: 8px;
+    }
+
+    .rep-kpi-valor {
+        font-size: 22px;
+    }
+}
+
+
+.rep-max {
+    display: block;
+    margin-bottom: 6px;
+    font-size: 11.5px;
+    color: var(--ink-muted);
+}

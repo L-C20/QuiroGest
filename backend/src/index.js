@@ -12,6 +12,8 @@ const pagosRoutes = require("./routes/pagos");
 const recordatoriosRoutes = require("./routes/recordatorios");
 const configuracionRoutes = require("./routes/configuracion");
 const superadminRoutes = require("./routes/superadmin");
+const agendaRoutes = require("./routes/agenda");
+const reportesRoutes = require("./routes/reportes");
 const respaldosRoutes = require("./routes/respaldos");
 const respaldos = require("./services/respaldos");
 const recordatorios = require("./services/recordatorios");
@@ -26,6 +28,8 @@ app.use("/turnos", turnosRoutes);
 app.use("/pagos", verificarToken, pagosRoutes);
 app.use("/recordatorios", verificarToken, recordatoriosRoutes);
 app.use("/configuracion", configuracionRoutes);
+app.use("/agenda", verificarToken, agendaRoutes);
+app.use("/reportes", verificarToken, verificarToken.requerirRol("administrador", "superadmin"), reportesRoutes);
 app.use(
     "/superadmin/respaldos",
     verificarToken,

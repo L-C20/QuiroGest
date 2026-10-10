@@ -5,6 +5,21 @@ const pool = require("../database/connection");
 
 const router = express.Router();
 
+/* duración en minutos: vacía = 30; válida entre 5 y 480 */
+function validarDuracion(valor) {
+
+    if (valor === undefined || valor === null || valor === "") {
+        return 30;
+    }
+
+    const n = Number(valor);
+
+    return Number.isInteger(n) && n >= 5 && n <= 480 ? n : null;
+}
+
+const FORMATO_FECHA = /^\d{4}-\d{2}-\d{2}$/;
+const FORMATO_HORA = /^\d{2}:\d{2}(:\d{2})?$/;
+
 
 /* =================================================
    CREAR TURNO
@@ -20,6 +35,12 @@ router.post("/", verificarToken, async (req, res) => {
             hora,
             observaciones
         } = req.body;
+
+        const duracion = validarDuracion(req.body.duracion_min);
+
+        if (duracion === null) {
+            return res.status(400).json({ mensaje: "Duración inválida" });
+        }
 
 
         /* ==========================================
@@ -85,7 +106,8 @@ router.post("/", verificarToken, async (req, res) => {
                     hora,
                     estado,
                     observaciones,
-                    consultorio_id
+                    consultorio_id,
+                    duracion_min
                 )
                 VALUES
                 (
@@ -94,7 +116,8 @@ router.post("/", verificarToken, async (req, res) => {
                     $3,
                     'pendiente',
                     $4,
-                    $5
+                    $5,
+                    $6
                 )
                 RETURNING *
                 `,
@@ -103,7 +126,8 @@ router.post("/", verificarToken, async (req, res) => {
                     fecha,
                     hora,
                     observaciones || null,
-                    req.usuario.consultorioId
+                    req.usuario.consultorioId,
+                    duracion
                 ]
             );
 
@@ -216,6 +240,7 @@ router.get("/", verificarToken, async (req, res) => {
                     t.hora,
                     t.estado,
                     t.observaciones,
+                    t.duracion_min,
 
                     p.id AS paciente_id,
                     p.numero_identificacion,
@@ -272,6 +297,7 @@ router.get("/", verificarToken, async (req, res) => {
             t.hora,
             t.estado,
             t.observaciones,
+            t.duracion_min,
 
             p.id AS paciente_id,
             p.numero_identificacion,
@@ -350,6 +376,7 @@ router.get("/:id", verificarToken, async (req, res) => {
                     t.hora,
                     t.estado,
                     t.observaciones,
+                    t.duracion_min,
 
                     p.id AS paciente_id,
                     p.numero_identificacion,
@@ -427,6 +454,12 @@ router.put("/:id", verificarToken, async (req, res) => {
             observaciones
         } = req.body;
 
+        const duracion = validarDuracion(req.body.duracion_min);
+
+        if (duracion === null) {
+            return res.status(400).json({ mensaje: "Duración inválida" });
+        }
+
 
         /* ==========================================
            VALIDAR CAMPOS
@@ -487,7 +520,8 @@ router.put("/:id", verificarToken, async (req, res) => {
                     fecha = $1,
                     hora = $2,
                     estado = $3,
-                    observaciones = $4
+                    observaciones = $4,
+                    duracion_min = COALESCE($7, duracion_min)
 
                 WHERE id = $5
                 AND consultorio_id = $6
@@ -500,7 +534,8 @@ router.put("/:id", verificarToken, async (req, res) => {
                     estado,
                     observaciones || null,
                     id,
-                    req.usuario.consultorioId
+                    req.usuario.consultorioId,
+                    req.body.duracion_min === undefined || req.body.duracion_min === "" ? null : duracion
                 ]
             );
 
@@ -677,6 +712,45 @@ router.patch("/:id/estado", verificarToken, async (req, res) => {
 
     }
 
+});
+
+/* =================================================
+   MOVER TURNO (arrastrar en la agenda)
+================================================= */
+
+router.patch("/:id/mover", verificarToken, async (req, res) => {
+
+    try {
+
+        const { fecha, hora } = req.body;
+
+        if (!FORMATO_FECHA.test(fecha || "") || !FORMATO_HORA.test(hora || "")) {
+            return res.status(400).json({ mensaje: "Fecha u hora inválida" });
+        }
+
+        const resultado = await pool.query(
+            `
+            UPDATE turnos
+            SET fecha = $1, hora = $2
+            WHERE id = $3
+            AND consultorio_id = $4
+            RETURNING id, fecha, hora, estado, duracion_min
+            `,
+            [fecha, hora, req.params.id, req.usuario.consultorioId]
+        );
+
+        if (resultado.rows.length === 0) {
+            return res.status(404).json({ mensaje: "Turno no encontrado" });
+        }
+
+        res.json({ mensaje: "Turno movido", turno: resultado.rows[0] });
+
+    } catch (error) {
+
+        console.error("Error moviendo turno:", error);
+
+        res.status(500).json({ mensaje: "Error interno del servidor" });
+    }
 });
 
 module.exports = router;

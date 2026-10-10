@@ -260,6 +260,13 @@
             if (chico) chico.textContent = ETIQUETA_ROL[sesion.usuario.rol] || "";
         }
 
+        /* entradas del menú que solo ven los administradores */
+        const esAdmin = sesion.usuario.rol === "administrador" || sesion.usuario.rol === "superadmin";
+
+        document.querySelectorAll("[data-solo-admin]").forEach(function (el) {
+            el.hidden = !esAdmin;
+        });
+
         enlacePanelProveedor(sesion);
         bannerSoporte(sesion);
 

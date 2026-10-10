@@ -262,6 +262,33 @@ async function migrar() {
         await client.query("CREATE INDEX IF NOT EXISTS idx_pagos_consultorio ON pagos (consultorio_id)");
         await client.query("CREATE INDEX IF NOT EXISTS idx_usuarios_consultorio ON usuarios (consultorio_id)");
 
+
+        /* ---------- agenda: duración de turnos, horario de atención y bloqueos ---------- */
+
+        await client.query("ALTER TABLE turnos ADD COLUMN IF NOT EXISTS duracion_min INTEGER NOT NULL DEFAULT 30");
+
+        await client.query(`
+            ALTER TABLE consultorios
+            ADD COLUMN IF NOT EXISTS agenda_hora_inicio INTEGER NOT NULL DEFAULT 8,
+            ADD COLUMN IF NOT EXISTS agenda_hora_fin INTEGER NOT NULL DEFAULT 20,
+            ADD COLUMN IF NOT EXISTS agenda_intervalo INTEGER NOT NULL DEFAULT 30
+        `);
+
+        await client.query(`
+            CREATE TABLE IF NOT EXISTS bloqueos (
+                id SERIAL PRIMARY KEY,
+                consultorio_id INTEGER NOT NULL REFERENCES consultorios(id),
+                fecha_desde DATE NOT NULL,
+                fecha_hasta DATE NOT NULL,
+                hora_desde TIME,
+                hora_hasta TIME,
+                motivo VARCHAR(120),
+                creado_en TIMESTAMPTZ NOT NULL DEFAULT NOW()
+            )
+        `);
+
+        await client.query("CREATE INDEX IF NOT EXISTS idx_bloqueos_consultorio_fecha ON bloqueos (consultorio_id, fecha_desde, fecha_hasta)");
+
         await client.query("COMMIT");
 
     } catch (error) {
