@@ -267,6 +267,12 @@
     padding: 0 2px;
 }
 
+/* la primera hora no se centra sobre la línea: quedaba tapada por el encabezado */
+.ag-hora.primera {
+    transform: none;
+    top: 4px !important;
+}
+
 .ag-col {
     position: relative;
     border-right: 1px solid var(--line);

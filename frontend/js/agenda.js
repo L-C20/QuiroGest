@@ -402,7 +402,7 @@
 
         for (let m = Math.ceil(escala.inicio / 60) * 60; m < escala.fin; m += 60) {
 
-            const e = elemento("span", "ag-hora", aHora(m));
+            const e = elemento("span", m === escala.inicio ? "ag-hora primera" : "ag-hora", aHora(m));
 
             e.style.top = (m - escala.inicio) * escala.px + "px";
             horas.appendChild(e);
