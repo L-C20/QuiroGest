@@ -73,7 +73,15 @@ router.get("/", async (req, res) => {
                     p.dni,
                     (pg.id IS NOT NULL) AS pago_registrado,
                     pg.monto::float AS pago_monto,
-                    pg.metodo_pago AS pago_metodo
+                    pg.metodo_pago AS pago_metodo,
+                    t.serie_id,
+                    CASE WHEN t.serie_id IS NULL THEN NULL ELSE (
+                        SELECT COUNT(*)::int FROM turnos s
+                        WHERE s.serie_id = t.serie_id AND (s.fecha, s.hora) <= (t.fecha, t.hora)
+                    ) END AS serie_numero,
+                    CASE WHEN t.serie_id IS NULL THEN NULL ELSE (
+                        SELECT COUNT(*)::int FROM turnos s WHERE s.serie_id = t.serie_id
+                    ) END AS serie_total
                 FROM turnos t
                 INNER JOIN pacientes p ON p.id = t.paciente_id
                 LEFT JOIN LATERAL (

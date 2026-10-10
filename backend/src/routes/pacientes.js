@@ -506,6 +506,12 @@ router.delete("/:id/definitivo", verificarToken, soloAdmin, async (req, res) => 
             [id, req.usuario.consultorioId]
         );
 
+        // las series de turnos recurrentes del paciente quedan vacías: se borran también
+        await client.query(
+            "DELETE FROM series_turnos WHERE paciente_id = $1 AND consultorio_id = $2",
+            [id, req.usuario.consultorioId]
+        );
+
         await client.query(
             "DELETE FROM pacientes WHERE id = $1 AND consultorio_id = $2",
             [id, req.usuario.consultorioId]

@@ -289,6 +289,22 @@ async function migrar() {
 
         await client.query("CREATE INDEX IF NOT EXISTS idx_bloqueos_consultorio_fecha ON bloqueos (consultorio_id, fecha_desde, fecha_hasta)");
 
+
+        /* ---------- turnos recurrentes (series) ---------- */
+
+        await client.query(`
+            CREATE TABLE IF NOT EXISTS series_turnos (
+                id SERIAL PRIMARY KEY,
+                consultorio_id INTEGER NOT NULL REFERENCES consultorios(id),
+                paciente_id INTEGER NOT NULL REFERENCES pacientes(id),
+                descripcion VARCHAR(200),
+                creado_en TIMESTAMPTZ NOT NULL DEFAULT NOW()
+            )
+        `);
+
+        await client.query("ALTER TABLE turnos ADD COLUMN IF NOT EXISTS serie_id INTEGER REFERENCES series_turnos(id)");
+        await client.query("CREATE INDEX IF NOT EXISTS idx_turnos_serie ON turnos (serie_id) WHERE serie_id IS NOT NULL");
+
         await client.query("COMMIT");
 
     } catch (error) {

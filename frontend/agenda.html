@@ -394,6 +394,53 @@
                     <textarea id="turObservaciones" rows="2" maxlength="500"></textarea>
                 </label>
 
+                <div class="config-campo-ancho agenda-repetir" id="campoRepetir">
+
+                    <label class="agenda-check">
+                        <input type="checkbox" id="turRepetir">
+                        <span>Repetir este turno (tratamiento de varias sesiones)</span>
+                    </label>
+
+                    <div class="agenda-repeticion" id="bloqueRepeticion" hidden>
+
+                        <div class="agenda-repeticion-fila">
+                            <span>Repetir cada</span>
+                            <select id="repIntervalo" aria-label="Cada cuántas semanas">
+                                <option value="1">semana</option>
+                                <option value="2">2 semanas</option>
+                                <option value="3">3 semanas</option>
+                                <option value="4">4 semanas</option>
+                            </select>
+                        </div>
+
+                        <div class="agenda-dias" id="repDias" role="group" aria-label="Días de la semana">
+                            <button type="button" data-dia="1" aria-pressed="false" title="Lunes">L</button>
+                            <button type="button" data-dia="2" aria-pressed="false" title="Martes">M</button>
+                            <button type="button" data-dia="3" aria-pressed="false" title="Miércoles">X</button>
+                            <button type="button" data-dia="4" aria-pressed="false" title="Jueves">J</button>
+                            <button type="button" data-dia="5" aria-pressed="false" title="Viernes">V</button>
+                            <button type="button" data-dia="6" aria-pressed="false" title="Sábado">S</button>
+                            <button type="button" data-dia="7" aria-pressed="false" title="Domingo">D</button>
+                        </div>
+
+                        <div class="agenda-repeticion-fila">
+                            <select id="repFin" aria-label="Cómo termina">
+                                <option value="cantidad">Terminar después de</option>
+                                <option value="fecha">Terminar el</option>
+                            </select>
+                            <span id="repCantidadCaja">
+                                <input type="number" id="repCantidad" min="2" max="52" value="8" aria-label="Cantidad de turnos">
+                                turnos
+                            </span>
+                            <input type="date" id="repHasta" aria-label="Fecha final" hidden>
+                        </div>
+
+                        <p class="agenda-serie-resumen" id="repResumen" aria-live="polite"></p>
+
+                    </div>
+
+                </div>
+
             </div>
 
             <div class="agenda-pago" id="bloquePago" hidden>
@@ -401,11 +448,21 @@
                 <button type="button" class="secondary-button" id="btnCobrar">Cobrar</button>
             </div>
 
+            <div class="agenda-serie" id="bloqueSerie" hidden>
+                <span id="serieTexto"></span>
+                <label class="agenda-check">
+                    <input type="checkbox" id="turAplicarSiguientes">
+                    <span>Aplicar el cambio de hora y duración a los siguientes</span>
+                </label>
+                <button type="button" class="secondary-button" id="btnCancelarSerie">Cancelar este y los siguientes</button>
+            </div>
+
             <p class="agenda-aviso" id="avisoTurno" role="alert" hidden></p>
             <p class="config-error" id="errorTurno" role="alert"></p>
 
             <div class="config-pie config-pie-dialogo">
                 <button type="button" class="secondary-button" id="btnCancelarTurno">Cerrar</button>
+                <button type="button" class="secondary-button" id="btnOmitirConflictos" hidden>Omitir las fechas que chocan</button>
                 <button type="submit" class="primary-button" id="btnGuardarTurno">Guardar</button>
             </div>
 

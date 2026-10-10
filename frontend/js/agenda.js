@@ -2,6 +2,7 @@
    GESTIONTEC MEDICAL — Agenda visual
    · Vista por día, por semana o en lista
    · Cobro del turno, búsqueda de turnos y recordatorios
+   · Turnos recurrentes (series) para tratamientos de varias sesiones
    · Clic en un horario libre para agendar
    · Arrastrar un turno para moverlo
    · Bloqueos (vacaciones, feriados, franjas)
@@ -58,6 +59,9 @@
     let turnoACobrar = null;
     let filtroLista = "todos";
     let recordatoriosCargados = false;
+    let diasTocados = false;               // si la persona eligió los días a mano
+    let conflictoSerie = false;            // el servidor avisó de choques y espera una decisión
+    let confirmandoCancelarSerie = false;
 
 
     /* ---------- utilidades de fecha y hora ---------- */
@@ -585,6 +589,8 @@
 
             if (t.dni) paciente.appendChild(elemento("small", "", `DNI ${t.dni}`));
 
+            if (t.serie_id) paciente.appendChild(elemento("small", "agenda-serie-marca", `↻ Serie ${t.serie_numero} de ${t.serie_total}`));
+
             fila.appendChild(paciente);
 
             const estado = elemento("td");
@@ -751,12 +757,13 @@
         const fin = aHora(ini + t.duracion_min);
 
         e.title = `${t.hora}–${fin} · ${nombre} · ${ETIQUETA_ESTADO[t.estado]}` +
+            (t.serie_id ? ` · Serie ${t.serie_numero} de ${t.serie_total}` : "") +
             (t.pago_registrado ? " · Pago registrado" : "") +
             (t.observaciones ? `\n${t.observaciones}` : "");
 
         e.setAttribute("aria-label", e.title);
 
-        e.appendChild(elemento("span", "ag-turno-nombre", nombre));
+        e.appendChild(elemento("span", "ag-turno-nombre", (t.serie_id ? "↻ " : "") + nombre));
 
         if (alto >= 34) {
             e.appendChild(elemento("span", "ag-turno-hora", `${t.hora}–${fin}`));
@@ -817,8 +824,150 @@
     function limpiarAvisoTurno() {
 
         sobreturnoConfirmado = false;
+        conflictoSerie = false;
+        confirmandoCancelarSerie = false;
+
         $("avisoTurno").hidden = true;
-        $("btnGuardarTurno").textContent = edicion ? "Guardar cambios" : "Agendar";
+        $("btnOmitirConflictos").hidden = true;
+        $("btnCancelarSerie").textContent = "Cancelar este y los siguientes";
+
+        $("btnGuardarTurno").textContent = edicion
+            ? "Guardar cambios"
+            : ($("turRepetir").checked ? "Crear serie" : "Agendar");
+    }
+
+
+    /* ---------- turnos recurrentes ---------- */
+
+    const diaIso = d => (d.getDay() === 0 ? 7 : d.getDay());
+
+    function diasMarcados() {
+
+        return [...document.querySelectorAll("#repDias button[aria-pressed='true']")]
+            .map(b => Number(b.dataset.dia));
+    }
+
+    function marcarDias(lista) {
+
+        document.querySelectorAll("#repDias button").forEach(b => {
+            b.setAttribute("aria-pressed", String(lista.includes(Number(b.dataset.dia))));
+        });
+    }
+
+    /* calcula las fechas de la serie; el servidor vuelve a validarlas */
+    function calcularSerie() {
+
+        const inicio = $("turFecha").value;
+
+        if (!inicio) return { error: "Indicá la fecha del primer turno." };
+
+        const dias = diasMarcados();
+
+        if (!dias.length) return { error: "Elegí al menos un día de la semana." };
+
+        const cada = Number($("repIntervalo").value);
+        const porFecha = $("repFin").value === "fecha";
+
+        let tope = 52;
+        let limite = null;
+
+        if (porFecha) {
+
+            limite = $("repHasta").value;
+
+            if (!limite) return { error: "Indicá hasta qué fecha se repite." };
+            if (limite < inicio) return { error: "La fecha final es anterior al primer turno." };
+
+        } else {
+
+            tope = Number($("repCantidad").value);
+
+            if (!Number.isInteger(tope) || tope < 2 || tope > 52) {
+                return { error: "La cantidad de turnos debe estar entre 2 y 52." };
+            }
+        }
+
+        const d0 = desdeIso(inicio);
+        const lunes0 = sumarDias(d0, -((d0.getDay() + 6) % 7));
+        const base = Date.UTC(lunes0.getFullYear(), lunes0.getMonth(), lunes0.getDate());
+
+        const fechas = [];
+        let truncada = false;
+
+        for (let i = 0; i <= 400; i++) {
+
+            const d = sumarDias(d0, i);
+            const f = iso(d);
+
+            if (limite && f > limite) break;
+
+            const dias_ = Math.round((Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()) - base) / 86400000);
+
+            if (Math.floor(dias_ / 7) % cada !== 0 || !dias.includes(diaIso(d))) continue;
+
+            fechas.push(f);
+
+            if (fechas.length >= tope) {
+                truncada = porFecha;
+                break;
+            }
+        }
+
+        if (fechas.length < 2) {
+            return { error: "Con esos datos se crearía un solo turno. Ajustá los días, la cantidad o la fecha final." };
+        }
+
+        return { fechas, truncada, dias, cada };
+    }
+
+    function fechaBreve(f) {
+
+        const d = desdeIso(f);
+
+        return `${d.getDate()} ${MES_CORTO[d.getMonth()]}`;
+    }
+
+    function actualizarSerie() {
+
+        limpiarAvisoTurno();
+
+        const caja = $("bloqueRepeticion");
+
+        if (caja.hidden) return;
+
+        const resumen = $("repResumen");
+        const calc = calcularSerie();
+
+        resumen.classList.toggle("error", Boolean(calc.error));
+
+        if (calc.error) {
+            resumen.textContent = calc.error;
+            return;
+        }
+
+        const nombres = calc.dias.map(n => NOMBRE_DIA[n % 7]).join(", ");
+        const primera = calc.fechas[0];
+        const ultima = calc.fechas[calc.fechas.length - 1];
+
+        resumen.textContent =
+            `Se crearán ${calc.fechas.length} turnos (${nombres}${calc.cada > 1 ? `, cada ${calc.cada} semanas` : ""}), ` +
+            `del ${fechaBreve(primera)} al ${fechaBreve(ultima)} de ${desdeIso(ultima).getFullYear()}.` +
+            (calc.truncada ? " Se llegó al máximo de 52 turnos." : "");
+    }
+
+    function reiniciarRepeticion(fecha) {
+
+        $("turRepetir").checked = false;
+        $("bloqueRepeticion").hidden = true;
+        $("repIntervalo").value = "1";
+        $("repFin").value = "cantidad";
+        $("repCantidad").value = "8";
+        $("repHasta").value = "";
+        $("repHasta").hidden = true;
+        $("repCantidadCaja").hidden = false;
+
+        diasTocados = false;
+        marcarDias(fecha ? [diaIso(desdeIso(fecha))] : []);
     }
 
     async function abrirNuevo(fecha, hora) {
@@ -831,6 +980,8 @@
         $("pacienteFijo").hidden = true;
         $("campoEstado").hidden = true;
         $("bloquePago").hidden = true;
+        $("bloqueSerie").hidden = true;
+        $("campoRepetir").hidden = false;
         $("turPaciente").value = "";
         $("turFecha").value = fecha;
         $("turHora").value = hora;
@@ -838,6 +989,7 @@
         $("turObservaciones").value = "";
         $("errorTurno").textContent = "";
 
+        reiniciarRepeticion(fecha);
         limpiarAvisoTurno();
 
         $("dialogoTurno").showModal();
@@ -865,6 +1017,18 @@
         $("pacienteFijo").hidden = false;
         $("turPacienteNombre").textContent = `${t.apellido}, ${t.nombre}`;
         $("campoEstado").hidden = false;
+        $("campoRepetir").hidden = true;
+        $("turRepetir").checked = false;
+        $("bloqueRepeticion").hidden = true;
+
+        const enSerie = t.serie_id !== null && t.serie_id !== undefined;
+
+        $("bloqueSerie").hidden = !enSerie;
+
+        if (enSerie) {
+            $("serieTexto").textContent = `Este es el turno ${t.serie_numero} de ${t.serie_total} de una serie.`;
+            $("turAplicarSiguientes").checked = false;
+        }
 
         $("bloquePago").hidden = false;
         $("pagoTexto").textContent = t.pago_registrado
@@ -894,9 +1058,133 @@
         $("dialogoTurno").showModal();
     }
 
-    async function guardarTurno(evento) {
+    async function guardarSerie(pacienteId, hora, duracion, decision) {
 
-        evento.preventDefault();
+        const boton = $("btnGuardarTurno");
+        const error = $("errorTurno");
+        const calc = calcularSerie();
+
+        if (calc.error) {
+            error.textContent = calc.error;
+            return;
+        }
+
+        const cuerpo = {
+            paciente_id: pacienteId,
+            hora,
+            duracion_min: duracion,
+            observaciones: $("turObservaciones").value.trim(),
+            fechas: calc.fechas
+        };
+
+        const conflictos = decision || (conflictoSerie ? "incluir" : undefined);
+
+        if (conflictos) cuerpo.conflictos = conflictos;
+
+        ocupado(boton, true, "Creando…");
+
+        try {
+
+            const r = await pedir("POST", "/turnos/serie", cuerpo);
+
+            if (r.status === 409) {
+
+                const lista = r.datos.conflictos
+                    .map(c => `${fechaBreve(c.fecha)} (${c.motivo.toLowerCase()})`)
+                    .join(", ");
+
+                $("avisoTurno").textContent =
+                    `${r.datos.mensaje}: ${lista}. Podés crear igual esos turnos o saltearlos.`;
+                $("avisoTurno").hidden = false;
+                $("btnOmitirConflictos").hidden = false;
+
+                conflictoSerie = true;
+                boton.dataset.texto = "Crear igualmente";
+
+                return;
+            }
+
+            if (!r.ok) {
+                error.textContent = r.datos.mensaje || "No se pudo crear la serie.";
+                return;
+            }
+
+            $("dialogoTurno").close();
+
+            const omitidos = r.datos.omitidos ? ` (se salteó ${r.datos.omitidos} por conflicto)` : "";
+
+            aviso("Agenda", `Serie creada: ${r.datos.creados} turnos${omitidos}.`, "success");
+
+            await irAFecha(calc.fechas[0]);
+
+        } catch (e) {
+
+            error.textContent = "No se pudo conectar con el servidor.";
+
+        } finally {
+
+            ocupado(boton, false);
+        }
+    }
+
+    async function cancelarSerie() {
+
+        if (!edicion || edicion.serie_id === null || edicion.serie_id === undefined) return;
+
+        const boton = $("btnCancelarSerie");
+
+        if (boton.disabled) return;
+
+        if (!confirmandoCancelarSerie) {
+
+            confirmandoCancelarSerie = true;
+            boton.textContent = "Tocá de nuevo para confirmar";
+
+            $("avisoTurno").textContent =
+                "Se cancelan este turno y los siguientes de la serie que estén pendientes o confirmados. Los ya atendidos no se tocan.";
+            $("avisoTurno").hidden = false;
+
+            return;
+        }
+
+        ocupado(boton, true, "Cancelando…");
+
+        let exito = false;
+
+        try {
+
+            const r = await pedir("POST", `/turnos/serie/${edicion.serie_id}/cancelar-siguientes`, { turno_id: edicion.id });
+
+            if (!r.ok) {
+                $("errorTurno").textContent = r.datos.mensaje || "No se pudo cancelar la serie.";
+                return;
+            }
+
+            exito = true;
+
+            $("dialogoTurno").close();
+            aviso("Agenda", `${r.datos.cancelados} turnos cancelados.`, "success");
+
+            await cargar();
+
+        } catch (e) {
+
+            $("errorTurno").textContent = "No se pudo conectar con el servidor.";
+
+        } finally {
+
+            ocupado(boton, false);
+
+            if (!exito) {
+                confirmandoCancelarSerie = false;
+                boton.textContent = "Cancelar este y los siguientes";
+            }
+        }
+    }
+
+    async function guardarTurno(evento, decision) {
+
+        if (evento) evento.preventDefault();
 
         const boton = $("btnGuardarTurno");
 
@@ -925,6 +1213,13 @@
                 error.textContent = "Elegí un paciente de la lista.";
                 return;
             }
+        }
+
+        if (!edicion && $("turRepetir").checked) {
+
+            await guardarSerie(pacienteId, hora, duracion, decision);
+
+            return;
         }
 
         /* aviso de superposición o bloqueo: hay que confirmar con un segundo clic */
@@ -971,8 +1266,29 @@
                 return;
             }
 
+            let extra = "";
+
+            if (edicion && edicion.serie_id !== null && edicion.serie_id !== undefined &&
+                $("turAplicarSiguientes").checked &&
+                (hora !== edicion.hora || duracion !== edicion.duracion_min)) {
+
+                const s = await pedir("PATCH", `/turnos/serie/${edicion.serie_id}/siguientes`, {
+                    turno_id: edicion.id,
+                    hora,
+                    duracion_min: duracion
+                });
+
+                if (s.ok) {
+                    extra = s.datos.actualizados
+                        ? ` También se actualizaron los ${s.datos.actualizados} siguientes.`
+                        : "";
+                } else {
+                    extra = " No se pudieron actualizar los siguientes.";
+                }
+            }
+
             $("dialogoTurno").close();
-            aviso("Agenda", edicion ? "Turno actualizado." : "Turno agendado.", "success");
+            aviso("Agenda", (edicion ? "Turno actualizado." : "Turno agendado.") + extra, "success");
 
             await irAFecha(fecha);
 
@@ -1776,9 +2092,56 @@
 
         $("formTurno").addEventListener("submit", guardarTurno);
         $("btnCancelarTurno").addEventListener("click", () => $("dialogoTurno").close());
+        $("btnOmitirConflictos").addEventListener("click", () => guardarTurno(null, "omitir"));
+        $("btnCancelarSerie").addEventListener("click", cancelarSerie);
 
-        ["turFecha", "turHora", "turDuracion"].forEach(id => {
+        ["turHora", "turDuracion"].forEach(id => {
             $(id).addEventListener("input", limpiarAvisoTurno);
+        });
+
+        /* si cambia la fecha y no se eligieron días a mano, se sigue el día de la semana de la fecha */
+        $("turFecha").addEventListener("input", () => {
+
+            if (!diasTocados && $("turFecha").value) {
+                marcarDias([diaIso(desdeIso($("turFecha").value))]);
+            }
+
+            actualizarSerie();
+        });
+
+        $("turRepetir").addEventListener("change", () => {
+
+            $("bloqueRepeticion").hidden = !$("turRepetir").checked;
+            actualizarSerie();
+        });
+
+        $("repDias").addEventListener("click", evento => {
+
+            const b = evento.target.closest("button[data-dia]");
+
+            if (!b) return;
+
+            b.setAttribute("aria-pressed", String(b.getAttribute("aria-pressed") !== "true"));
+            diasTocados = true;
+            actualizarSerie();
+        });
+
+        $("repFin").addEventListener("change", () => {
+
+            const porFecha = $("repFin").value === "fecha";
+
+            $("repCantidadCaja").hidden = porFecha;
+            $("repHasta").hidden = !porFecha;
+
+            if (porFecha && !$("repHasta").value && $("turFecha").value) {
+                $("repHasta").value = iso(sumarDias(desdeIso($("turFecha").value), 56));
+            }
+
+            actualizarSerie();
+        });
+
+        ["repIntervalo", "repCantidad", "repHasta"].forEach(id => {
+            $(id).addEventListener("input", actualizarSerie);
         });
 
         $("formBloqueo").addEventListener("submit", guardarBloqueo);
