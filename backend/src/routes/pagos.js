@@ -33,6 +33,17 @@ router.post("/", async (req, res) => {
         }
 
 
+        const importe = Number(monto);
+
+        if (!Number.isFinite(importe) || importe <= 0 || importe > 100000000) {
+
+            return res.status(400).json({
+                mensaje: "El monto debe ser un número mayor a cero."
+            });
+
+        }
+
+
         /* =============================================
            VERIFICAR QUE EL TURNO SEA DEL CONSULTORIO
         ============================================= */
@@ -51,6 +62,30 @@ router.post("/", async (req, res) => {
 
             return res.status(404).json({
                 mensaje: "Turno no encontrado."
+            });
+
+        }
+
+
+        /* =============================================
+           UN TURNO NO SE COBRA DOS VECES
+        ============================================= */
+
+        const yaPagado = await pool.query(
+            `
+            SELECT 1
+            FROM pagos
+            WHERE turno_id = $1
+              AND consultorio_id = $2
+              AND estado = 'pagado'
+            `,
+            [turno_id, req.usuario.consultorioId]
+        );
+
+        if (yaPagado.rows.length > 0) {
+
+            return res.status(409).json({
+                mensaje: "Este turno ya tiene un pago registrado."
             });
 
         }
@@ -86,7 +121,7 @@ router.post("/", async (req, res) => {
             `,
             [
                 turno_id,
-                monto,
+                importe,
                 metodo_pago,
                 observaciones || null,
                 req.usuario.consultorioId

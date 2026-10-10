@@ -70,12 +70,19 @@ router.get("/", async (req, res) => {
                     p.id AS paciente_id,
                     p.nombre,
                     p.apellido,
-                    EXISTS (
-                        SELECT 1 FROM pagos pg
-                        WHERE pg.turno_id = t.id AND pg.estado = 'pagado'
-                    ) AS pago_registrado
+                    p.dni,
+                    (pg.id IS NOT NULL) AS pago_registrado,
+                    pg.monto::float AS pago_monto,
+                    pg.metodo_pago AS pago_metodo
                 FROM turnos t
                 INNER JOIN pacientes p ON p.id = t.paciente_id
+                LEFT JOIN LATERAL (
+                    SELECT id, monto, metodo_pago
+                    FROM pagos
+                    WHERE turno_id = t.id AND estado = 'pagado' AND consultorio_id = t.consultorio_id
+                    ORDER BY fecha_pago DESC
+                    LIMIT 1
+                ) pg ON true
                 WHERE t.consultorio_id = $1
                   AND t.fecha BETWEEN $2 AND $3
                 ORDER BY t.fecha, t.hora

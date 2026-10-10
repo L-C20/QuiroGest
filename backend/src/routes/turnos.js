@@ -236,8 +236,8 @@ router.get("/", verificarToken, async (req, res) => {
                 `
                 SELECT
                     t.id,
-                    t.fecha,
-                    t.hora,
+                    to_char(t.fecha, 'YYYY-MM-DD') AS fecha,
+                    to_char(t.hora, 'HH24:MI') AS hora,
                     t.estado,
                     t.observaciones,
                     t.duracion_min,

@@ -544,3 +544,340 @@
 [data-theme="dark"] .ag-turno {
     color: var(--ink);
 }
+
+
+/* =====================================================
+   Lista del día, cobro, búsqueda y recordatorios
+===================================================== */
+
+.agenda-resumen {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 10px;
+    margin-bottom: 12px;
+}
+
+.agenda-resumen[hidden],
+.agenda-lista[hidden],
+.agenda-leyenda[hidden],
+.agenda-ayuda[hidden],
+.agenda-scroll[hidden] {
+    display: none;
+}
+
+.agenda-contador {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2px;
+    padding: 11px 14px;
+    border: 1px solid var(--line);
+    border-left: 4px solid var(--e-borde, var(--teal-600));
+    border-radius: var(--radius);
+    background: var(--surface);
+    color: var(--ink-soft);
+    font: inherit;
+    text-align: left;
+    cursor: pointer;
+    transition: box-shadow .15s ease, background .15s ease;
+}
+
+.agenda-contador strong {
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--ink);
+}
+
+.agenda-contador span {
+    font-size: 12.5px;
+    font-weight: 600;
+    color: var(--ink-muted);
+}
+
+.agenda-contador:hover {
+    box-shadow: var(--shadow-sm);
+}
+
+.agenda-contador.activo {
+    background: var(--e-fondo, var(--teal-50));
+    box-shadow: var(--shadow-sm);
+}
+
+.agenda-contador.est-todos {
+    --e-borde: var(--teal-600);
+    --e-fondo: var(--teal-50);
+}
+
+.agenda-lista {
+    padding: 4px 6px 10px;
+}
+
+.agenda-lista-bloqueo {
+    margin: 10px 14px 0;
+    padding: 8px 12px;
+    border-radius: var(--radius-sm);
+    background: var(--surface-soft);
+    color: var(--ink-soft);
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.agenda-lista-vacio {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+    padding: 44px 16px;
+    color: var(--ink-muted);
+}
+
+.agenda-lista-vacio p {
+    margin: 0;
+}
+
+.agenda-tabla-marco {
+    overflow-x: auto;
+}
+
+.agenda-tabla {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+}
+
+.agenda-tabla th {
+    padding: 12px 14px 8px;
+    text-align: left;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--ink-muted);
+    border-bottom: 1px solid var(--line);
+}
+
+.agenda-tabla td {
+    padding: 12px 14px;
+    border-bottom: 1px solid var(--line);
+    vertical-align: middle;
+}
+
+.agenda-tabla tr:last-child td {
+    border-bottom: 0;
+}
+
+.agenda-tabla tr.est-cancelado .agenda-col-paciente strong {
+    text-decoration: line-through;
+    color: var(--ink-muted);
+}
+
+.agenda-col-hora,
+.agenda-col-paciente {
+    display: table-cell;
+}
+
+.agenda-col-hora strong,
+.agenda-col-paciente strong {
+    display: block;
+    color: var(--ink);
+}
+
+.agenda-col-hora small,
+.agenda-col-paciente small {
+    display: block;
+    font-size: 12px;
+    color: var(--ink-muted);
+}
+
+.agenda-col-acciones {
+    width: 1%;
+    white-space: nowrap;
+    text-align: right;
+}
+
+.agenda-estado {
+    padding: 6px 28px 6px 10px;
+    border: 1px solid var(--e-borde);
+    border-radius: 999px;
+    background-color: var(--e-fondo);
+    color: var(--ink);
+    font: inherit;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.agenda-estado:focus {
+    outline: none;
+    box-shadow: var(--ring);
+}
+
+.agenda-chip {
+    display: inline-block;
+    padding: 3px 10px;
+    border: 1px solid var(--e-borde, var(--line-strong));
+    border-radius: 999px;
+    background: var(--e-fondo, var(--surface-soft));
+    color: var(--ink);
+    font-size: 12.5px;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.agenda-chip.pagado {
+    --e-borde: var(--ok);
+    --e-fondo: var(--ok-bg);
+}
+
+.agenda-cobrar {
+    padding: 6px 14px;
+    font-size: 13px;
+}
+
+.agenda-pago {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin-top: 6px;
+    padding: 10px 12px;
+    border-radius: var(--radius-sm);
+    background: var(--surface-soft);
+    font-size: 13.5px;
+    color: var(--ink-soft);
+}
+
+.agenda-pago[hidden],
+.agenda-pago [hidden] {
+    display: none;
+}
+
+.agenda-dialogo-ancho {
+    width: min(760px, calc(100vw - 24px));
+    max-width: none;
+}
+
+.agenda-resultados {
+    margin: 4px 0 0;
+    font-size: 13px;
+    color: var(--ink-muted);
+}
+
+.agenda-busqueda-tabla {
+    max-height: 280px;
+    overflow: auto;
+    margin-top: 8px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
+}
+
+.agenda-tabla-click tbody tr {
+    cursor: pointer;
+}
+
+.agenda-tabla-click tbody tr:hover,
+.agenda-tabla-click tbody tr:focus-visible {
+    background: var(--teal-50);
+    outline: none;
+}
+
+
+/* ---------- recordatorios ---------- */
+
+.agenda-recordatorios {
+    margin-top: 16px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    background: var(--surface);
+    box-shadow: var(--shadow-xs);
+}
+
+.agenda-recordatorios summary {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 18px;
+    font-size: 14.5px;
+    font-weight: 700;
+    color: var(--ink);
+    cursor: pointer;
+}
+
+.agenda-recordatorios-cuerpo {
+    padding: 0 18px 18px;
+}
+
+.agenda-recordatorios-cuerpo p {
+    margin: 0 0 10px;
+    font-size: 13.5px;
+    color: var(--ink-muted);
+}
+
+.agenda-insignia {
+    padding: 2px 10px;
+    border-radius: 999px;
+    background: var(--surface-soft);
+    color: var(--ink-muted);
+    font-size: 11.5px;
+    font-weight: 700;
+}
+
+.agenda-insignia.activa {
+    background: var(--ok-bg);
+    color: var(--ok);
+}
+
+.agenda-insignia[hidden] {
+    display: none;
+}
+
+.agenda-canales {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 12px;
+}
+
+.agenda-canal {
+    padding: 4px 10px;
+    border: 1px solid var(--line-strong);
+    border-radius: 999px;
+    font-size: 12.5px;
+    color: var(--ink-muted);
+}
+
+.agenda-canal.listo {
+    border-color: var(--ok);
+    color: var(--ok);
+}
+
+@media (max-width: 900px) {
+
+    .agenda-resumen {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 560px) {
+
+    .agenda-resumen {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 8px;
+    }
+
+    .agenda-contador {
+        padding: 8px 10px;
+    }
+
+    .agenda-contador strong {
+        font-size: 18px;
+    }
+
+    .agenda-contador span {
+        font-size: 11.5px;
+    }
+
+    .agenda-tabla th:nth-child(4),
+    .agenda-tabla td:nth-child(4) {
+        min-width: 130px;
+    }
+}

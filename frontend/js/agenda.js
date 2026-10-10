@@ -1,6 +1,7 @@
 /* =====================================================
    GESTIONTEC MEDICAL — Agenda visual
-   · Vista por día o por semana
+   · Vista por día, por semana o en lista
+   · Cobro del turno, búsqueda de turnos y recordatorios
    · Clic en un horario libre para agendar
    · Arrastrar un turno para moverlo
    · Bloqueos (vacaciones, feriados, franjas)
@@ -21,6 +22,16 @@
     const DIA_CORTO = ["dom", "lun", "mar", "mié", "jue", "vie", "sáb"];
     const MES_CORTO = ["ene", "feb", "mar", "abr", "may", "jun", "jul", "ago", "sep", "oct", "nov", "dic"];
     const MES_LARGO = ["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"];
+
+    const dinero = new Intl.NumberFormat("es-AR", { style: "currency", currency: "ARS" });
+
+    const ETIQUETA_METODO = {
+        efectivo: "Efectivo",
+        transferencia: "Transferencia",
+        mercado_pago: "Mercado Pago",
+        tarjeta: "Tarjeta",
+        otro: "Otro"
+    };
 
     const ETIQUETA_ESTADO = {
         pendiente: "Pendiente",
@@ -44,6 +55,9 @@
     let edicion = null;                    // turno que se está editando (o null si es nuevo)
     let sobreturnoConfirmado = false;
     let bloqueoAbierto = null;
+    let turnoACobrar = null;
+    let filtroLista = "todos";
+    let recordatoriosCargados = false;
 
 
     /* ---------- utilidades de fecha y hora ---------- */
@@ -93,7 +107,7 @@
 
             const guardada = localStorage.getItem(CLAVE_VISTA);
 
-            if (guardada === "dia" || guardada === "semana") {
+            if (guardada === "dia" || guardada === "semana" || guardada === "lista") {
                 return guardada;
             }
 
@@ -111,7 +125,7 @@
 
     function diasDeLaVista() {
 
-        if (vista === "dia") {
+        if (vista !== "semana") {
             return [referencia];
         }
 
@@ -125,7 +139,7 @@
         const a = dias[0];
         const b = dias[dias.length - 1];
 
-        if (vista === "dia") {
+        if (vista !== "semana") {
             return `${NOMBRE_DIA[a.getDay()]} ${a.getDate()} de ${MES_LARGO[a.getMonth()]} de ${a.getFullYear()}`;
         }
 
@@ -349,6 +363,19 @@
         grilla.style.setProperty("--columnas", dias.length);
         grilla.classList.toggle("una-columna", dias.length === 1);
 
+        const enLista = vista === "lista";
+
+        $("agScroll").hidden = enLista;
+        $("agLista").hidden = !enLista;
+        $("agResumen").hidden = !enLista;
+        $("agLeyenda").hidden = enLista;
+        $("agAyuda").hidden = enLista;
+
+        if (enLista) {
+            dibujarLista();
+            return;
+        }
+
         const cabecera = elemento("div", "ag-cabecera");
         cabecera.appendChild(elemento("div", "ag-esquina"));
 
@@ -362,7 +389,7 @@
             titulo.appendChild(elemento("span", "ag-dia-nombre", DIA_CORTO[d.getDay()]));
             titulo.appendChild(elemento("span", "ag-dia-numero", String(d.getDate())));
 
-            if (vista === "dia") titulo.disabled = true;
+            if (vista !== "semana") titulo.disabled = true;
 
             cabecera.appendChild(titulo);
         });
@@ -445,6 +472,235 @@
                 : escala.configInicio - 30;
 
             $("agScroll").scrollTop = Math.max(0, (objetivo - escala.inicio) * escala.px);
+        }
+    }
+
+    /* ---------- vista de lista (turnos del día) ---------- */
+
+    const ICONO_EDITAR =
+        '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20h4L19 9l-4-4L4 16z"></path><path d="M13.5 6.5l4 4"></path></svg>';
+
+    function etiquetaPago(t) {
+
+        return t.pago_registrado
+            ? `${dinero.format(t.pago_monto)} · ${ETIQUETA_METODO[t.pago_metodo] || t.pago_metodo || "—"}`
+            : "";
+    }
+
+    function dibujarLista() {
+
+        const f = iso(referencia);
+        const turnos = datos.turnos
+            .filter(t => t.fecha === f)
+            .sort((a, b) => a.hora.localeCompare(b.hora));
+
+        /* contadores: sirven también como filtro */
+        const cuenta = { todos: turnos.length, pendiente: 0, confirmado: 0, atendido: 0, cancelado: 0 };
+
+        turnos.forEach(t => { cuenta[t.estado]++; });
+
+        if (filtroLista !== "todos" && !cuenta[filtroLista]) {
+            filtroLista = "todos";
+        }
+
+        const resumen = $("agResumen");
+
+        resumen.replaceChildren(...[
+            ["todos", "Todos"],
+            ["pendiente", "Pendientes"],
+            ["confirmado", "Confirmados"],
+            ["atendido", "Atendidos"],
+            ["cancelado", "Cancelados"]
+        ].map(([clave, nombre]) => {
+
+            const b = elemento("button", `agenda-contador est-${clave}${filtroLista === clave ? " activo" : ""}`);
+
+            b.type = "button";
+            b.dataset.filtro = clave;
+            b.setAttribute("aria-pressed", String(filtroLista === clave));
+            b.appendChild(elemento("strong", "", String(cuenta[clave])));
+            b.appendChild(elemento("span", "", nombre));
+
+            return b;
+        }));
+
+        const lista = $("agLista");
+        const visibles = filtroLista === "todos" ? turnos : turnos.filter(t => t.estado === filtroLista);
+        const bloqueosDelDia = datos.bloqueos.filter(b => b.fecha_desde <= f && b.fecha_hasta >= f);
+
+        const nodos = [];
+
+        bloqueosDelDia.forEach(b => {
+
+            const aviso = elemento("p", "agenda-lista-bloqueo",
+                `Bloqueado${b.motivo ? ": " + b.motivo : ""}${b.hora_desde ? ` (${b.hora_desde} a ${b.hora_hasta})` : " todo el día"}`);
+
+            nodos.push(aviso);
+        });
+
+        if (!visibles.length) {
+
+            const vacio = elemento("div", "agenda-lista-vacio");
+
+            vacio.appendChild(elemento("p", "", turnos.length ? "No hay turnos con ese estado." : "No hay turnos para este día."));
+
+            const agendar = elemento("button", "primary-button", "+ Nuevo turno");
+
+            agendar.type = "button";
+            agendar.dataset.accion = "nuevo";
+
+            vacio.appendChild(agendar);
+            nodos.push(vacio);
+
+            lista.replaceChildren(...nodos);
+
+            return;
+        }
+
+        const tabla = elemento("table", "agenda-tabla");
+        const cabecera = elemento("thead");
+        const filaCab = elemento("tr");
+
+        ["Hora", "Paciente", "Estado", "Pago", ""].forEach(t => filaCab.appendChild(elemento("th", "", t)));
+        cabecera.appendChild(filaCab);
+        tabla.appendChild(cabecera);
+
+        const cuerpo = elemento("tbody");
+
+        visibles.forEach(t => {
+
+            const fila = elemento("tr", `est-${t.estado}`);
+
+            fila.dataset.turno = t.id;
+
+            const hora = elemento("td", "agenda-col-hora");
+
+            hora.appendChild(elemento("strong", "", t.hora));
+            hora.appendChild(elemento("small", "", `${t.duracion_min} min`));
+            fila.appendChild(hora);
+
+            const paciente = elemento("td", "agenda-col-paciente");
+
+            paciente.appendChild(elemento("strong", "", `${t.apellido}, ${t.nombre}`));
+
+            if (t.dni) paciente.appendChild(elemento("small", "", `DNI ${t.dni}`));
+
+            fila.appendChild(paciente);
+
+            const estado = elemento("td");
+            const selector = elemento("select", `agenda-estado est-${t.estado}`);
+
+            selector.dataset.turno = t.id;
+            selector.setAttribute("aria-label", "Estado del turno");
+
+            Object.keys(ETIQUETA_ESTADO).forEach(clave => {
+                const o = new Option(ETIQUETA_ESTADO[clave], clave);
+                o.selected = clave === t.estado;
+                selector.appendChild(o);
+            });
+
+            estado.appendChild(selector);
+            fila.appendChild(estado);
+
+            const pago = elemento("td", "agenda-col-pago");
+
+            if (t.pago_registrado) {
+
+                pago.appendChild(elemento("span", "agenda-chip pagado", etiquetaPago(t)));
+
+            } else {
+
+                const cobrar = elemento("button", "secondary-button agenda-cobrar", "Cobrar");
+
+                cobrar.type = "button";
+                cobrar.dataset.accion = "cobrar";
+                cobrar.dataset.turno = t.id;
+                pago.appendChild(cobrar);
+            }
+
+            fila.appendChild(pago);
+
+            const acciones = elemento("td", "agenda-col-acciones");
+            const editar = elemento("button", "icono-accion");
+
+            editar.type = "button";
+            editar.dataset.accion = "editar";
+            editar.dataset.turno = t.id;
+            editar.title = "Ver o editar turno";
+            editar.setAttribute("aria-label", "Ver o editar turno");
+            editar.innerHTML = ICONO_EDITAR;
+
+            acciones.appendChild(editar);
+            fila.appendChild(acciones);
+
+            cuerpo.appendChild(fila);
+        });
+
+        tabla.appendChild(cuerpo);
+
+        nodos.push(elemento("div", "agenda-tabla-marco"));
+        nodos[nodos.length - 1].appendChild(tabla);
+
+        lista.replaceChildren(...nodos);
+    }
+
+    async function cambiarEstado(selector) {
+
+        const id = Number(selector.dataset.turno);
+        const t = datos.turnos.find(x => x.id === id);
+
+        if (!t || selector.value === t.estado) return;
+
+        selector.disabled = true;
+
+        try {
+
+            const r = await pedir("PATCH", `/turnos/${id}/estado`, { estado: selector.value });
+
+            if (!r.ok) {
+                aviso("Agenda", r.datos.mensaje || "No se pudo cambiar el estado.", "error");
+                selector.value = t.estado;
+                return;
+            }
+
+            t.estado = selector.value;
+            aviso("Agenda", `Turno ${ETIQUETA_ESTADO[t.estado].toLowerCase()}.`, "success");
+
+            dibujar();
+
+        } catch (e) {
+
+            aviso("Agenda", "No se pudo conectar con el servidor.", "error");
+            selector.value = t.estado;
+
+        } finally {
+
+            selector.disabled = false;
+        }
+    }
+
+    function clicEnLista(evento) {
+
+        const filtro = evento.target.closest("[data-filtro]");
+
+        if (filtro) {
+            filtroLista = filtro.dataset.filtro;
+            dibujar();
+            return;
+        }
+
+        const accion = evento.target.closest("[data-accion]");
+
+        if (!accion) return;
+
+        const id = Number(accion.dataset.turno);
+
+        if (accion.dataset.accion === "nuevo") {
+            abrirNuevo(iso(referencia), horaRedondaProxima());
+        } else if (accion.dataset.accion === "editar") {
+            abrirEdicion(id);
+        } else if (accion.dataset.accion === "cobrar") {
+            abrirPago(datos.turnos.find(t => t.id === id));
         }
     }
 
@@ -574,6 +830,7 @@
         $("campoPaciente").hidden = false;
         $("pacienteFijo").hidden = true;
         $("campoEstado").hidden = true;
+        $("bloquePago").hidden = true;
         $("turPaciente").value = "";
         $("turFecha").value = fecha;
         $("turHora").value = hora;
@@ -608,6 +865,13 @@
         $("pacienteFijo").hidden = false;
         $("turPacienteNombre").textContent = `${t.apellido}, ${t.nombre}`;
         $("campoEstado").hidden = false;
+
+        $("bloquePago").hidden = false;
+        $("pagoTexto").textContent = t.pago_registrado
+            ? `Pago registrado: ${etiquetaPago(t)}`
+            : "Este turno todavía no tiene pago registrado.";
+        $("btnCobrar").hidden = t.pago_registrado;
+
         $("turFecha").value = t.fecha;
         $("turHora").value = t.hora;
         $("turEstado").value = t.estado;
@@ -732,6 +996,308 @@
         }
 
         await cargar();
+    }
+
+
+    /* ---------- cobrar ---------- */
+
+    function abrirPago(t) {
+
+        if (!t) return;
+
+        turnoACobrar = t;
+
+        const d = desdeIso(t.fecha);
+
+        $("pagoSubtitulo").textContent =
+            `${t.apellido}, ${t.nombre} · ${d.getDate()} ${MES_CORTO[d.getMonth()]} ${t.hora}`;
+
+        $("pagoMonto").value = "";
+        $("pagoMetodo").value = "";
+        $("pagoObservaciones").value = "";
+        $("errorPago").textContent = "";
+
+        if ($("dialogoTurno").open) $("dialogoTurno").close();
+
+        $("dialogoPago").showModal();
+        $("pagoMonto").focus();
+    }
+
+    async function guardarPago(evento) {
+
+        evento.preventDefault();
+
+        const boton = $("btnGuardarPago");
+
+        if (boton.disabled || !turnoACobrar) return;
+
+        const error = $("errorPago");
+        const monto = Number($("pagoMonto").value);
+
+        error.textContent = "";
+
+        if (!Number.isFinite(monto) || monto <= 0) {
+            error.textContent = "Ingresá un monto mayor a cero.";
+            return;
+        }
+
+        if (!$("pagoMetodo").value) {
+            error.textContent = "Elegí el medio de pago.";
+            return;
+        }
+
+        ocupado(boton, true);
+
+        try {
+
+            const r = await pedir("POST", "/pagos", {
+                turno_id: turnoACobrar.id,
+                monto,
+                metodo_pago: $("pagoMetodo").value,
+                observaciones: $("pagoObservaciones").value.trim()
+            });
+
+            if (!r.ok) {
+                error.textContent = r.datos.mensaje || "No se pudo registrar el pago.";
+
+                if (r.status === 409) await cargar();
+
+                return;
+            }
+
+            $("dialogoPago").close();
+            aviso("Agenda", `Pago de ${dinero.format(monto)} registrado.`, "success");
+
+            await cargar();
+
+        } catch (e) {
+
+            error.textContent = "No se pudo conectar con el servidor.";
+
+        } finally {
+
+            ocupado(boton, false);
+        }
+    }
+
+
+    /* ---------- buscar turnos ---------- */
+
+    function abrirBuscar() {
+
+        $("busAviso").textContent = "";
+        $("busContenedor").hidden = true;
+        $("dialogoBuscar").showModal();
+        $("busTexto").focus();
+    }
+
+    function fechaLarga(f) {
+
+        const d = desdeIso(f);
+
+        return `${dos(d.getDate())}/${dos(d.getMonth() + 1)}/${d.getFullYear()}`;
+    }
+
+    async function buscarTurnos(evento) {
+
+        evento.preventDefault();
+
+        const aviso = $("busAviso");
+        const parametros = new URLSearchParams();
+
+        if ($("busTexto").value.trim()) parametros.set("q", $("busTexto").value.trim());
+        if ($("busEstado").value) parametros.set("estado", $("busEstado").value);
+        if ($("busDesde").value) parametros.set("desde", $("busDesde").value);
+        if ($("busHasta").value) parametros.set("hasta", $("busHasta").value);
+
+        if (![...parametros.keys()].length) {
+            aviso.textContent = "Indicá al menos un filtro para buscar.";
+            $("busContenedor").hidden = true;
+            return;
+        }
+
+        if ($("busDesde").value && $("busHasta").value && $("busDesde").value > $("busHasta").value) {
+            aviso.textContent = "La fecha Desde no puede ser posterior a Hasta.";
+            return;
+        }
+
+        const boton = $("btnBuscarTurnos");
+
+        if (boton.disabled) return;
+
+        ocupado(boton, true, "Buscando…");
+        aviso.textContent = "";
+
+        try {
+
+            const r = await pedir("GET", `/turnos?${parametros}`);
+
+            if (!r.ok) {
+                aviso.textContent = r.datos.mensaje || "No se pudo realizar la búsqueda.";
+                $("busContenedor").hidden = true;
+                return;
+            }
+
+            const turnos = r.datos.turnos || [];
+
+            $("busContenedor").hidden = false;
+
+            if (!turnos.length) {
+
+                const fila = elemento("tr");
+                const celda = elemento("td", "rep-vacio", "No se encontraron turnos con esos filtros.");
+
+                celda.colSpan = 5;
+                fila.appendChild(celda);
+                $("busTabla").replaceChildren(fila);
+
+                aviso.textContent = "";
+
+                return;
+            }
+
+            $("busTabla").replaceChildren(...turnos.map(t => {
+
+                const fila = elemento("tr");
+
+                fila.dataset.turno = t.id;
+                fila.dataset.fecha = t.fecha;
+                fila.tabIndex = 0;
+
+                fila.appendChild(elemento("td", "", fechaLarga(t.fecha)));
+                fila.appendChild(elemento("td", "", t.hora));
+                fila.appendChild(elemento("td", "", `${t.apellido}, ${t.nombre}`));
+
+                const estado = elemento("td");
+
+                estado.appendChild(elemento("span", `agenda-chip est-${t.estado}`, ETIQUETA_ESTADO[t.estado] || t.estado));
+                fila.appendChild(estado);
+
+                fila.appendChild(elemento("td", "", t.pago_registrado ? "Registrado" : "Sin pago"));
+
+                return fila;
+            }));
+
+            aviso.textContent = turnos.length >= 300
+                ? "Mostrando los primeros 300 resultados. Afiná la búsqueda."
+                : `${turnos.length} ${turnos.length === 1 ? "turno" : "turnos"}`;
+
+        } catch (e) {
+
+            aviso.textContent = "No se pudo conectar con el servidor.";
+            $("busContenedor").hidden = true;
+
+        } finally {
+
+            ocupado(boton, false);
+        }
+    }
+
+    async function abrirResultado(evento) {
+
+        const fila = evento.target.closest("tr[data-turno]");
+
+        if (!fila) return;
+
+        const id = Number(fila.dataset.turno);
+        const fecha = fila.dataset.fecha;
+
+        $("dialogoBuscar").close();
+
+        referencia = desdeIso(fecha);
+
+        if (vista === "semana") {
+            irAHora = true;
+        }
+
+        await cargar();
+
+        abrirEdicion(id);
+    }
+
+
+    /* ---------- recordatorios ---------- */
+
+    const ESTADO_RECORDATORIO = {
+        enviado: ["est-atendido", "Enviado"],
+        fallido: ["est-cancelado", "Falló"],
+        enviando: ["est-pendiente", "Enviando"],
+        sin_contacto: ["est-pendiente", "Sin datos de contacto"]
+    };
+
+    const CANAL_RECORDATORIO = { email: "Correo", whatsapp: "WhatsApp", ninguno: "—" };
+
+    async function cargarEstadoRecordatorios() {
+
+        try {
+
+            const r = await pedir("GET", "/recordatorios/estado");
+
+            if (!r.ok) throw new Error("estado");
+
+            const e = r.datos;
+            const hayCanal = e.canales.email || e.canales.whatsapp;
+            const insignia = $("recInsignia");
+
+            insignia.hidden = false;
+
+            if (e.habilitado && hayCanal) {
+                insignia.textContent = e.simulacro ? "Simulacro" : "Activos";
+                insignia.className = "agenda-insignia activa";
+                $("recResumen").textContent = `Se avisa a los pacientes ${e.horasAntes} horas antes del turno.`;
+            } else {
+                insignia.textContent = "Desactivados";
+                insignia.className = "agenda-insignia";
+                $("recResumen").textContent = e.habilitado
+                    ? "Faltan las claves de un canal para poder enviar."
+                    : "Todavía no están activados. Se configuran en el servidor.";
+            }
+
+            $("recCanales").replaceChildren(...[["email", "Correo"], ["whatsapp", "WhatsApp"]].map(([clave, nombre]) =>
+                elemento("span", `agenda-canal${e.canales[clave] ? " listo" : ""}`,
+                    `${nombre}: ${e.canales[clave] ? "listo" : "sin configurar"}`)
+            ));
+
+        } catch (e) {
+
+            $("recResumen").textContent = "No se pudo cargar el estado de los recordatorios.";
+        }
+    }
+
+    async function cargarHistorialRecordatorios() {
+
+        try {
+
+            const r = await pedir("GET", "/recordatorios?limite=30");
+            const lista = (r.datos && r.datos.recordatorios) || [];
+
+            if (!r.ok || !lista.length) return;
+
+            $("recTabla").replaceChildren(...lista.map(x => {
+
+                const [clase, texto] = ESTADO_RECORDATORIO[x.estado] || ["", x.estado];
+                const fila = elemento("tr");
+
+                fila.appendChild(elemento("td", "", `${fechaLarga(String(x.fecha).slice(0, 10))} ${x.hora}`));
+                fila.appendChild(elemento("td", "", `${x.apellido}, ${x.nombre}`));
+                fila.appendChild(elemento("td", "", CANAL_RECORDATORIO[x.canal] || x.canal));
+
+                const estado = elemento("td");
+                const chip = elemento("span", `agenda-chip ${clase}`, texto);
+
+                if (x.error) chip.title = x.error;
+
+                estado.appendChild(chip);
+                fila.appendChild(estado);
+
+                fila.appendChild(elemento("td", "", x.enviado_en
+                    ? new Date(x.enviado_en).toLocaleString("es-AR", { day: "2-digit", month: "2-digit", hour: "2-digit", minute: "2-digit" })
+                    : "—"));
+
+                return fila;
+            }));
+
+        } catch (e) { /* queda el mensaje vacío */ }
     }
 
 
@@ -1080,7 +1646,7 @@
 
     function moverVista(sentido) {
 
-        referencia = sumarDias(referencia, sentido * (vista === "dia" ? 1 : 7));
+        referencia = sumarDias(referencia, sentido * (vista === "semana" ? 7 : 1));
         irAHora = true;
         cargar();
     }
@@ -1156,6 +1722,38 @@
         $("agNuevo").addEventListener("click", () => abrirNuevo(iso(referencia), horaRedondaProxima()));
         $("agBloquear").addEventListener("click", () => abrirNuevoBloqueo(iso(referencia)));
         $("agHorario").addEventListener("click", abrirHorario);
+        $("agBuscar").addEventListener("click", abrirBuscar);
+
+        $("agLista").addEventListener("click", clicEnLista);
+        $("agResumen").addEventListener("click", clicEnLista);
+
+        $("agLista").addEventListener("change", evento => {
+
+            const selector = evento.target.closest("select.agenda-estado");
+
+            if (selector) cambiarEstado(selector);
+        });
+
+        $("btnCobrar").addEventListener("click", () => abrirPago(edicion));
+        $("formPago").addEventListener("submit", guardarPago);
+        $("btnCancelarPago").addEventListener("click", () => $("dialogoPago").close());
+
+        $("formBuscar").addEventListener("submit", buscarTurnos);
+        $("btnCerrarBuscar").addEventListener("click", () => $("dialogoBuscar").close());
+        $("busTabla").addEventListener("click", abrirResultado);
+
+        $("busTabla").addEventListener("keydown", evento => {
+
+            if (evento.key === "Enter") abrirResultado(evento);
+        });
+
+        $("agRecordatorios").addEventListener("toggle", () => {
+
+            if ($("agRecordatorios").open && !recordatoriosCargados) {
+                recordatoriosCargados = true;
+                cargarHistorialRecordatorios();
+            }
+        });
 
         const grilla = $("agGrilla");
 
@@ -1207,5 +1805,6 @@
 
     conectarEventos();
     cargar();
+    cargarEstadoRecordatorios();
 
 })();

@@ -113,30 +113,6 @@
 
 
             <a
-                href="turnos.html"
-                class="nav-item"
-            >
-
-                <span class="nav-icon">
-    <svg viewBox="0 0 24 24" aria-hidden="true">
-        <rect x="3" y="5" width="18" height="16" rx="2"></rect>
-        <path d="M16 3v4"></path>
-        <path d="M8 3v4"></path>
-        <path d="M3 10h18"></path>
-        <path d="M8 14h2"></path>
-        <path d="M14 14h2"></path>
-        <path d="M8 18h2"></path>
-    </svg>
-</span>
-
-                <span>
-                    Turnos
-                </span>
-
-            </a>
-
-
-            <a
                 href="pagos.html"
                 class="nav-item"
             >
@@ -274,7 +250,10 @@
                     <div class="agenda-vistas" role="group" aria-label="Vista">
                         <button type="button" data-vista="dia" aria-pressed="false">Día</button>
                         <button type="button" data-vista="semana" aria-pressed="true">Semana</button>
+                        <button type="button" data-vista="lista" aria-pressed="false">Lista</button>
                     </div>
+
+                    <button type="button" class="secondary-button" id="agBuscar">Buscar turnos</button>
 
                     <button type="button" class="secondary-button" id="agBloquear">Bloquear horario</button>
 
@@ -288,7 +267,9 @@
 
             </div>
 
-            <div class="agenda-leyenda" aria-label="Referencias">
+            <div class="agenda-resumen" id="agResumen" hidden></div>
+
+            <div class="agenda-leyenda" id="agLeyenda" aria-label="Referencias">
                 <span><i class="est-pendiente"></i>Pendiente</span>
                 <span><i class="est-confirmado"></i>Confirmado</span>
                 <span><i class="est-atendido"></i>Atendido</span>
@@ -303,11 +284,48 @@
                 <div class="agenda-scroll" id="agScroll">
                     <div class="agenda-grilla" id="agGrilla"></div>
                 </div>
+                <div class="agenda-lista" id="agLista" hidden></div>
             </div>
 
-            <p class="agenda-ayuda">
+            <p class="agenda-ayuda" id="agAyuda">
                 Hacé clic en un horario libre para agendar. Arrastrá un turno para moverlo (en el celular, tocalo y cambiá fecha y hora).
             </p>
+
+            <!-- RECORDATORIOS -->
+
+            <details class="agenda-recordatorios" id="agRecordatorios">
+
+                <summary>
+                    <span>Recordatorios a pacientes</span>
+                    <span class="agenda-insignia" id="recInsignia" hidden></span>
+                </summary>
+
+                <div class="agenda-recordatorios-cuerpo">
+
+                    <p id="recResumen">Cargando estado…</p>
+
+                    <div class="agenda-canales" id="recCanales"></div>
+
+                    <div class="rep-tabla-marco">
+                        <table class="rep-tabla">
+                            <thead>
+                                <tr>
+                                    <th>Turno</th>
+                                    <th>Paciente</th>
+                                    <th>Canal</th>
+                                    <th>Estado</th>
+                                    <th>Enviado</th>
+                                </tr>
+                            </thead>
+                            <tbody id="recTabla">
+                                <tr><td colspan="5" class="rep-vacio">Todavía no se envió ningún recordatorio.</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+
+            </details>
 
         </section>
 
@@ -376,6 +394,11 @@
                     <textarea id="turObservaciones" rows="2" maxlength="500"></textarea>
                 </label>
 
+            </div>
+
+            <div class="agenda-pago" id="bloquePago" hidden>
+                <span id="pagoTexto"></span>
+                <button type="button" class="secondary-button" id="btnCobrar">Cobrar</button>
             </div>
 
             <p class="agenda-aviso" id="avisoTurno" role="alert" hidden></p>
@@ -464,6 +487,125 @@
             <div class="config-pie config-pie-dialogo">
                 <button type="button" class="secondary-button" id="btnCerrarQuitarBloqueo">Cerrar</button>
                 <button type="button" class="primary-button peligro" id="btnQuitarBloqueo">Quitar bloqueo</button>
+            </div>
+
+        </form>
+
+    </dialog>
+
+
+    <!-- DIÁLOGO: COBRAR -->
+
+    <dialog class="config-dialogo" id="dialogoPago">
+
+        <form method="dialog" id="formPago" class="config-form" novalidate>
+
+            <header class="config-panel-cabecera">
+                <h2>Cobrar turno</h2>
+                <p id="pagoSubtitulo"></p>
+            </header>
+
+            <div class="config-grilla">
+
+                <label class="config-campo">
+                    <span>Monto <b>*</b></span>
+                    <input type="number" id="pagoMonto" min="0" step="0.01" inputmode="decimal" placeholder="0,00">
+                </label>
+
+                <label class="config-campo">
+                    <span>Medio de pago <b>*</b></span>
+                    <select id="pagoMetodo">
+                        <option value="">Seleccionar</option>
+                        <option value="efectivo">Efectivo</option>
+                        <option value="transferencia">Transferencia</option>
+                        <option value="mercado_pago">Mercado Pago</option>
+                        <option value="tarjeta">Tarjeta</option>
+                        <option value="otro">Otro</option>
+                    </select>
+                </label>
+
+                <label class="config-campo config-campo-ancho">
+                    <span>Observaciones</span>
+                    <input type="text" id="pagoObservaciones" maxlength="200" autocomplete="off">
+                </label>
+
+            </div>
+
+            <p class="config-error" id="errorPago" role="alert"></p>
+
+            <div class="config-pie config-pie-dialogo">
+                <button type="button" class="secondary-button" id="btnCancelarPago">Cancelar</button>
+                <button type="submit" class="primary-button" id="btnGuardarPago">Registrar pago</button>
+            </div>
+
+        </form>
+
+    </dialog>
+
+
+    <!-- DIÁLOGO: BUSCAR TURNOS -->
+
+    <dialog class="config-dialogo agenda-dialogo-ancho" id="dialogoBuscar">
+
+        <form method="dialog" id="formBuscar" class="config-form" novalidate>
+
+            <header class="config-panel-cabecera">
+                <h2>Buscar turnos</h2>
+                <p>Por paciente, estado o fechas. Hacé clic en un resultado para abrirlo.</p>
+            </header>
+
+            <div class="config-grilla">
+
+                <label class="config-campo config-campo-ancho">
+                    <span>Paciente, DNI o número</span>
+                    <input type="search" id="busTexto" maxlength="80" autocomplete="off">
+                </label>
+
+                <label class="config-campo">
+                    <span>Estado</span>
+                    <select id="busEstado">
+                        <option value="">Todos</option>
+                        <option value="pendiente">Pendiente</option>
+                        <option value="confirmado">Confirmado</option>
+                        <option value="atendido">Atendido</option>
+                        <option value="cancelado">Cancelado</option>
+                    </select>
+                </label>
+
+                <span></span>
+
+                <label class="config-campo">
+                    <span>Desde</span>
+                    <input type="date" id="busDesde">
+                </label>
+
+                <label class="config-campo">
+                    <span>Hasta</span>
+                    <input type="date" id="busHasta">
+                </label>
+
+            </div>
+
+            <p class="agenda-resultados" id="busAviso" aria-live="polite"></p>
+
+            <div class="rep-tabla-marco agenda-busqueda-tabla" id="busContenedor" hidden>
+                <table class="rep-tabla agenda-tabla-click">
+                    <thead>
+                        <tr>
+                            <th>Fecha</th>
+                            <th>Hora</th>
+                            <th>Paciente</th>
+                            <th>Estado</th>
+                            <th>Pago</th>
+                        </tr>
+                    </thead>
+                    <tbody id="busTabla"></tbody>
+                </table>
+            </div>
+
+            <div class="config-pie config-pie-dialogo">
+                <button type="button" class="secondary-button" id="btnCerrarBuscar">Cerrar</button>
+                <button type="submit" class="primary-button" id="btnBuscarTurnos">Buscar</button>
             </div>
 
         </form>
